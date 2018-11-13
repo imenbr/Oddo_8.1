@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_report_categ_homologation" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;categ_lines&apos;]"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Nom-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/Categorie-name/Nom-name]]></fieldDescription>
+	</field>
+	<field name="zzu-taux_1" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/zzu-taux_1]]></fieldDescription>
+	</field>
+	<field name="znt-taux_2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/znt-taux_2]]></fieldDescription>
+	</field>
+	<field name="qst-taux_3" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/qst-taux_3]]></fieldDescription>
+	</field>
+	<field name="uzc-taux_4" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/uzc-taux_4]]></fieldDescription>
+	</field>
+	<field name="AIR-taux_5" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/AIR-taux_5]]></fieldDescription>
+	</field>
+	<field name="Total-total" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/categ_lines/Total-total]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Nom-name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{zzu-taux_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{znt-taux_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{qst-taux_3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{AIR-taux_5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="55" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Total-total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

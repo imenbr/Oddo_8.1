@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+              
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">quotation.request.form</field>
+            <field name="model">quotation.request</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Request for quotation">
+                    <group>
+                        <group>
+                            <field name="quotation_request_ref" string="Reference" readonly="1"/>
+                            <field name="partner_id" domain="[('supplier', '=', True)]"/> 
+                        </group>
+                        <group>
+                            <field name="name" />
+                            <field name="date_quotation_req"/>
+                        </group>     
+                    </group>
+
+                    <notebook colspan="4">
+                        <page string="Request for quotation">
+                            <field colspan="4" name="quotation_request_line" nolabel="1" editable="bottom">
+                                <tree string="Request for quotation Lines">
+                                    <field name="name"/>
+                                    <field name="ref_supplier"/>
+                                    <field name="product_qty"/>
+                                    <field name="product_uom"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field colspan="4" name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+       
+        <record id="purchase_order_tree" model="ir.ui.view">
+            <field name="name">quotation.request.tree</field>
+            <field name="model">quotation.request</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Request for quotation">
+                    <field name="quotation_request_ref" string="Reference"/>
+                    <field name="name" />
+                    <field name="date_quotation_req"/>
+                    <field name="partner_id"/> 
+                </tree>
+            </field>
+        </record>
+        
+        <record id="purchase_order_search" model="ir.ui.view">
+            <field name="name">quotation.request.search</field>
+            <field name="model">quotation.request</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Request for quotation">
+                    <field name="quotation_request_ref" string="Reference"/>
+                    <field name="name" />
+                    <field name="date_quotation_req"/>
+                    <field name="partner_id" widget="selection"/> 
+                </search>
+            </field>
+        </record>
+       
+        <record id="quotation_request_action" model="ir.actions.act_window">
+            <field name="name">Demandes de prix</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quotation.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        
+        <menuitem action="quotation_request_action" id="purchase.menu_purchase_quotation_request"
+            parent="purchase.menu_procurement_management"
+            sequence="6"/>
+        
+        <record id="quotation_request_line_form" model="ir.ui.view">
+            <field name="name">quotation.request.line.form</field>
+            <field name="model">quotation.request.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Request for quotation Line">
+                    <group>
+                        <group>
+                            <field name="product_id" on_change="product_id_change(parent.partner_id,product_id,product_uom,name)"/>
+                            <field name="ref_supplier"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="product_qty"/>
+                            <field name="product_uom"/>
+                        </group>
+                    </group>    
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_tree" model="ir.ui.view">
+            <field name="name">quotation.request.line.tree</field>
+            <field name="model">quotation.request.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Request for quotation Line">
+                    <field name="quotation_request_id"/>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="ref_supplier"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

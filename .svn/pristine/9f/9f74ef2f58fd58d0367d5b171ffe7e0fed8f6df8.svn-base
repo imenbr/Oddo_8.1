@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="reglement_banque_1" model="reglement.banque">
+			<field name="code">Al Baraka</field>
+			<field name="designation">Al Baraka</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_2" model="reglement.banque">
+			<field name="code">Amen Bank</field>
+			<field name="designation">Amen Bank</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_3" model="reglement.banque">
+			<field name="code">Arab Banking Corporation onshore</field>
+			<field name="designation">ABC</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_4" model="reglement.banque">
+			<field name="code">Arab Tunisian Bank</field>
+			<field name="designation">ATB</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_5" model="reglement.banque">
+			<field name="code">Attijari bank</field>
+			<field name="designation">Attijari bank</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_6" model="reglement.banque">
+			<field name="code">Banque d'Habitat</field>
+			<field name="designation">BH</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_7" model="reglement.banque">
+			<field name="code">Banque de Tunisie</field>
+			<field name="designation">BT</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_8" model="reglement.banque">
+			<field name="code">Banque de Tunisie et des Emirats</field>
+			<field name="designation">BTE</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_9" model="reglement.banque">
+			<field name="code">Banque financement Pet. et Moy. Entreprises</field>
+			<field name="designation">BFPME</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_10" model="reglement.banque">
+			<field name="code">Banque Franco-Tunisienne</field>
+			<field name="designation">BFT</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_11" model="reglement.banque">
+			<field name="code">Banque Internationale Arabe de Tunisie</field>
+			<field name="designation">BIAT</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_12" model="reglement.banque">
+			<field name="code">Banque Nationale Agricole</field>
+			<field name="designation">BNA</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_13" model="reglement.banque">
+			<field name="code">Banque Tunisienne de Solidarité</field>
+			<field name="designation">BTS</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_14" model="reglement.banque">
+			<field name="code">Banque Tuniso-Koweitienne</field>
+			<field name="designation">BTK</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_15" model="reglement.banque">
+			<field name="code">Banque Tuniso-Libyenne</field>
+			<field name="designation">BTL</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_16" model="reglement.banque">
+			<field name="code">Banque Zitouna</field>
+			<field name="designation">Banque Zitouna</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_17" model="reglement.banque">
+			<field name="code">Citi-Bank Tunis Branch onshore</field>
+			<field name="designation">Citi-Bank</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_18" model="reglement.banque">
+			<field name="code">North Africa International Bank</field>
+			<field name="designation">NAIB</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_19" model="reglement.banque">
+			<field name="code">Société Tunisienne de Banque</field>
+			<field name="designation">STB</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_20" model="reglement.banque">
+			<field name="code">Stusid Bank</field>
+			<field name="designation">Stusid Bank</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_21" model="reglement.banque">
+			<field name="code">Tunisian Qatari Bank</field>
+			<field name="designation">TQB</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_22" model="reglement.banque">
+			<field name="code">Union Bancaire Commerce et Industrie</field>
+			<field name="designation">UBCI</field>
+		</record>
+	</data>
+	<data>
+		<record id="reglement_banque_23" model="reglement.banque">
+			<field name="code">Union Internationale de Banques</field>
+			<field name="designation">UIB</field>
+		</record>
+	</data>
+</openerp>

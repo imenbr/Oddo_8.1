@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_tva_achat_view' model="ir.ui.view">
+            <field name="name">TVA Récupérable</field>
+            <field name="model">wizard.tva.achat</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport TVA Récupérable" >
+                    <group col="2" fill="0" colspan="4">
+                        <field name="date_debut" />
+                        <field name="date_fin" />
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_tva_achat">
+            <field name="name">TVA Récupérable</field>
+            <field name="res_model">wizard.tva.achat</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_tva_achat_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="TVA Récupérable"
+		model="account.invoice"
+		auto="True"
+		name="jasper_tva_achat_print"
+		rml="office_stat/tva_achat/report/tva_achat.jrxml"
+		id="tva_achat"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_tva_achat_report" name="TVA Récupérable" action="action_wizard_tva_achat" parent="menu_rapport_reglement"  sequence="6"/>
+    </data>
+</openerp>
+

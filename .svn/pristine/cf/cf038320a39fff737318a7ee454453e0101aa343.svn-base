@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_reglement_detail_impaye_tree" model="ir.ui.view">
+            <field name="name">reglement.detail.impaye.tree</field>
+            <field name="model">reglement.detail.impaye</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Unpaid Détails">
+                    <field name="piece_id"/>
+		    <!--  <field name="titulaire"/> -->
+                    <field name="montant_piece" string="Montant Pièce"/>
+		    <field name="montant" string="Amount"/>
+		    <field name="montant_rest" string="Reste à payer"/>
+		    <field name="date_echance"/>
+                </tree>
+            </field>
+        </record>
+
+	<record id="view_reglement_detail_impaye_form" model="ir.ui.view">
+            <field name="name">reglement.detail.impaye.form</field>
+            <field name="model">reglement.detail.impaye</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+		        <field name="piece_id" domain="[('partner_id','=', parent.partner_id), ('state','in',['impaid','pimpaid'])]" on_change="piece_id_change(piece_id, parent.partner_id)"/>
+		        <field name="titulaire" readonly="1"/> 
+		        <field name="date_echance" readonly="1"/>
+                        <field name="montant_piece" string="Montant Pièce" readonly="1"/>
+			<field name="montant" string="Amount" on_change="montant_change(montant, montant_rest)" />
+		        <field name="montant_rest" string="Reste à payer" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_reglement_detail_avoir_tree" model="ir.ui.view">
+            <field name="name">reglement.detail.avoir.tree</field>
+            <field name="model">reglement.detail.avoir</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Refund Détails">
+		    <field name="avoir_id" string="Num. Invoice"/>
+		    <field name="ttc" string="TTC"/>
+		    <field name="montant_rest" string="Reste à payer"/>
+		    <field name="montant" string="Amount"/>
+		    <field name="date_invoice"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_reglement_detail_avoir_form" model="ir.ui.view">
+            <field name="name">reglement.detail.avoir.form</field>
+            <field name="model">reglement.detail.avoir</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="avoir_id" string="Num. Invoice" domain="[('partner_id','=', parent.partner_id), ('state','in',['ppaid','open']), ('type','=', 'in_refund')]" on_change="avoir_id_change(avoir_id, parent.partner_id)"/>
+		        <field name="ttc" string="TTC" readonly="1" />
+		        <field name="montant_rest" string="Reste à payer" readonly="1"/>
+		        <field name="montant" string="Amount" on_change="montant_change(montant, montant_rest)"/>
+		        <field name="date_invoice" readonly="1"/>        
+                    </group>           
+                </form>
+            </field>
+        </record>
+       
+	<record id="view_reglement_detail_tree" model="ir.ui.view">
+            <field name="name">reglement.detail.tree</field>
+            <field name="model">reglement.detail</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Details">
+		    <field name="invoice_id" string="Num. Invoice"/>
+		    <field name="ttc" string="TTC"/>
+		    <field name="montant_rest" string="Reste à payer"/>
+		    <field name="montant" string="Amount"/>
+		    <field name="date_invoice"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_reglement_detail_form" model="ir.ui.view">
+            <field name="name">reglement.detail.form</field>
+            <field name="model">reglement.detail</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="invoice_id" string="Num. Invoice" domain="[('partner_id','=', parent.partner_id), ('state','in',['ppaid','open']),('type','=', parent.type_invoice) ]" on_change="invoice_id_change(invoice_id, parent.partner_id )"/>
+		        <field name="ttc" string="TTC" readonly="1"/>
+		        <field name="montant_rest" string="Reste à payer" readonly="1"/>
+		        <field name="montant" string="Amount" on_change="montant_change(montant, montant_rest, invoice_id, parent.partner_id)"/>
+		        <field name="date_invoice" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+	<record id="view_reglement_detail_piece_form" model="ir.ui.view">
+            <field name="name">reglement.detail.piece.form</field>
+            <field name="model">reglement.detail.piece</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Payment Document">
+                    <group>
+		        <field name="piece_id" on_change="piece_id_change(piece_id, parent.partner_id)" domain="[('partner_id','=', parent.partner_id),('state','=', 'free')]"/>
+                        <field name="num_cheque_traite" readonly="1"/>		    
+                        <field name="titulaire" readonly="1"/>
+                        <field name="montant_piece" readonly="1"/>
+		        <field name="date_echance" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+	<record id="view_reglement_detail_piece_tree" model="ir.ui.view">
+            <field name="name">reglement.detail.piece.tree</field>
+            <field name="model">reglement.detail.piece</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Documents">
+                    <field name="piece_id"/>		    
+                    <field name="titulaire"/>
+                    <field name="montant_piece"/>
+		    <field name="date_echance"/>
+                </tree>
+            </field>
+        </record>
+
+	<record model="ir.ui.view" id="view_detail_avance_tree">
+            <field name="name">detail.avance.tree</field>
+            <field name="model">reglement.detail.avance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Payment on Account Details">
+	            <field name="avance_id" string="Num. Avance"/>
+	            <field name="montant_avance" />
+	            <field name="montant" string="Amount"/>
+	            <field name="montant_rest" string="Reste à payer"/>
+	            <field name="date_avance"/>
+                </tree>
+            </field>
+        </record>
+
+	<record model="ir.ui.view" id="view_detail_avance_form">
+            <field name="name">detail.avance.form</field>
+            <field name="model">reglement.detail.avance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	        <form string="Detail">
+                    <group>
+	                <field name="avance_id" string="Num. Avance" domain="[('partner_id','=', parent.partner_id), ('state','in',['closed','ppaid'])]" on_change="avance_id_change(avance_id,parent.partner_id)"/>
+			<field name="montant_avance" readonly="1"/>
+			<field name="montant_rest" string="Reste à payer" readonly="1"/>
+			<field name="montant" on_change="montant_change(montant, montant_rest)"/>
+			<field name="date_avance" readonly="1"/>
+                    </group> 
+                </form>
+            </field>
+        </record>
+
+        <!--
+            REGLEMENT/REGLEMENT 
+        -->
+        <menuitem name="Réglement" id="menu_regelement_reglement" parent="menu_reglement" sequence="1"/>
+        <record model="ir.ui.view" id="view_reglement_tree_customer">
+            <field name="name">reglement.tree.form.customer</field>
+            <field name="model">reglement.paiement</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Settlement" colors="blue:state in ('draft')">
+	            <field name="code_reglement"/>
+                    <field name="partner_id" string="Customer" />
+                    <field name="state"/>
+                    <field name="montant_total_paye" string ="Total paiement"/>
+                    <field name="montant_total_apaye" string ="Total à payer"/>
+                </tree>
+            </field>
+        </record>
+      
+        <record model="ir.ui.view" id="view_reglement_tree_supplier">
+            <field name="name">reglement.tree.form.supplier</field>
+            <field name="model">reglement.paiement</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+	        <tree string="Settlement" colors="blue:state in ('draft')">
+		    <field name="code_reglement"/>
+                    <field name="partner_id" string="Supplier"/>
+                    <field name="state"/>
+                    <field name="montant_total_paye" string ="Total paiement"/>
+                    <field name="montant_total_apaye" string ="Total à payer"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_reglement_form_client" model="ir.ui.view">
+            <field name="name">reglement.form.client</field>
+            <field name="model">reglement.paiement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Règlement">
+                    <header>
+                        <button name="reg_close" string="Close" states="draft" icon="gtk-jump-to"/>
+                        <button name="reg_cancel" string="Cancel" states="close"  icon="gtk-cancel"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,close"/>
+                    </header>
+                   
+                        <group>
+                            <group>
+                                <field name="type_invoice" invisible="1"/>
+                                <field name="code_reglement"/>
+		                <field name="partner_id" string="Customer" domain="[('customer','=', True)]"/>
+                            </group>
+                            <group>
+			        <field name="date_reglement"/>
+			        <field name="montant_espece"/>
+                            </group>
+                        </group> 
+                        <group string="Pièces paiement">
+                            <field name="reglement_details_piece" nolabel="1" widget="one2many_list" domain="[('partner_id','=', parent.partner_id)]"/> 
+                        </group> 
+                        <notebook colspan="4">
+			    <page string="Facture">		 		 
+				<field name="reglement_detail" nolabel="1" context="{'type_invoice':type_invoice, 'default_type_invoice': type_invoice}"/>                  		  
+			    </page>
+			    <page string="Refund">		 		 
+				<field colspan="6" name="reglement_detail_avoir" nolabel="1"/>                     		  
+			    </page>
+			    <page string="Payment on account">		 		 
+				<field colspan="6" name="reglement_detail_avance" nolabel="1"/>                     		  
+			    </page>
+			    <page string="Unpaid">		 		 
+				<field colspan="6" name="reglement_detail_impaye" nolabel="1"/>                     		  
+			    </page>
+		        </notebook> 
+		        <div class="oe_right">
+                            <group>
+                                <field name="montant_total_paye"/>
+                                <field name="montant_total_apaye"/>
+			        <label string=" " colspan="2"/>
+                                <button name="button_dummy" states="draft" string="Compute" type="object" icon="gtk-execute" colspan="2"/>
+                            </group>
+                        </div> 
+		</form>
+            </field>
+        </record>
+
+        <record id="view_reglement_form_fournisseur" model="ir.ui.view">
+            <field name="name">reglement.form.fournisseur</field>
+            <field name="model">reglement.paiement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Réglement">
+                    <header>
+                        <button name="reg_close" string="Close" states="draft" icon="gtk-jump-to"/>
+                        <button name="reg_cancel" string="Cancel" states="close"  icon="gtk-cancel"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,close"/>
+                    </header>
+                    
+                        <group>
+                            <group>
+                                <field name="type_invoice" invisible="1"/>
+                                <field name="code_reglement"/>
+		                <field name="partner_id" string="Supplier" domain="[('supplier','=', True)]"/>
+                            </group>
+                            <group>
+	                        <field name="date_reglement"/>
+	                        <field name="montant_espece"/>
+                            </group>
+                        </group>
+                        <group string="Pièces paiement">
+                                <field  name="reglement_details_piece" nolabel="1" widget="one2many_list" domain="[('piece_id.partner_id','=', parent.partner_id)]"/> 
+                            </group>
+                        <notebook colspan="4">
+	                    <page string="Invoice">		 		 
+			        <field name="reglement_detail" nolabel="1" context="{'type_invoice':type_invoice, 'default_type_invoice': type_invoice}"/>                     		  
+			    </page>
+			    <page string="Refund">		 		 
+		                <field colspan="6" name="reglement_detail_avoir" nolabel="1"/>                     		  
+			    </page>
+			    <page string="payment on account">		 		 
+		                <field colspan="6" name="reglement_detail_avance" nolabel="1"/>                     		  
+			    </page>
+			    <page string="Unpaid">		 		 
+		                <field colspan="6" name="reglement_detail_impaye" nolabel="1"/>                     		  
+			    </page>
+		        </notebook>
+                        <div class="oe_right">
+                            <group>
+                                <field name="montant_total_paye" />
+                                <field name="montant_total_apaye"/>
+                                <button name="button_dummy" states="draft" string="Compute" type="object" icon="gtk-execute" colspan="2"/>
+                            </group>
+                        </div>   
+		    
+		</form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_paiement_serch">
+            <field name="name">account.reglement.paiement.search</field>
+            <field name="model">reglement.paiement</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search>
+		    <filter string="Draft" icon="terp-accessories-archiver" domain="[('state','=','draft')]"/>
+		    <filter string="Close" icon="terp-accessories-archiver" domain="[('state','=','close')]"/>
+                    <separator orientation="vertical"/>
+                    <field name="code_reglement"/>
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+	<record id="action_reglement_form_client" model="ir.actions.act_window">
+            <field name="name">Reglement Client</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.paiement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+	    <field eval="False" name="view_id"/> 
+            <field name="view_id" ref="view_reglement_tree_customer"/>
+            <field name="domain">[('type','=','out')]</field> 
+            <field name="context">{'type':'out','default_type_invoice':'out_invoice'}</field>
+        </record>
+
+	<record id="action_reglement_form_fournisseur" model="ir.actions.act_window">
+            <field name="name">Reglement Fournisseur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.paiement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="view_reglement_tree_supplier"/>
+            <field name="domain">[('type','=','in')]</field> 
+            <field name="context">{'type':'in','default_type_invoice':'in_invoice'}</field>      
+        </record>
+
+	<record id="action_reglement_tree_out_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_reglement_tree_customer"/>
+            <field name="act_window_id" ref="action_reglement_form_client"/>
+        </record>
+
+	<record id="action_reglement_form_out_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_reglement_form_client"/>
+            <field name="act_window_id" ref="action_reglement_form_client"/>
+        </record>
+
+	<record id="action_reglement_tree_in_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_reglement_tree_supplier"/>
+            <field name="act_window_id" ref="action_reglement_form_fournisseur"/>
+        </record>
+
+	<record id="action_reglement_form_in_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_reglement_form_fournisseur"/>
+            <field name="act_window_id" ref="action_reglement_form_fournisseur"/>
+        </record>
+      
+        <menuitem name="Réglement Client" action="action_reglement_form_client" id="menu_regelement_client"  parent="menu_regelement_reglement" />
+        <menuitem name="Réglement Fournisseur" action="action_reglement_form_fournisseur" id="menu_regelement_fournisseur"  parent="menu_regelement_reglement" />
+	 
+
+        <!-- 
+            REGLEMENT/RETENUE
+        -->
+        <menuitem name="Retenue" id="menu_retenu_source"  parent="menu_reglement" sequence="4"/>
+
+        <record id="view_retenu_source_tree" model="ir.ui.view">
+            <field name="name">reglement.retenu.source.tree</field>
+            <field name="model">reglement.retenu.source</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="A Deduction At Source">
+		    <field name="retenu_id" string="Retenue à la source" />
+                    <field name="type" string="Type retenue"/> 
+                    <field name="designation" />  
+                    
+                    <field name="partner_id" />
+		    <field name="date_retenu" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_retenu_source_form" model="ir.ui.view">
+            <field name="name">reglement.retenu.source.form</field>
+            <field name="model">reglement.retenu.source</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="validation_retenu" string="Valider" type="object"  states="draft" colspan="2" icon="gtk-jump-to"/>                   <field  name="state" widget="statusbar" statusbar_visible="draft,close"/> 
+                    </header>
+                    <group>
+                        <group>
+		            <field  name="partner_id" string="Fournisseur"/>
+		            <field name="date_retenu"/>
+                        </group>
+                        <group>
+		            <field  name="retenu_id" on_change="retenu_change(retenu_id)" required="1"/>     
+		            <field  name="designation"/>     
+                            <field  name="type"/> 
+                        </group>
+                    </group>
+                    <group colspan="6">
+                        <separator string="Factures"/>
+                        <field name="retenue_src_lines" nolabel="1"  required="1" colspan="6" >
+                            <tree  editable="bottom">
+                                    <field name="invoice_id" domain="[('partner_id','=', parent.partner_id), ('state','in',['ppaid','open']),('type','=', 'in_invoice') ]" on_change="invoice_id_change(invoice_id, parent.designation)" />   
+                                    <field name="date_invoice"/>                       
+                                    <field name="ttc" sum= "ttc"/>
+                                    <field name="montant_retenu" sum= "montant_retenu" />
+                                    <field name="montant_rest" sum= "montant_rest"/> 
+                            </tree>
+                        </field>
+                    </group>
+                    <div class="oe_right">
+                        <group>
+                            <field name="total_retenu" string="Total Retenue" colspan="2"/>
+                            <field name="total_ttc" string="Total TTC" colspan="2"/>
+                            <field name="total_reste_a_payer" string="Total Reste" colspan="2"/>
+                            
+                        </group>  
+                        <button name="calculer_retenu" string="Calculer" type="object"   colspan="2" icon="gtk-execute"/>
+                        
+                    </div>
+                </form>
+            </field>
+        </record>
+
+	<record id="action_retenu_source_form" model="ir.actions.act_window">
+            <field name="name">Retenue Source</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.retenu.source</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_retenu_source_tree"/>
+        </record>
+
+	<record id="action_retenu_source_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_retenu_source_tree"/>
+            <field name="act_window_id" ref="action_retenu_source_form"/>
+        </record>
+
+	<record id="action_retenu_source_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_retenu_source_form"/>
+            <field name="act_window_id" ref="action_retenu_source_form"/>
+        </record>
+
+        <!-- 
+            REGLEMENT/RETENUE/RETENUE SOURCE
+        -->
+        <menuitem action="action_retenu_source_form" name="Retenue Source" id="menu_retenu_source_item"  parent="menu_retenu_source" />
+
+     </data>
+</openerp>

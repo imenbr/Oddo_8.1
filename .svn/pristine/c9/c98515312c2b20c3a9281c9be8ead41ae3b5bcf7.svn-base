@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>      
+
+  <!-- Add button in your xml form -->
+
+        
+        <!-- xml excel -->
+        <record id="view_txt_form_extended" model="ir.ui.view">
+            <field name="name">txt.extended.form</field>
+            <field name="model">txt.extended</field>
+            <field name="arch" type="xml">
+                <form string="Teledeclaration CNSS">
+                    <group>
+			<field name="trimestre" />
+                        <field name="excel_file" readonly="1" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>        <button name="print_excel_report" string="Teledeclaration de salaires" type="object" />
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_txt_form" model="ir.actions.act_window">
+            <field name="name">Reportes txt</field>
+            <field name="view_id" ref="view_txt_form_extended"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="res_model">txt.extended</field>
+            <field name="target">new</field>
+        </record>
+<menuitem id="submenu_wizar_reporteeee_text" name="Declaration sur disquette" action="action_txt_form" parent="pay_report.menu_hr_root_payroll_report" sequence="6"/>
+ </data>
+</openerp>
+

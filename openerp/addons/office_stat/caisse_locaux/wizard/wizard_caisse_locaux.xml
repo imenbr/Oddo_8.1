@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_caisse_view' model="ir.ui.view">
+            <field name="name">Caisses Locaux</field>
+            <field name="model">wizard.caisse.locaux</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Caisses Locaux" >
+                    <group col="2" fill="0" colspan="4">
+			<field name="caisse_id" />
+                        <field name="date_debut" />
+                        <field name="date_fin" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_caisse">
+            <field name="name">Caisses Locaux</field>
+            <field name="res_model">wizard.caisse.locaux</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_caisse_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Caisses Locaux"
+		model="account.bank.statement"
+		auto="True"
+		name="jasper_caisse_locaux_print"
+		rml="office_stat/caisse_locaux/report/caisse_locaux.jrxml"
+		id="caisse_locaux"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_caisse_report" name="Caisse Locaux" action="action_wizard_caisse" parent="menu_comptabilite_report"  sequence="8"/>
+    </data>
+</openerp>
+

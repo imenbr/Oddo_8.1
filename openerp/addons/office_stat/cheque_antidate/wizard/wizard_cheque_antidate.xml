@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_cheque_antidate_view' model="ir.ui.view">
+            <field name="name">Cheques antidates</field>
+            <field name="model">wizard.cheque.antidate</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Cheques antidates" >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <field name="date_aujourd" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_cheque_antidate">
+            <field name="name">Cheques antidatés</field>
+            <field name="res_model">wizard.cheque.antidate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_cheque_antidate_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Cheques antidates"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_cheques_antidates_print"
+		rml="office_stat/cheque_antidate/report/cheques_antidates.jrxml"
+		id="cheque_antidates"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_cheque_antidate_report" name="Cheques antidates" action="action_wizard_cheque_antidate" parent="menu_rapport_reglement"  sequence="8"/>
+    </data>
+</openerp>
+

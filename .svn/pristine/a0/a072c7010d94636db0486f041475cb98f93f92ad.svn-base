@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_bl_non_facturer_view' model="ir.ui.view">
+            <field name="name">Declaration Impot Employeur</field>
+            <field name="model">wizard.dec.impot.emp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Declaration Impot Employeur" >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+
+			<field name="annee" />
+
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_bl_non_facturer">
+            <field name="name">Declaration Impot Employeur</field>
+            <field name="res_model">wizard.dec.impot.emp</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_bl_non_facturer_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Declaration Impot Employeur"
+		model="hr.payslip"
+		auto="True"
+		name="jasper_impot_print"
+		rml="pay_report/dec_impot_emp/report/dec_impot_emp.jrxml"
+		id="bl_non_facturer_client"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_bl_non_facturer_report" name="Declaration Impot Employeur" action="action_wizard_bl_non_facturer" parent="menu_hr_root_payroll_report" sequence="6"/>
+    </data>
+</openerp>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_supplier_products_view' model="ir.ui.view">
+            <field name="name">Liste des Produits Fournisseur</field>
+            <field name="model">supplier.products.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Liste des produits par fournisseur" >
+                    <group col="2" fill="0" states="choose">
+                        <separator string="Fournisseur" />
+ 			<field name="supplier_ids" colspan="4" nolabel="1" required="1"/>
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Ok"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_supplier_product">
+            <field name="name">Liste des produits par fournisseur</field>
+            <field name="res_model">supplier.products.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_supplier_products_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Supplier"
+		model="product.supplierinfo"
+		auto="True"
+		name="jasper_report_supplier_product_print"
+		rml="office_stat/supplier_products/report/supplier_products.jrxml"
+		id="supplier_products"
+		menu="False"
+		/>
+        <!--
+            ENTREPOT/OFFICE RAPPORT
+        -->
+        <menuitem id="menu_reporting_office" name="Office Rapports" parent="stock.menu_stock_root"/>
+        <!--
+            ENTREPOT/OFFICE RAPPORT/LISTE DES PRODUITS FOURNISSEUR
+        -->
+        <menuitem id="submenu_supplier_products" name="Liste des Produits Fournisseur" action="action_supplier_product" sequence ="1"
+   parent="menu_reporting_office"/>
+
+    </data>
+</openerp>
+

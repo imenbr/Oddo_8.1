@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bulletin_paie" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="OPENERP_RELATIONS" value="[&apos;line_ids&apos;]"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Date_debut-date_from" class="java.util.Date">
+		<fieldDescription><![CDATA[/data/record/Date_debut-date_from]]></fieldDescription>
+	</field>
+	<field name="Date_de_fin-date_to" class="java.util.Date">
+		<fieldDescription><![CDATA[/data/record/Date_de_fin-date_to]]></fieldDescription>
+	</field>
+	<field name="Reference-number" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Reference-number]]></fieldDescription>
+	</field>
+	<field name="Taux-rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_du_bulletin_de_paie-line_ids/Taux-rate]]></fieldDescription>
+	</field>
+	<field name="Total-total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_du_bulletin_de_paie-line_ids/Total-total]]></fieldDescription>
+	</field>
+	<field name="Nom-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_du_bulletin_de_paie-line_ids/Nom-name]]></fieldDescription>
+	</field>
+	<field name="Code-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_du_bulletin_de_paie-line_ids/Code-code]]></fieldDescription>
+	</field>
+	<field name="Matricule_CNSS-matricule_cnss" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Matricule_CNSS-matricule_cnss]]></fieldDescription>
+	</field>
+	<field name="Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Nom_de_bulletin_de_paie-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Nom_de_bulletin_de_paie-name]]></fieldDescription>
+	</field>
+	<field name="Ville-city" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Ville-city]]></fieldDescription>
+	</field>
+	<field name="Numero_chez_l_employeur-num_chezemployeur" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Numero_chez_l_employeur-num_chezemployeur]]></fieldDescription>
+	</field>
+	<field name="Street-street" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Street-street]]></fieldDescription>
+	</field>
+	<field name="Street2-street2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Street2-street2]]></fieldDescription>
+	</field>
+	<field name="Zip-zip" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Zip-zip]]></fieldDescription>
+	</field>
+	<field name="Nom_de_la_societe-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Societe-company_id/Nom_de_la_societe-name]]></fieldDescription>
+	</field>
+	<field name="Rue-street" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Company-company_id/Rue-street]]></fieldDescription>
+	</field>
+	<field name="Rue__suite-street2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Company-company_id/Rue__suite-street2]]></fieldDescription>
+	</field>
+	<field name="Code_Postal-zip" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Company-company_id/Code_Postal-zip]]></fieldDescription>
+	</field>
+	<field name="Ville-city2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Employe-employee_id/Company-company_id/Ville-city]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="267" y="10" width="273" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fiche de paie ]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="10" y="10" width="228" height="93"/>
+			</rectangle>
+			<textField>
+				<reportElement x="404" y="46" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MM/dd/yyyy").format($F{Date_debut-date_from})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="404" y="66" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MM/dd/yyyy").format($F{Date_de_fin-date_to})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="373" y="66" width="32" height="20"/>
+				<textElement/>
+				<text><![CDATA[AU ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="47" width="86" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERIODE DU :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="26" y="16" width="198" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nom_de_la_societe-name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="36" width="198" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Rue-street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="56" width="198" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Rue__suite-street2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="76" width="53" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Code_Postal-zip}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="76" width="145" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ville-city2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="299" y="5" width="241" height="85"/>
+			</rectangle>
+			<textField>
+				<reportElement x="333" y="10" width="174" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Name-name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Matricule_CNSS-matricule_cnss}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="30" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Matricule CNSS ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="50" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Numero_chez_l_employeur-num_chezemployeur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="50" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Matricule Salarié]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="384" y="67" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Ville-city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="31" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Street-street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="48" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Street2-street2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="67" width="49" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Zip-zip}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="26" y="41" width="64" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="41" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Montant ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="41" width="265" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="41" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Taux (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="26" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="455" y="0" width="102" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Total-total}.setScale(3, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="265" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Nom-name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="0" width="64" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Code-code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="355" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Taux-rate}.setScale(3, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="26" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

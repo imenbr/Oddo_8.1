@@ -1,0 +1,95 @@
+# -*- coding: utf-8 -*-
+##################################################################################
+#
+# Copyright (c) 2005-2006 Axelor SARL. (http://www.axelor.com)
+# and 2004-2010 Tiny SPRL (<http://tiny.be>).
+#
+# $Id: hr.py 4656 2006-11-24 09:58:42Z Cyp $
+#
+#     This program is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU Affero General Public License as
+#     published by the Free Software Foundation, either version 3 of the
+#     License, or (at your option) any later version.
+#
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU Affero General Public License for more details.
+#
+#     You should have received a copy of the GNU Affero General Public License
+#     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+import datetime
+import math
+import time
+from operator import attrgetter
+
+from openerp.exceptions import Warning
+from openerp import tools
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
+class hr_holidays(osv.osv):
+    _name = "hr.holidays"
+
+    _inherit = ['hr.holidays', 'mail.thread']
+    _columns = {
+
+
+
+
+	}
+    def add_follower(self, cr, uid, ids, employee_id, context=None):
+        employee = self.pool['hr.employee'].browse(cr, uid, employee_id, context=context)
+        #if employee.user_id:
+            #self.message_subscribe(cr, uid, ids, [employee.user_id.partner_id.id], context=context)
+
+
+
+
+    def create(self, cr, uid, values, context=None):
+	
+	
+        hr_holiday_id = super(hr_holidays, self).create(cr, uid, values, context=context)
+		##notifier resposanble
+        user_id=1
+        name = values.get('name', False)
+		
+		
+		#id = values.get('name', False)
+        #for demande in self.browse(cr, uid, [hr_holiday_id], context=context):
+		
+        if hr_holiday_id:
+		
+			mail_vals = {
+				'body':'<html>Vous avez une demande de congé </html>',
+				'record_name':name,
+				'res_id':hr_holiday_id,
+				'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+				'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+				'model':'hr.holidays',
+				'type':'comment',
+				'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+				'starred':True,
+			}
+			message = self.pool.get('mail.message').create(cr, uid, mail_vals) 
+			print "messages reeeeeeeeeeeeeeeeeeeeeee" 
+					
+			mail_notif_vals = {
+				'partner_id':self.pool.get('res.users').browse(cr, uid,user_id, context=context).partner_id.id,
+				'message_id':message,
+				'is_read':False,
+				'starred':True,
+						
+			}
+			self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+			print "notiiiiiiiiifffffff reeeeeeeeeeeeeeeeeeeeeee"
+	
+        return hr_holiday_id
+
+
+
+
+

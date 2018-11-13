@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_reg_fourns_locaux_view' model="ir.ui.view">
+            <field name="name">Reglement fournisseurs locaux</field>
+            <field name="model">wizard.reg.fourns.locaux</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Reglement fournisseurs locaux " >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <field name="date_from" />
+			 <field name="date_to" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_Reg_fournis_locaux">
+            <field name="name">Reglement fournisseurs locaux</field>
+            <field name="res_model">wizard.reg.fourns.locaux</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_reg_fourns_locaux_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Reglement fournisseurs locaux"
+		model="account.invoice"
+		auto="True"
+		name="jasper_reg_fourns_locaux_print"
+		rml="office_stat/reglement_fournisseurs_locaux/report/reg_fourns_locaux.jrxml"
+		id="Reg_fournis_locaux"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_Reg_fournis_locaux_report" name="Reglement fournisseurs locaux" action="action_wizard_Reg_fournis_locaux" parent="menu_comptabilite_report"  sequence="11"/>
+    </data>
+</openerp>
+

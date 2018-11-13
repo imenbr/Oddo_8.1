@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <menuitem id="menu_hr_root_payroll_report" parent="hr.menu_hr_root" name="Rapport" groups="base.group_hr_manager" sequence="30"/>
+<!--==================== wizard View ==================-->
+        <record id='wizard_decompte_salaire_view' model="ir.ui.view">
+            <field name="name">Decompte Salaire</field>
+            <field name="model">decompte.salaire.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Decompte Salaire" >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <field name="date_debut" />
+			<field name="date_fin" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_decompte_salaire">
+            <field name="name">Decompte Salaire</field>
+            <field name="res_model">decompte.salaire.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_decompte_salaire_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Decompte Salaire"
+		model="hr.payslip"
+		auto="True"
+		name="jasper_decompte_salaire_print"
+		rml="pay_report/Decompte_salaire/report/decompte_salaire.jrxml"
+		id="decompte_salaire"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_decompte_salaire_report" name="Decompte Salaire" action="action_wizard_decompte_salaire" parent="menu_hr_root_payroll_report"  sequence="8"/>
+    </data>
+</openerp>
+

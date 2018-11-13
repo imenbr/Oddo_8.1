@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_purchase_order_form_inherited" model="ir.ui.view">
+            <field name="name">ir.sequence.type.inherited</field>
+            <field name="model">ir.sequence.type</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.sequence_type_form_view"/>
+            <field name="arch" type="xml">
+				<xpath expr="//form[@string='Sequence Type']/field[@name='code']" position="replace">
+					<field name="code" on_change="onchange_ir_sequence(code)"  required="1"/>
+		   		</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>

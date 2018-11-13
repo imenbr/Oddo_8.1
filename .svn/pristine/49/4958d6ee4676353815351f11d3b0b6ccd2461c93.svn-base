@@ -1,0 +1,841 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+import time
+import openerp.addons.decimal_precision as dp
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp.tools import Number_To_Word
+
+class reglement_paiement(osv.osv):
+
+    def	compute_amounts(self, cr, uid, ids, context=None):  
+        	res = {}
+        	for rp in self.browse(cr, uid, ids, context):
+            		res[rp.id] = {
+                		'montant_total_paye': 0.000,
+                		'montant_total_apaye': 0.000
+            			}
+			for cheque in rp.reglement_details_piece:
+                		res[rp.id]['montant_total_paye'] += cheque.montant_piece 
+			for line in rp.reglement_detail:
+                		res[rp.id]['montant_total_apaye'] += line.montant
+			for avoir in rp.reglement_detail_avoir:
+                		res[rp.id]['montant_total_paye'] +=avoir.montant 
+			for avance in rp.reglement_detail_avance:
+                		res[rp.id]['montant_total_paye'] += avance.montant
+			for impaye in rp.reglement_detail_impaye:
+                		res[rp.id]['montant_total_apaye'] += impaye.montant	
+                	res[rp.id]['montant_total_paye'] += rp.montant_espece
+         	return res
+
+    def	_compute_all(self, cr, uid, ids, name, args, context=None):  
+        res = {}
+        res=self.compute_amounts(cr, uid, ids, context)  
+        return res
+
+    _name = "reglement.paiement"
+    #_rec_name = "designation"
+    _description = "Reglement Paiement"   	
+    _columns = {
+        'code_reglement': fields.char('Reference', size=10,readonly=True),
+        'partner_id': fields.many2one('res.partner', 'Customer', required=True),	
+        'date_reglement': fields.date('Payment Date', required=True,states={'close':[('readonly',True)]}),
+        'montant_espece': fields.float('Cash Amount', digits_compute=dp.get_precision('Account'),readonly=True,states={'draft':[('readonly',False)]}),	
+        'reglement_details_piece': fields.one2many('reglement.detail.piece', 'reglement_id', 'Reglement Piece',states={'close':[('readonly',True)]}),	
+        'reglement_detail': fields.one2many('reglement.detail', 'reglement_id', 'Reglement Detail',states={'close':[('readonly',True)]}),	
+	'reglement_detail_avoir': fields.one2many('reglement.detail.avoir', 'reglement_id', 'Reglement Detail Avoir',states={'close':[('readonly',True)]}),	
+	'reglement_detail_avance': fields.one2many('reglement.detail.avance', 'reglement_id', 'Reglement Detail Avance',states={'close':[('readonly',True)]}),
+	'reglement_detail_impaye': fields.one2many('reglement.detail.impaye', 'reglement_id', 'Reglement Detail Impaye',states={'close':[('readonly',True)]}),
+	#'retenu_id': fields.many2one('reglement.retenu', 'Retenu Reglement',states={'close':[('readonly',True)]}),
+	'state': fields.selection([('draft', 'Draft'),('close', 'Closed')],'State', readonly=True),		
+	'montant_total_paye': fields.function(_compute_all, method=True, digits_compute=dp.get_precision('Account'), string='Total Payer', multi='all'),
+	'montant_total_apaye': fields.function(_compute_all, method=True, digits_compute=dp.get_precision('Account'), string='Total A Paiement', multi='all'),
+	'type': fields.selection([('out','Customer Payment'),('in','Supplier Payment'),],'Type', readonly=True, select=True, change_default=True),
+        'type_invoice':fields.selection([('out_invoice','Customer invoices'),('in_invoice','Supplier Invoices'),],'Type Invoice', readonly=True),
+	'caisse_id': fields.many2one('account.bank.statement', 'Caisse', required=True,states={'close':[('readonly',True)]}),
+               
+	}
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
+
+    def	create(self, cr, uid, vals, context=None):
+                if context['type'] == 'out':
+                   vals['code_reglement']=self.pool.get('ir.sequence').get(cr, uid, 'reglement.client')
+                if context['type'] == 'in':
+                   vals['code_reglement']=self.pool.get('ir.sequence').get(cr, uid, 'reglement.fournisseur')
+		vals['type']=context['type']
+		res = super(reglement_paiement, self).create(cr, uid, vals, context)
+		return res
+
+    
+
+    def amounts_check(self, cr, uid, ids,context=None):
+            res = {}
+            res=self.compute_amounts(cr, uid, ids, context)  
+            return True
+
+    def reg_cancel(self, cr, uid, ids):
+            self.write(cr, uid, ids, { 'state': 'cancel' })
+            return True
+
+    def reg_draft(self, cr, uid, ids):
+            self.write(cr, uid, ids, { 'state': 'draft' })
+            return True
+
+    def reg_close(self, cr, uid, ids,context=None):
+            #we should have only one line for each invoice
+            for reglement in self.browse(cr, uid, ids, context=context):
+                for line in reglement.reglement_detail : 
+                    
+                    cr.execute('SELECT * FROM reglement_detail WHERE id != %s and reglement_id = %s and invoice_id =%s',(line.id, reglement.id,line.invoice_id.id))
+                    lines = cr.dictfetchall()
+                    if (len(lines)>0):
+                        raise osv.except_osv(_('Error !'),_('Verifier les lignes de details facture.'))
+            
+            #we should have only one line for each paiement doc
+                for line in reglement.reglement_details_piece : 
+                    
+                    cr.execute('SELECT * FROM reglement_detail_piece WHERE id != %s and reglement_id = %s and piece_id =%s',(line.id, reglement.id,line.piece_id.id))
+                    lines = cr.dictfetchall()
+                    if (len(lines)>0):
+                        raise osv.except_osv(_('Error !'),_('Verifier les lignes de pieces paiement.'))
+            #we should have only one line for each refund  
+                for line in reglement.reglement_detail_avoir:                    
+                    cr.execute('SELECT * FROM reglement_detail_avoir WHERE id != %s and reglement_id = %s and avoir_id =%s',(line.id, reglement.id,line.avoir_id.id))
+                    lines = cr.dictfetchall()
+                    if (len(lines)>0):
+                        raise osv.except_osv(_('Error !'),_('Verifier les lignes des avoirs.'))          
+            #vous devez avoir au plus une seule ligne pour chaque avance 
+                for line in reglement.reglement_detail_avance:                    
+                    cr.execute('SELECT * FROM reglement_detail_avance WHERE id != %s and reglement_id = %s and avance_id =%s',(line.id, reglement.id,line.avance_id.id))
+                    lines = cr.dictfetchall()
+                    if (len(lines)>0):
+                        raise osv.except_osv(_('Error !'),_('Verifier les lignes des avances.')) 	
+            #vous devez avoir au plus une seule ligne pour chaque impaye
+                for line in reglement.reglement_detail_impaye:                    
+                    cr.execute('SELECT * FROM reglement_detail_impaye WHERE id != %s and reglement_id = %s and piece_id =%s',(line.id, reglement.id,line.piece_id.id))
+                    lines = cr.dictfetchall()
+                    if (len(lines)>0):
+                        raise osv.except_osv(_('Error !'),_('Verifier les lignes des impayes.')) 
+            
+            #verification montant paye = montant a payer
+            self.write(cr, uid, ids, { 'state': 'close'})
+
+            reg = self.browse(cr, uid, ids)
+            # Insertion des Cheques et Traites
+            rdp_obj = self.pool.get('reglement.detail.piece')
+            rp_obj = self.pool.get('reglement.piece')
+            
+
+            # Mise a jour Factures
+            rd_obj = self.pool.get('reglement.detail')
+            ai_obj = self.pool.get('account.invoice')
+            for rd_id in rd_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):
+                rd=rd_obj.browse(cr, uid, rd_id)
+        	cr.execute("""
+SELECT 
+  reglement_detail.ttc, 
+  min (reglement_detail.montant_rest) as montant_rest, 
+  account_invoice.montant_paye, 
+  reglement_detail.montant
+FROM 
+  account_invoice, 
+  reglement_detail
+WHERE 
+  reglement_detail.invoice_id = account_invoice.id and account_invoice.id=%s and reglement_detail.id =%s
+  GROUP BY reglement_detail.ttc,account_invoice.montant_paye,  reglement_detail.montant,reglement_detail.montant_rest
+  ORDER BY montant_rest asc
+		      """,(rd.invoice_id.id,rd_id)
+			 ) 
+      		line = cr.dictfetchall()[0]
+		var=0.0
+		montant_rest=line['montant_rest']
+		montant_paye=line['montant_paye']
+		montant=line['montant']
+		ttc=line['ttc']
+		var=ttc-(montant_paye+rd.montant)
+		difference=ttc-montant_paye
+		if var<0:
+		  raise osv.except_osv(_('Les montants ont ete modifies !'),_("Veuillez verifier la facture %s" %rd.invoice_id.number,))
+                if(round(rd.montant,3)<round(difference,3)):
+                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s , reste_a_payer=reste_a_payer - %s WHERE id=%s', (rd.montant, 'ppaid',rd.montant , rd.invoice_id.id,))
+                else:
+                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, reste_a_payer= reste_a_payer - %s WHERE id=%s', (rd.montant, 'paid', rd.montant, rd.invoice_id.id,))
+            # Mise a jour  des Avoirs
+            rda_obj = self.pool.get('reglement.detail.avoir')
+            ai_obj = self.pool.get('account.invoice')
+            for rda_id in rda_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):
+                rda=rda_obj.browse(cr, uid, rda_id)
+		cr.execute("""SELECT 
+  reglement_detail_avoir.ttc, 
+  reglement_detail_avoir.montant_rest, 
+  account_invoice.montant_paye, 
+  reglement_detail_avoir.montant
+FROM 
+  account_invoice, 
+  reglement_detail_avoir
+WHERE 
+  reglement_detail_avoir.avoir_id = account_invoice.id and account_invoice.id=%s and reglement_detail_avoir.id =%s
+		      """,(rda.avoir_id.id,rda_id)
+			 ) 
+      		line = cr.dictfetchall()[0]
+		var=0.0
+		montant_rest=line['montant_rest']
+		montant_paye=line['montant_paye']
+		montant=line['montant']
+		ttc=line['ttc']
+		var=ttc-(montant_paye+rda.montant)
+		if var<0:
+		  raise osv.except_osv(_('Les montants ont ete modifies !'),_("Veuillez verifier avoir numero %s" %rda.avoir_id.number,))
+                if(rda.montant<(ttc-montant_paye)):
+                #if(rda.montant<rda.montant_rest):
+                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, reste_a_payer= reste_a_payer - %s WHERE id=%s', (rda.montant, 'ppaid',rda.montant, rda.avoir_id.id,))
+                else:
+                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, reste_a_payer= reste_a_payer - %s WHERE id=%s', (rda.montant, 'paid',rda.montant, rda.avoir_id.id,))
+
+            # Mise a jour  des Avances
+            rda_obj = self.pool.get('reglement.detail.avance')
+            ra_obj = self.pool.get('reglement.avance')
+            for rda_id in rda_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):
+                rda=rda_obj.browse(cr, uid, rda_id)
+		cr.execute("""SELECT 
+  reglement_detail_avance.montant_avance, 
+  reglement_detail_avance.montant_rest, 
+  reglement_avance.montant_paye, 
+  reglement_detail_avance.montant
+FROM 
+  reglement_avance, 
+  reglement_detail_avance
+WHERE 
+  reglement_detail_avance.avance_id = reglement_avance.id and reglement_avance.id=%s and reglement_detail_avance.id =%s
+		      """,(rda.avance_id.id,rda_id)
+			 ) 
+      		line = cr.dictfetchall()[0]
+		var=0.0
+		montant_rest=line['montant_rest']
+		montant_paye=line['montant_paye']
+		montant=line['montant']
+		montant_avance=line['montant_avance']
+		var=montant_avance-(montant_paye+rda.montant)
+		if var<0:
+		  raise osv.except_osv(_('Les montants ont ete modifies !'),_("Veuillez verifier avoir de montant %s" %rda.avance_id.montant_avance,))
+	
+                #if(rda.montant<rda.montant_rest):
+                if(rda.montant<(montant_avance-montant_paye)):
+                  cr.execute('UPDATE  reglement_avance SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rda.montant, 'ppaid', rda.avance_id.id,))
+                else:
+                  cr.execute('UPDATE  reglement_avance SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rda.montant, 'paid', rda.avance_id.id,))
+
+            # Mise a jour  des impayes
+            rdi_obj = self.pool.get('reglement.detail.impaye')
+            rp_obj = self.pool.get('reglement.piece')
+            a=rdi_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)])
+            for rdi_id in rdi_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):
+                rdi=rdi_obj.browse(cr, uid, rdi_id)
+
+		cr.execute("""SELECT 
+  reglement_detail_impaye.montant_piece, 
+  reglement_detail_impaye.montant_rest, 
+  reglement_piece.montant_paye, 
+  reglement_detail_impaye.montant
+FROM 
+  reglement_piece, 
+  reglement_detail_impaye
+WHERE 
+  reglement_detail_impaye.piece_id = reglement_piece.id and reglement_piece.id=%s and reglement_detail_impaye.id =%s
+		      """,(rdi.piece_id.id,rdi_id)
+			 ) 
+      		line = cr.dictfetchall()[0]
+		var=0.0
+		montant_rest=line['montant_rest']
+		montant_paye=line['montant_paye']
+		montant=line['montant']
+		montant_piece=line['montant_piece']
+		var=montant_piece-(montant_paye+rdi.montant)
+		if var<0:
+		  raise osv.except_osv(_('Les montants ont ete modifies !'),_("Veuillez verifier imapye numero %s" %rdi.piece_id.num_cheque_traite,))
+
+                if(rdi.montant<rdi.montant_rest):
+                  cr.execute('UPDATE  reglement_piece SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rdi.montant, 'pimpaid', rdi.piece_id.id,))
+                else:
+                  cr.execute('UPDATE  reglement_piece SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rdi.montant, 'cashed', rdi.piece_id.id,))
+
+            res = {}
+            for rp in self.browse(cr, uid, ids, context):
+            		res[rp.id] = {
+                		'credit_total': 0.000,
+                		'debit_total': 0.000
+            			}
+			for cheque in rp.reglement_details_piece:
+				#verifier l etat du cheque
+        			cr.execute("""SELECT 
+ 					 reglement_piece.state, 
+ 				 reglement_paiement.id, 
+ 				 reglement_detail_piece.id, 
+  				reglement_detail_piece.num_cheque_traite as num_cheque_traite
+				FROM 
+ 				 reglement_piece, 
+ 				 reglement_paiement, 
+				  reglement_detail_piece
+				WHERE 
+ 				 reglement_paiement.id = reglement_detail_piece.reglement_id AND reglement_detail_piece.id=%s and
+ 				 reglement_detail_piece.piece_id = reglement_piece.id;
+
+			      """,(cheque.id,)
+					 ) 
+      				line = cr.dictfetchall()[0]
+				if line['state']=='integrated':
+				  raise osv.except_osv(_('Le cheque a ete utilise dans une autre facture !'),_("Veuillez verifier la piece %s" %line['num_cheque_traite'],))
+                		res[rp.id]['debit_total'] += cheque.montant_piece 
+			for line in rp.reglement_detail:
+                		res[rp.id]['credit_total'] += line.montant
+			for avoir in rp.reglement_detail_avoir:
+                		res[rp.id]['debit_total'] +=avoir.montant 
+			for avance in rp.reglement_detail_avance:
+                		res[rp.id]['debit_total'] += avance.montant
+			for impaye in rp.reglement_detail_impaye:
+                		res[rp.id]['credit_total'] += impaye.montant	
+                	res[rp.id]['debit_total'] += rp.montant_espece
+            
+            #if res[rp.id]['debit_total'] != res[rp.id]['credit_total']:
+            #if str(res[rp.id]['debit_total']) != str(res[rp.id]['credit_total']):
+            if ((res[rp.id]['debit_total'] - res[rp.id]['credit_total']) >= 0.0009999999999999) or ((res[rp.id]['debit_total'] - res[rp.id]['credit_total']) <= -0.0009999999999999): 
+               
+               deb = res[rp.id]['debit_total']
+               cred = res[rp.id]['credit_total']
+               
+               raise osv.except_osv(_('Les montants de debit et de credit sont differents !'),_("Veuillez verifier toutes les pieces de paiement !!") )
+	    for rdp_id in rdp_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):
+                rdp=rdp_obj.browse(cr, uid, rdp_id)
+                rp_obj.write(cr, uid, rdp.piece_id.id, { 'state': 'integrated' })
+            return True
+
+    def button_add_bank_statement_client(self, cr, uid, ids, context=None):    
+	
+	obj_bank_stat_line = self.pool.get('account.bank.statement.line')
+	reglement=self.browse(cr, uid, ids)
+	val = {
+		'name':"Reglement Client",
+		'date':reglement.date_reglement,
+		'ref':reglement.code_reglement,
+		'partner_id':reglement.partner_id.id,
+		'amount':reglement.montant_total_paye,
+		'statement_id':reglement.caisse_id.id,
+			
+		}
+	
+	inv_id=obj_bank_stat_line.create(cr,uid,val)
+
+	obj_bank_stat_line.write(cr, uid,[inv_id],val)
+        return True
+
+
+    def button_add_bank_statement_fournisseur(self, cr, uid, ids, context=None):    
+	
+	obj_bank_stat_line = self.pool.get('account.bank.statement.line')
+	reglement=self.browse(cr, uid, ids)
+	val = {
+		'name':"Reglement Fournisseur",
+		'date':reglement.date_reglement,
+		'ref':reglement.code_reglement,
+		'partner_id':reglement.partner_id.id,
+		'amount':-reglement.montant_total_paye,
+		'statement_id':reglement.caisse_id.id,
+			
+		}
+	
+	inv_id=obj_bank_stat_line.create(cr,uid,val)
+	obj_bank_stat_line.write(cr, uid,[inv_id],val)
+        return True
+
+    def button_dummy(self, cr, uid, ids, context=None):
+          return True
+
+reglement_paiement()
+
+class reglement_detail_piece(osv.osv):
+    _name = "reglement.detail.piece"
+    _description = "Payment Document"
+    _rec_name = "num_cheque_traite"
+    _columns = {
+        'piece_id': fields.many2one('reglement.piece', 'Numero Piece', size=64),
+	'reglement_id': fields.many2one('reglement.paiement', 'Numero Payment', ondelete='set null'),
+        'num_cheque_traite': fields.char('Number', size=254, required=True),
+        'titulaire': fields.char('Holder', size=254, required=True),
+	'date_echance': fields.date('Maturity Date', required=True),
+	'montant_piece': fields.float('Amount', digits_compute=dp.get_precision('Account')),
+    }
+
+    def	piece_id_change(self, cr, uid, ids, piece_id,partner_id, context=None):
+        res_final = {}
+	result = {}
+        if piece_id:
+	    piece_obj = self.pool.get('reglement.piece').browse(cr, uid, piece_id, context=context)
+	    result['num_cheque_traite'] = piece_obj.num_cheque_traite
+	    result['titulaire'] = piece_obj.titulaire
+	    result['montant_piece'] = piece_obj.montant_piece
+	    result['date_echance'] = piece_obj.date_echance
+	    res_final = {'value':result}
+        return res_final
+
+    def create(self, cr, uid, vals, context=None):
+       	result = {}
+    	if vals['piece_id']:
+    	    piece_obj = self.pool.get('reglement.piece').browse(cr, uid, vals['piece_id'], context=context)
+    	    vals['num_cheque_traite'] = piece_obj.num_cheque_traite
+    	    vals['titulaire'] = piece_obj.titulaire
+   	    vals['montant_piece'] = piece_obj.montant_piece
+   	    vals['date_echance'] = piece_obj.date_echance
+  	res = super(reglement_detail_piece, self).create(cr, uid, vals, context)
+   	return res
+
+reglement_detail_piece()
+
+class reglement_detail_impaye(osv.osv):
+    
+    _name = "reglement.detail.impaye"
+    _description = "Payment Document"
+    _columns = {
+	'piece_id': fields.many2one('reglement.piece', 'Piece ID', size=64),
+	'reglement_id': fields.many2one('reglement.paiement', 'Payment ID', ondelete='set null'),
+        'titulaire': fields.char('Holder', size=254, required=True),
+	'date_echance': fields.date('Maturity Date', required=True),
+	'montant_piece': fields.float('Amount', digits_compute=dp.get_precision('Account')),
+	'montant': fields.float('Montant', digits_compute=dp.get_precision('Account')),
+	'montant_rest': fields.float('Montant Restant', digits_compute=dp.get_precision('Account')),
+    }
+
+    def create(self, cr, uid, vals, context=None):
+	result = {}
+    	if vals['piece_id']:
+    	    piece_obj = self.pool.get('reglement.piece').browse(cr, uid, vals['piece_id'], context=context)
+    	    vals['num_cheque_traite'] = piece_obj.num_cheque_traite
+    	    vals['titulaire'] = piece_obj.titulaire
+   	    vals['montant_piece'] = piece_obj.montant_piece
+	    vals['montant_rest'] = piece_obj.montant_piece - piece_obj.montant_paye
+   	    vals['date_echance'] = piece_obj.date_echance
+  	res = super(reglement_detail_impaye, self).create(cr, uid, vals, context)
+   	return res
+
+    def	piece_id_change(self, cr, uid, ids, piece_id, context=None):
+	res_final = {}
+	result = {}
+	if piece_id:
+	    piece_obj = self.pool.get('reglement.piece').browse(cr, uid, piece_id, context=context)
+	    result['num_cheque_traite'] = piece_obj.num_cheque_traite
+	    result['titulaire'] = piece_obj.titulaire
+	    result['montant_piece'] = piece_obj.montant_piece
+	    result['montant_rest'] = piece_obj.montant_piece - piece_obj.montant_paye
+	    result['date_echance'] = piece_obj.date_echance
+	    res_final = {'value':result}
+        return res_final
+
+    def	montant_change(self, cr, uid, ids,montant, montant_rest, context=None):
+        res_final = {}
+	if round(montant-montant_rest,3) > 0:
+            raise osv.except_osv(_('Le Montant que vous allez payer est superieur au montant restant !'),_("Veuillez modifier ce montant  !") )
+        return res_final
+
+reglement_detail_impaye()
+
+class reglement_detail(osv.osv):
+    
+    _name = "reglement.detail"
+    _description = "Reglement Detail"
+    _columns = {
+       	'invoice_id': fields.many2one('account.invoice', 'Invoice Ref', size=64),
+	'reglement_id': fields.many2one('reglement.paiement', 'Reglement', ondelete='set null'),
+	'ttc': fields.float('Total Amount', digits_compute=dp.get_precision('Account')),
+	'montant': fields.float('Amount', digits_compute=dp.get_precision('Account')),
+	'montant_rest': fields.float('Reste à payer', digits_compute=dp.get_precision('Account')),
+      	'montant_paye': fields.float('Paid Amount', digits_compute=dp.get_precision('Account')),
+	'date_invoice': fields.date('Date'),
+    }
+
+    def create(self, cr, uid, vals, context=None):
+	result = {}
+    	if vals['invoice_id']:
+    	    invoice_obj = self.pool.get('account.invoice').browse(cr, uid, vals['invoice_id'], context=context)
+            cr.execute("SELECT amount_total FROM account_invoice WHERE id =%s ",(vals['invoice_id'],))
+            vals['ttc'] = cr.dictfetchone()['amount_total']
+            
+    	    #vals['ttc'] = invoice_obj.amount_total
+    	    #vals['montant_rest'] = invoice_obj.amount_total - invoice_obj.montant_paye
+            vals['montant_rest'] = vals['ttc'] - invoice_obj.montant_paye
+   	    vals['date_invoice'] = invoice_obj.date_invoice
+   	    vals['num_facture'] = invoice_obj.internal_number
+  	res = super(reglement_detail, self).create(cr, uid, vals, context)
+   	return res
+
+    def	invoice_id_change(self, cr, uid, ids, invoice_id, partner_id,context=None):
+	if not partner_id:
+            raise osv.except_osv(_('Pas de partenaire choisi !'),_("Veuillez selectionner un partenaire  !") )
+	res_final = {}
+	result = {}
+	if invoice_id:
+	    invoice_obj = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context=context)
+                        
+            cr.execute("SELECT amount_total FROM account_invoice WHERE id =%s ",(invoice_id,))
+            result['ttc'] = cr.dictfetchone()['amount_total']
+	    #result['ttc'] = invoice_obj.amount_total
+	    result['montant_rest'] = result['ttc'] - invoice_obj.montant_paye
+	    result['date_invoice'] = invoice_obj.date_invoice
+	    result['num_facture'] = invoice_obj.internal_number
+	    result['montant_paye'] = invoice_obj.montant_paye
+            res_final = {'value':result}
+        return res_final
+
+    def	montant_change(self, cr, uid, ids,montant, montant_rest, invoice_id, partner_id, context=None):
+	res_final = {}
+	if montant > montant_rest :
+            raise osv.except_osv(_('Le Montant que vous allez payer est superieur au montant restant !'),_("Veuillez modifier ce montant  !") )
+        return res_final
+	
+reglement_detail()
+
+class reglement_detail_avoir(osv.osv):
+    
+    _name = "reglement.detail.avoir"	
+    _rec_name = "avoir_id"
+    _description = "Reglement Detail Avoir"
+    _columns = {
+	'avoir_id': fields.many2one('account.invoice', 'Refund Ref', size=64),
+	'reglement_id': fields.many2one('reglement.paiement', 'Reglement', ondelete='set null'),
+	'montant_reglement': fields.float('Montant Reglement', digits_compute=dp.get_precision('Account')),
+	'ttc': fields.float('TTC', digits_compute=dp.get_precision('Account')),
+	'montant': fields.float('Montant', digits_compute=dp.get_precision('Account')),
+	'montant_rest': fields.float('Montant Restant', digits_compute=dp.get_precision('Account')),
+	'date_invoice': fields.date('Date'),
+        'num_facture': fields.char('N Avoir', size=10),		
+    }
+    def create(self, cr, uid, vals, context=None):
+	result = {}
+    	if vals['avoir_id']:
+    	    invoice_obj = self.pool.get('account.invoice').browse(cr, uid, vals['avoir_id'], context=context)
+            cr.execute("SELECT amount_total FROM account_invoice WHERE id =%s ",(vals['avoir_id'],))
+            vals['ttc'] = cr.dictfetchone()['amount_total']
+    	    #vals['ttc'] = invoice_obj.amount_total
+    	    #vals['montant_rest'] = invoice_obj.amount_total - invoice_obj.montant_paye
+            vals['montant_rest'] = vals['ttc'] - invoice_obj.montant_paye
+   	    vals['date_invoice'] = invoice_obj.date_invoice
+   	    vals['num_facture'] = invoice_obj.internal_number
+  	res = super(reglement_detail_avoir, self).create(cr, uid, vals, context)
+   	return res
+
+    def	avoir_id_change(self, cr, uid, ids,avoir_id, partner_id, context=None):
+	res_final = {}
+	result = {}
+	if avoir_id:
+	    invoice_obj = self.pool.get('account.invoice').browse(cr, uid, avoir_id, context=context)
+            cr.execute("SELECT amount_total FROM account_invoice WHERE id =%s ",(avoir_id,))
+            result['ttc'] = cr.dictfetchone()['amount_total']
+	    #result['ttc'] = invoice_obj.amount_total
+	    #result['montant_rest'] = invoice_obj.amount_total - invoice_obj.montant_paye
+            result['montant_rest'] = result['ttc'] - invoice_obj.montant_paye
+	    result['date_invoice'] = invoice_obj.date_invoice
+	    result['num_facture'] = invoice_obj.internal_number
+            res_final = {'value':result}
+        return res_final
+
+    def	montant_change(self, cr, uid, ids,montant, montant_rest, context=None):
+	res_final = {}
+	if montant > montant_rest:
+            raise osv.except_osv(_('Le Montant que vous allez payer est superieur au montant restant !'),_("Veuillez modifier ce montant  !") )
+        return res_final
+
+reglement_detail_avoir()
+
+class reglement_detail_avance(osv.osv):
+    
+    _name = "reglement.detail.avance"
+    _description = "Reglement Detail Avance"	
+    _rec_name = "avance_id"
+    _columns = {
+	'avance_id': fields.many2one('reglement.avance', 'Payment on account Ref', size=64),
+	'reglement_id': fields.many2one('reglement.paiement', 'Reglement', ondelete='set null'),
+	'date_avance': fields.date('Date'),
+	'montant': fields.float('Montant', digits_compute=dp.get_precision('Account')),
+	'montant_avance': fields.float('Montant Avance', digits_compute=dp.get_precision('Account')),		
+	'montant_rest': fields.float('Montant Restant', digits_compute=dp.get_precision('Account')),		
+    }
+
+    def create(self, cr, uid, vals, context=None):
+	result = {}
+    	if vals['avance_id']:
+    	    invoice_obj = self.pool.get('reglement.avance').browse(cr, uid, vals['avance_id'], context=context)
+	    vals['montant_avance'] = invoice_obj.montant_avance
+	    vals['montant_rest'] = invoice_obj.montant_avance
+   	    vals['date_invoice'] = invoice_obj.date_avance
+
+  	res = super(reglement_detail_avance, self).create(cr, uid, vals, context)
+   	return res
+
+    def	avance_id_change(self, cr, uid, ids,avance_id, partner_id, context=None):
+	if not partner_id:
+            		raise osv.except_osv(_('Pas de partenaire choisi !'),_("Veuillez selectionner un partenaire  !") )
+	res_final = {}
+	result = {}
+	if avance_id:
+	    invoice_obj = self.pool.get('reglement.avance').browse(cr, uid, avance_id, context=context)
+	    result['montant_avance'] = invoice_obj.montant_avance
+	    result['montant_rest'] = invoice_obj.montant_avance - invoice_obj.montant_paye
+	    result['date_avance'] = invoice_obj.date_avance
+            res_final = {'value':result}
+        return res_final
+
+    def	montant_change(self, cr, uid, ids,montant, montant_rest, context=None):
+	res_final = {}
+	if montant > montant_rest:
+            raise osv.except_osv(_('Le Montant que vous allez payer est superieur au montant restant !'),_("Veuillez modifier ce montant  !") )
+        return res_final
+reglement_detail_avance()
+
+class reglement_retenu_source(osv.osv):
+
+    def create(self, cr, uid, vals, context=None):
+        if context['type_in_out'] == 'out':
+            vals['name']=self.pool.get('ir.sequence').get(cr, uid, 'reglement.retenu.client')
+        if context['type_in_out'] == 'in':
+            vals['name']=self.pool.get('ir.sequence').get(cr, uid, 'reglement.retenu.fournisseur')
+        vals['type_in_out']=context['type_in_out']
+        new_id = super(reglement_retenu_source,self).create(cr, uid, vals, context=context) 
+        return new_id
+
+    def _calcule_Total_Retenue(self, cr, uid, ids, field_name, arg, context=None):
+         res={}
+         for i in ids:
+             sql_req = """SELECT sum(rl.montant_retenu) as sum_rt
+  FROM reglement_retenu_source r
+LEFT JOIN retenue_src_line rl ON (r.id = rl.retenu_src_id)
+where ( r.id = %d )
+        """ % (i,)
+             cr.execute(sql_req)
+             sql_res = cr.dictfetchone()
+             if sql_res: 
+                 res[i] = sql_res['sum_rt']
+             else:
+                 res[i] = False
+         return res
+
+    def _calcule_Total_TTC(self, cr, uid, ids, field_name1, arg, context=None):
+         res={}
+         for i in ids:
+             sql_req = """SELECT sum(rl.ttc) as sum_ttc
+  FROM reglement_retenu_source r
+LEFT JOIN retenue_src_line rl ON (r.id = rl.retenu_src_id)
+where ( r.id = %d )
+        """ % (i,)
+             cr.execute(sql_req)
+             sql_res = cr.dictfetchone()
+             if sql_res: 
+                 res[i] = sql_res['sum_ttc']
+             else:
+                 res[i] = False
+         return res 
+
+    def _calcule_Total_Reste(self, cr, uid, ids, field_name2, arg, context=None):
+         res={}
+         for i in ids:
+             sql_req = """SELECT sum(rl.montant_rest) as sum_rest
+  FROM reglement_retenu_source r
+LEFT JOIN retenue_src_line rl ON (r.id = rl.retenu_src_id)
+where ( r.id = %d )
+        """ % (i,)
+             cr.execute(sql_req)
+             sql_res = cr.dictfetchone()
+             if sql_res: #The employee has one associated contract
+                 res[i] = sql_res['sum_rest']
+             else:
+                 res[i] = False
+         return res
+       
+    def retenu_change(self, cr, uid, ids, retenu,context=None):
+	res_final = {}
+	result = {}
+	if retenu:
+	    retenu_obj = self.pool.get('reglement.retenu').browse(cr, uid, retenu, context=context)
+	    result['designation'] = retenu_obj.designation
+            result['type'] = retenu_obj.type
+            res_final = {'value':result}
+        return res_final
+
+    def calculer_retenu(self, cr, uid, ids, retenu,context=None):
+        return 'TRUE'
+ 
+    def validation_retenu(self, cr, uid, ids, context=None):
+            totale_ttc = 0.000
+            montant_retenu = 0
+            var='Montant Min pour retenue'
+            cr.execute('SELECT valeur FROM account_parametre WHERE designation=%s', (var,))
+            record = cr.dictfetchone()
+            if record != None :
+                montant_retenu = record['valeur']
+            else:
+                raise osv.except_osv(('Erreur'), ('Vérifier le paramètre montant min pour retenue' ) ) 
+            for retenue_src in self.browse(cr, uid, ids, context=context):  
+                retenue_lines = retenue_src.retenue_src_lines
+                if len(retenue_lines) == 0:
+                    raise osv.except_osv(_('Attention !'),_("Vous devez saisir au moin une facture")) 
+               
+                for ligne in retenue_lines:
+                    
+                    totale_ttc = totale_ttc + ligne.ttc
+               
+                if totale_ttc < montant_retenu:
+                   raise osv.except_osv(_('Verifier Factures !'),_("Montant Total des factures est inferieur à '%s' DT") %(montant_retenu,))
+                invoice_obj = self.pool.get('account.invoice')
+                type_retenu = self.browse(cr, uid, ids[0], context=context).type
+                designation = self.browse(cr, uid, ids[0], context=context).retenu_id.designation
+                for retenue_line in retenue_lines:
+                    invoice_id = retenue_line.invoice_id.id
+                    
+                    cr.execute("SELECT * FROM reglement_retenu_source,retenue_src_line WHERE retenue_src_line.retenu_src_id = reglement_retenu_source.id AND reglement_retenu_source.state='close' AND retenue_src_line.invoice_id = %s",(invoice_id,))
+                    retenu_src_ids = cr.dictfetchall()
+                    if len(retenu_src_ids) >= 2:
+                        raise osv.except_osv(_('Impossible de faire une retenue a la source !'),_("Verifier les factures"))
+                    if len(retenu_src_ids) == 1: 
+                        for retenu_src_id in retenu_src_ids:
+                            retenu_id_appl = retenu_src_id['retenu_id']
+                            retenu_obj = self.pool.get('reglement.retenu').browse(cr, uid, retenu_id_appl, context=None)   
+                            if(retenu_obj.type == type_retenu):
+                                raise osv.except_osv(_('Impossible de faire une retenue a la source !'),_("Verifier Type de la taxe"))  
+                            else:
+                                invoice_obj.write(cr, uid, invoice_id, { 'statu_retenu': 'True',}) 
+                    #taux = designation * 0.01
+		    taux = designation    
+                    ttc = 0
+                    invoice = invoice_obj.browse(cr, uid, invoice_id, context=None)
+                    cr.execute("SELECT amount_total FROM account_invoice WHERE id =%s ",(invoice_id,))
+                    ttc = cr.dictfetchone()['amount_total']
+                    old_montant_paye = invoice['montant_paye']
+                    
+                    old_montant_retenue = invoice['montant_retenue'] or 0.0
+                    montant_retenue = 0
+                    old_residual = invoice['reste_a_payer'] 
+	            if ( type_retenu == 'TTC'):
+                        amount_total = ttc
+                        mt_paye = taux * amount_total
+                         
+                        montant_retenue = taux * amount_total
+                        residual = old_residual - mt_paye
+                    else:  
+                        amount_tax = invoice['amount_tax']
+                        mt_paye = taux * amount_tax
+                        montant_retenue = taux * amount_tax
+                        residual = old_residual - mt_paye     
+                    cr.execute('UPDATE  account_invoice SET  montant_paye=%s, reste_a_payer=%s, montant_retenue=%s WHERE id=%s', (old_montant_paye + mt_paye, residual, montant_retenue, invoice_id,))
+            self.write(cr, uid, ids, {'state':'close'}, context=context)
+            return True
+
+    def _get_type(self, cr, uid, context=None):
+        if context is None:
+            context = {}
+            return context.get('type_in_out', 'out')
+  
+    _name = "reglement.retenu.source"
+    _rec_name = "retenu_id"	
+    _columns = {
+        'name' : fields.char('Référence', size=64, readonly=True),
+	'retenu_id': fields.many2one('reglement.retenu', 'Ref Retenu'),
+        'retenue_src_lines':fields.one2many('retenue.src.line', 'retenu_src_id','Invoice Ref'),               	
+	'date_retenu': fields.date('Date',readonly=True),
+	'partner_id': fields.many2one('res.partner', 'Customer', required=True),	
+	'designation': fields.float('Taux',digits_compute=dp.get_precision('Account')),
+       	'state': fields.selection([
+            ('draft','Draft'),
+            ('close','Close')
+            ],'State', select=True, readonly=True,),      
+         'type':fields.char('Type', size=10),      
+         'total_retenu': fields.function(_calcule_Total_Retenue,  digits_compute= dp.get_precision('Account'),type="float", string='Total Retenu',store=True, method=True,), 
+         'total_ttc': fields.function(_calcule_Total_TTC,  digits_compute= dp.get_precision('Account'),type="float", string='Total TTC',store=True, method=True,),
+         'total_reste_a_payer': fields.function(_calcule_Total_Reste,  digits_compute= dp.get_precision('Account'),type="float", string='Total Retse ',store=True, method=True,),
+        'type_in_out': fields.selection([('out','Customer'),('in','Supplier')],'Type (IN / OUT)', select=True, change_default=True),
+    }
+    _defaults = {
+        'state': 'draft',
+        'type_in_out': _get_type,
+        'date_retenu': time.strftime('%Y-%m-%d')
+    }
+	
+reglement_retenu_source()
+
+class retenue_src_line(osv.osv):
+
+    _name = "retenue.src.line"
+
+    def invoice_id_change(self, cr, uid, ids, invoice_id, taux,retenu_id,context=None):
+        res_final = {}
+        result = {}
+	if retenu_id:
+	    retenu_obj = self.pool.get('reglement.retenu').browse(cr, uid, retenu_id, context=context)
+	    retenu = retenu_obj.code
+	    retenu_type=retenu_obj.type
+	if invoice_id:
+	    print "retenu_id ===",retenu
+	    
+	    invoice_obj = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context=context)
+            cr.execute("SELECT amount_total FROM account_invoice WHERE id =%s ",(invoice_id,))
+            result['ttc'] = cr.dictfetchone()['amount_total']
+	    cr.execute("SELECT amount_tax FROM account_invoice WHERE id =%s ",(invoice_id,))
+            result['tva'] = cr.dictfetchone()['amount_tax']
+	    #result['ttc'] = invoice_obj.amount_total
+	    #result['montant_rest'] = invoice_obj.amount_total - invoice_obj.montant_paye
+	    if retenu_type == 'TTC':
+		result['montant_retenu']= round( (result['ttc'] * taux),3)
+		result['montant_rest']= round( (result['ttc'] - result['montant_retenu']),3)
+
+
+		    #if retenu =="1,5% sur TTC" :
+			#if result['ttc']>1000 :
+		    	#	result['montant_retenu']= round( (result['ttc'] * taux),3)
+		    	#	result['montant_rest']= round( (result['ttc'] - result['montant_retenu']),3)
+			#else :
+			#	result['montant_retenu']= 0.000
+		    	#	result['montant_rest']= round( (result['ttc'] - result['montant_retenu']),3)
+	            #if retenu =="5% sur TTC" :
+			#result['montant_retenu']= round( (result['ttc'] * taux),3)
+		    	#result['montant_rest']= round( (result['ttc'] - result['montant_retenu']),3)
+		   
+			
+	    else :
+		result['montant_retenu']= round( (result['tva'] * taux),3)
+		result['montant_rest']= round( (result['ttc'] - result['montant_retenu']),3)
+
+		    
+	    
+            result['date_invoice'] = invoice_obj.date_invoice
+            res_final = {'value':result}
+        return res_final
+
+    _columns = {
+        'retenu_src_id':fields.many2one('reglement.retenu.source', 'Retenue source Ref'),
+        'invoice_id': fields.many2one('account.invoice', 'Ref Facture', ), 
+        'ttc': fields.float('Montant Total TTC', digits_compute=dp.get_precision('Account')),
+        'montant_retenu': fields.float('Montant Retenu', digits_compute=dp.get_precision('Account')),
+        'montant_rest': fields.float('Reste a payer', digits_compute=dp.get_precision('Account')),
+        'date_invoice': fields.date('Date Facture'),  
+	'tva': fields.float('Taxes Total ', digits_compute=dp.get_precision('Account')),
+       
+    }
+retenue_src_line()
+

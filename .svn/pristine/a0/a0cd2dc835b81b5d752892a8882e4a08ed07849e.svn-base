@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='releve_client_wizard_view' model="ir.ui.view">
+            <field name="name">Relevé client</field>
+            <field name="model">releve.client.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Relevé client" >
+                    <group col="2" >
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <field name="fournisseur_id" domain="[('customer','=',True)]"/>
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                        
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_releve_client_wizard">
+            <field name="name">Relevé client</field>
+            <field name="res_model">releve.client.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="releve_client_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <!--==================== report spec ========================-->
+        <report string="Relevé client"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_rapport_releve_client_print"
+		rml="office_stat/releve_client/releve_client.jrxml"
+		id="etat_releve_client"
+		menu="False"
+		/>
+        <!--menuitem id="menu_rapprots_sttc" name="Rapports STTC" parent="sotebat_reglement.menu_reglement" /-->
+        <!--menuitem action="action_releve_client_wizard" id="menu_releve_client"  parent="menu_rapprots_sttc" /-->
+        <menuitem action="action_releve_client_wizard" id="submenu_releve_client" name="releve client"  parent="menu_rapport_reglement"  sequence="6"/>
+        
+    </data>
+</openerp>
+
+

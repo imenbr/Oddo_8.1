@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Frais Types -->
+        <record id="frais_type_001" model="frais.var.produit">
+            <field name="name">001</field>
+        </record>
+        
+        
+         <record id="frais_type_093" model="frais.var.produit">
+            <field name="name">093</field>
+        </record>
+        
+        
+        <record id="frais_type_473" model="frais.var.produit">
+            <field name="name">473</field>
+        </record>
+
+        <record id="frais_type_105" model="frais.var.produit">
+            <field name="name">105</field>
+        </record>	
+        
+        
+        <record id="frais_type_AIR" model="frais.var.produit">
+            <field name="name">AIR</field>
+        </record>	
+    </data>
+</openerp>

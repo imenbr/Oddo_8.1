@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sotebat_price_compare" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.7697371773460598"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="LOGO_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/home/odoo/odoo-8/openerp/addons/office_stat/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="somme_ttc" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/somme_ttc]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/user]]></fieldDescription>
+	</field>
+	<field name="somme_montant_ht" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/somme_montant_ht]]></fieldDescription>
+	</field>
+	<field name="somme_timbre" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/somme_timbre]]></fieldDescription>
+	</field>
+	<field name="somme_amount_tax" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/somme_amount_tax]]></fieldDescription>
+	</field>
+	<field name="from" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/from]]></fieldDescription>
+	</field>
+	<field name="to" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/to]]></fieldDescription>
+	</field>
+	<field name="month" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/month]]></fieldDescription>
+	</field>
+	<field name="year" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/year]]></fieldDescription>
+	</field>
+	<field name="sub_ht" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/sub_ht]]></fieldDescription>
+	</field>
+	<field name="somme_avoir" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/somme_avoir]]></fieldDescription>
+	</field>
+	<field name="somme_exonere" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/somme_exonere]]></fieldDescription>
+	</field>
+	<field name="total_general" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/total_general]]></fieldDescription>
+	</field>
+	<field name="stat_path" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/stat_path]]></fieldDescription>
+	</field>
+	<variable name="somme_ht" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_montant_ht}]]></variableExpression>
+	</variable>
+	<variable name="somme_ttc" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_ttc}]]></variableExpression>
+	</variable>
+	<variable name="somme_tva" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_amount_tax}]]></variableExpression>
+	</variable>
+	<variable name="somme_timbre" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_timbre}]]></variableExpression>
+	</variable>
+	<variable name="count" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{REPORT_COUNT}-1]]></variableExpression>
+	</variable>
+	<variable name="somme_exoner" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_exonere}]]></variableExpression>
+	</variable>
+	<variable name="total_avoir" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_avoir}]]></variableExpression>
+	</variable>
+	<variable name="V_ht" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_montant_ht}]]></variableExpression>
+	</variable>
+	<variable name="v_tva" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_amount_tax}]]></variableExpression>
+	</variable>
+	<variable name="v_timbre" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_timbre}]]></variableExpression>
+	</variable>
+	<variable name="v_ttc" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_ttc}]]></variableExpression>
+	</variable>
+	<variable name="v_exoner" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_exonere}]]></variableExpression>
+	</variable>
+	<variable name="v_avoir" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_avoir}]]></variableExpression>
+	</variable>
+	<variable name="sub_exoner" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_exonere}]]></variableExpression>
+	</variable>
+	<variable name="sub_avoir" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{somme_avoir}]]></variableExpression>
+	</variable>
+	<variable name="v_total_general" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_general}]]></variableExpression>
+	</variable>
+	<variable name="v_recap_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_general}]]></variableExpression>
+	</variable>
+	<group name="nom_emp">
+		<groupExpression><![CDATA[new Integer(  (int) ( $V{count}.intValue() / 12 ) )]]></groupExpression>
+		<groupHeader>
+			<band height="68">
+				<staticText>
+					<reportElement x="0" y="44" width="42" height="24"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Mois]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="367" y="44" width="108" height="24"/>
+					<box leftPadding="3" rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Montant Total (TTC)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="42" y="44" width="113" height="24"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Montant HT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="155" y="44" width="112" height="24"/>
+					<box leftPadding="3" rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total TVA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="267" y="44" width="100" height="24"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total Timbre]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="42" y="10" width="100" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="475" y="44" width="113" height="24"/>
+					<box leftPadding="3" rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total Exoneré]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="588" y="44" width="100" height="24"/>
+					<box leftPadding="3" rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total Avoir]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="10" width="42" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Année :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="688" y="44" width="114" height="24"/>
+					<box leftPadding="3" rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total Général]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="42" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total  :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="42" y="0" width="113" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{somme_ht}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="367" y="0" width="108" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{somme_ttc}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="155" y="0" width="112" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{somme_tva}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="267" y="0" width="100" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{somme_timbre}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="475" y="0" width="113" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{sub_exoner}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="588" y="0" width="100" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{sub_avoir}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="688" y="0" width="114" height="20"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{v_total_general}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="4"/>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="200" height="44"/>
+				<imageExpression><![CDATA[$F{stat_path} + "logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="802" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECAP MOUVEMENTS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="367" y="0" width="108" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{somme_ttc}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="0" width="113" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{somme_montant_ht}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="155" y="0" width="112" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{somme_amount_tax}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="267" y="0" width="100" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{somme_timbre}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="42" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{month}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="588" y="0" width="100" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{somme_avoir}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="475" y="0" width="113" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{somme_exonere}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="688" y="0" width="114" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total_general}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="91"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="204">
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="110" width="114" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{V_ht}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="110" width="42" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Tot:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECAP MOUVEMENTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="598" y="86" width="98" height="24"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total Avoir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="86" width="161" height="24"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Montant Total (TTC)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="488" y="86" width="110" height="24"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total Exoneré]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="86" width="55" height="24"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total Timbre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="86" width="114" height="24"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Montant HT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="86" width="116" height="24"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total TVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="66" width="211" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Les Montants totaux à partir de l'année : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="271" y="66" width="45" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{from}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="406" y="66" width="41" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="316" y="66" width="90" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jusqu'à l'année:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="156" y="110" width="116" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_tva}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="272" y="110" width="55" height="20"/>
+				<box bottomPadding="0" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_timbre}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="327" y="110" width="161" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_ttc}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="488" y="110" width="110" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_exoner}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="354" y="152" width="64" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Elaboré le :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="418" y="152" width="143" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="598" y="110" width="98" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_avoir}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="696" y="86" width="106" height="24"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total Général]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="696" y="110" width="106" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_recap_total}.setScale(3)]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

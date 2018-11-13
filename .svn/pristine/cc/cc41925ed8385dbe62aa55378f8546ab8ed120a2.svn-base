@@ -1,0 +1,80 @@
+﻿from openerp.osv import fields, osv
+import openerp.addons.decimal_precision as dp
+
+class hr_avance(osv.osv):
+    _name = 'hr.avance'
+
+    _columns = {
+        'employee_id': fields.many2one('hr.employee', 'Employee', required=True, readonly=True, states={'draft': [('readonly', False)]}),
+	'date':fields.date('Date',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+        'state': fields.selection([
+            ('draft', 'Brouillon'),
+            ('sent', 'Envoyée'),
+            ('done', 'Acceptée'),
+            ('cancel', 'Refusée'),
+        ]),
+		'montant':fields.float('Montant demandé',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+    }
+    _defaults = {
+	
+		'state':'draft'
+    }
+
+		
+		
+		
+    def create(self,cr, uid, values, context=None):
+	res=0
+	employee_id = values.get('employee_id', False)
+        #demande_avance=self.browse(cr, uid, ids)
+	montant = values.get('montant', False)
+		
+        contract_ids=self.pool.get('hr.contract').search(cr, uid, [('employee_id', '=',employee_id)])
+		
+        contract = self.pool.get('hr.contract').browse(cr, uid,contract_ids)
+
+
+    	if montant > contract.wage:
+
+			#raise osv.except_osv(_('Montant erroné'), _('Montant demandé supperieur à votre salaire '))
+			raise osv.except_osv(('Montant erroné'), ('Montant demandé supperieur à votre salaire '))
+        else :
+		res=super(hr_avance, self).create(cr, uid, values, context)
+        return res
+## il faut redefenir le write aussi !! 
+
+    def envoyer(self, cr, uid, ids, context):
+        '''
+           Methode du workflow: changer l'état du demande à l'état envoyé
+        ''' 
+        demande_avance=self.browse(cr, uid, ids)
+		
+        contract_ids=self.pool.get('hr.contract').search(cr, uid, [('employee_id', '=', demande_avance.employee_id.id)])
+		
+        contract = self.pool.get('hr.contract').browse(cr, uid,contract_ids)
+
+
+    	if demande_avance.montant > contract.wage:
+
+			#raise osv.except_osv(_('Montant erroné'), _('Montant demandé supperieur à votre salaire '))
+			raise osv.except_osv(('Montant erroné'), ('Montant demandé supperieur à votre salaire '))
+
+        self.write(cr, uid, ids, {'state': 'sent'})
+        return True
+
+    def confirmer(self, cr, uid, ids, context):
+        '''
+           Methode du workflow: changer l'état du demande à l'état accepté
+        ''' 
+
+        self.write(cr, uid, ids, {'state': 'done'})
+        return True
+
+    def refuser(self, cr, uid, ids, context):
+        '''
+           Methode du workflow: changer l'état du demande à l'état refusé
+        ''' 
+
+        self.write(cr, uid, ids, {'state': 'cancel'})
+        return True
+hr_avance()

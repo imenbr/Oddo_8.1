@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="picking_inventory_location_change_form" model="ir.ui.view">
+            <field name="name">picking.inventory.location.change</field>
+            <field name="model">stock.inventory</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Inventory Details']/field[@name='line_ids']/tree/field[@name='product_qty']" position="after">
+                    <field name='quantity_difference' string="Écart" />  
+                </xpath>
+                <xpath expr="//page[@string='Inventory Details']/field[@name='line_ids']/tree/field[@name='package_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+	    </field>
+	</record>
+
+
+    </data>
+</openerp>
+

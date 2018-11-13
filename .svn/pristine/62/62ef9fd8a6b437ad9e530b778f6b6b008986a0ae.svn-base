@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+       
+        <!-- Task Stages -->
+        <delete id="project.project_tt_design" model="project.task.type" />
+  <delete id="project.project_tt_analysis" model="project.task.type" />
+ 
+   <delete id="project.project_tt_specification" model="project.task.type" />
+    <delete id="project.project_tt_development" model="project.task.type" />
+ 
+     <delete id="project.project_tt_testing" model="project.task.type" />
+          <delete id="project.project_tt_merge" model="project.task.type" />
+           <delete id="project.project_tt_cancel" model="project.task.type" />
+
+<record id="project_tt_en_draft" model="project.task.type">
+            <field name="sequence">1</field>
+            <field name="name">Brouillon</field>
+            <field name="case_default" eval="True"/>
+        </record>
+
+
+        <record id="project_tt_en_attente" model="project.task.type">
+            <field name="sequence">2</field>
+            <field name="name">Envoyer</field>
+            <field name="case_default" eval="True"/>
+        </record>
+        <record id="project_tt_encrs_prepa" model="project.task.type">
+            <field name="sequence">3</field>
+            <field name="name">En cours de preparation</field>
+            <field name="case_default" eval="True"/>
+        </record>
+        
+    </data>
+
+  
+
+</openerp>

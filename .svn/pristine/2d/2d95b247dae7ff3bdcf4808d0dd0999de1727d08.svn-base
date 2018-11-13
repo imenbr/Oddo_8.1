@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="view_account_param_form">
+        <field name="name">account.parametre.form</field>
+        <field name="model">account.parametre</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="account_parametre">
+	        <group col="7">				
+                    <field name="designation" string="Désignation"/>
+                    <field name="valeur" string="Valeur"/>
+ 		</group>    
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_parametre_tree">
+        <field name="name">account.parametre.tree</field>
+        <field name="model">account.parametre</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="account.parametre">
+                <field name="designation" string="Désignation"/>
+                <field name="valeur" string="Valeur"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_account_parametre">
+        <field name="name">Paramètre</field>
+        <field name="res_model">account.parametre</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Configuration" id="menu_account_config" parent="account.menu_finance"/>
+    <menuitem name="Paramètres" id="menu_account_param" action="action_account_parametre" parent="menu_account_config"/>
+    </data>
+</openerp>
+

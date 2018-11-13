@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_facture_fournisseur_nonregler_view' model="ir.ui.view">
+            <field name="name">Facture fournisseur non Réglé</field>
+            <field name="model">wizard.facture.fournisseur.nonregler</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport du Facture Fournisseur Non Régler" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        <field name="fournisseur_id" />
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Annuler"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_facture_fournisseur_nonregler2">
+            <field name="name">Facture Fournisseur non Réglé</field>
+            <field name="res_model">wizard.facture.fournisseur.nonregler</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_facture_fournisseur_nonregler_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Rapport Facture fournisseur non Régler"
+		model="account.invoice"
+		auto="True"
+		name="jasper_facture_fournisseur_nonregler_print"
+		rml="office_stat/facture_fournisseur_nonregler/report/facture_fournisseur_nonregler.jrxml"
+		id="facture_fournisseur_nonregler"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_facture_fr_nonregler_report" name="Facture Fournisseur non Réglé" action="action_wizard_facture_fournisseur_nonregler2" parent="menu_rapport_reglement" sequence="6"/>
+    </data>
+</openerp>
+

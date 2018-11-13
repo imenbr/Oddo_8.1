@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_recap_mouvement_view' model="ir.ui.view">
+            <field name="name">Recap Mouvement</field>
+            <field name="model">wizard.recap.mouvement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Recap Mouvement" >
+                    <group col="2" fill="0" colspan="4">
+                        <field name="date_debut" />
+                        <field name="date_fin" />
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_recap_mouvement">
+            <field name="name">Recap Mouvement</field>
+            <field name="res_model">wizard.recap.mouvement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_recap_mouvement_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Recap Mouvement"
+		model="account.invoice"
+		auto="True"
+		name="jasper_recap_mouvement_print"
+		rml="office_stat/recap_mouvement/report/recap_mouvement.jrxml"
+		id="recap_mouvement"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_recap_mouvement_report" name="Recap Mouvement" action="action_wizard_recap_mouvement" parent="menu_rapport_reglement"  sequence="6"/>
+    </data>
+</openerp>
+

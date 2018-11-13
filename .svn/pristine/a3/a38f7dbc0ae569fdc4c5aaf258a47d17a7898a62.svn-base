@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="importation_produit" name="Importation" />
+<menuitem id="menu_importation_produit" name="Importation" parent="importation_produit"   />
+<menuitem id="menu_configuration_importation_produit" name="Configuration" parent="importation_produit"   />
+
+
+<record id="view_imortation_produit_form" model="ir.ui.view">
+            <field name="name">importation.produit.form</field>
+            <field name="model">importation.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Importation Produits">
+                    <header>
+
+		    </header>
+		    <sheet><group>
+			<group>                    	
+				<field name="partner_id" string="Fournisseur" />
+			</group>
+			  
+ 			<group>
+
+
+			<field name="name" string="Référence"/>
+			  <field name="date" string="Date"/>
+			<field name="facture_id" string="Facture" domain="[('partner_id','=', partner_id) ]"/>
+			<button colspan="2" name="button_add_invoice" string="Ajouter Produits Facture" type="object" /> 		
+		                	
+			</group>
+			<group>
+
+		<field name="taux" string="Taux"/>
+		<field name="amount_invoice_euro" string="Montant Facture €"/>
+		<field name="amount_invoice_DT" string="Montant Facture DT"/>
+			</group>
+		</group>
+<group><group colspan="4">
+		<notebook>
+			<page string="Produits">
+
+
+			<field name="importation_lines"  widget="one2many_list" col="4" colspan="4">
+			     <tree string="Importation Produit">
+				      <field name="categ_id"/>
+				<!--  <field name="product_id"/>-->
+			          <field name="designation"/>
+                		  <field name="price_unit"/>
+                		  <field name="product_qty"/>
+                                  <field name="price_subtotal_euro"/>
+                                  <field name="price_subtotal_dt"/>
+                                  <field name="taux_FF"/>
+                                  <field name="taux_DD"/>
+                                  <field name="FF"/>
+                                  <field name="DD"/>
+                                  <field name="price_subtotal_revient_dt"/>
+                                  <field name="price_unit_revient_dt"/>
+                                  <field name="marge_35"/>
+                                  <field name="marge_50"/>
+                                  <field name="coeff_rev"/>
+
+			     </tree>
+
+			<form string="Importation Produit">
+                                  <group>
+
+				      <field name="product_id" on_change="product_id_change(product_id)"/><!--on_change="product_id_change(product_id,tax_ids)"-->
+				      <field name="categ_id"/>
+				      <field name="designation"/>
+                		      <field name="price_unit"/>
+                		      <field name="product_qty"/>
+
+
+
+                                  	<field name="price_subtotal_euro"/>
+                                  	<field name="price_subtotal_dt"/>
+                                  <field name="taux_FF"/>
+                                  <field name="taux_DD"/>
+                                  <field name="FF"/>
+                                  <field name="DD"/>
+                                  <field name="price_subtotal_revient_dt"/>
+                                  <field name="price_unit_revient_dt"/>
+                                  <field name="marge_35"/>
+                                  <field name="marge_50"/>
+                                  <field name="coeff_rev"/>
+
+
+
+
+                                  </group>
+			     </form>
+		
+			</field>
+
+
+
+
+
+
+
+		</page>
+
+		<page string="Les Frais Fixe">
+
+			<field name="charges_importation_lines"  widget="one2many_list">
+			     <tree string="Charge Importation Produit">
+				  <field name="charge_id"/>
+			          <field name="amount_charge"/>
+                		
+
+			     </tree>
+
+			<form string="Charge Importation Produit">
+                                  <group>
+				      <field name="charge_id"/>
+			          <field name="amount_charge"/>
+                                  </group>
+			     </form>
+		
+			</field>
+
+
+		</page>
+                    </notebook>
+
+</group>
+			<group >
+				
+
+    <div>
+
+						<field name="categ_lines"  widget="one2many_list"   >
+			     		<tree string=" ">
+					  <field name="name"/>
+			        	  <field name="taux_1"/>
+			        	  <field name="taux_2"/>
+			        	  <field name="taux_3"/>
+			        	  <field name="taux_4"/>
+			        	  <field name="taux_5"/>
+			        	  <field name="total"/>
+                		
+
+			    		 </tree>
+
+
+				</field></div> <div>
+			         <group class="oe_right"><button colspan="2" name="button_calcul_categ" string="Calculer Tous" type="object" icon="terp-stock_format-scientific"/> 
+                                                         
+			       <!--  <field name="undiscount_total"/>
+                                <label string="" colspan="2"/>
+		                <field name="discount_total" />
+                                <label string="" colspan="2"/>
+		                <field name="amount_untaxed"  string ="Total NHT"/>-->
+                                <label string="" colspan="2"/>
+                          <field name="amount_total_DD"  string="Total DD DT"/>
+                                <field name="amount_total_euro"/>
+                                <field name="amount_total_dt"/>
+                                 <field name="amount_total_chrage_dt"/>
+                            
+                            </group>  </div>
+                        </group></group>
+
+
+
+		 </sheet>
+		</form>
+            </field>
+        </record>
+
+
+
+
+
+	<record id="view_importation_produit_tree" model="ir.ui.view">
+            <field name="name">importation.produit.tree</field>
+            <field name="model">importation.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="Importation Produits">
+                   <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+		<field name="amount_total_euro"/>
+                      <field name="amount_total_dt"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+
+
+ <record id="action_importation_produit" model="ir.actions.act_window">
+            <field name="name">Importation Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">importation.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_importation_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_importation_produit_item" name="Importation Produit" parent="menu_importation_produit" action="action_importation_produit" groups="base.group_sale_salesman,base.group_sale_manager" />
+
+
+
+<record id="view_charge_importation_produit_form" model="ir.ui.view">
+            <field name="name">charge.importation.produit.form</field>
+            <field name="model">charge.importation.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Charge Importation Produits">
+			 <sheet><group>
+
+			<field name="name" string="Type Charge"/>
+
+</group>
+ 			</sheet>
+
+
+		</form>
+            </field>
+        </record>
+
+<record id="view_charge_importation_produit_tree" model="ir.ui.view">
+            <field name="name">charge.importation.produit.tree</field>
+            <field name="model">charge.importation.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="Charge Importation Produits">
+                   <field name="name" string="Type Charge"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+ <record id="action_charge_importation_produit" model="ir.actions.act_window">
+            <field name="name">Importation Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">charge.importation.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_charge_importation_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_charge_importation_produit_item" name="Frais Fixes" parent="menu_configuration_importation_produit" action="action_charge_importation_produit" groups="base.group_sale_salesman,base.group_sale_manager" />
+
+
+
+
+
+
+
+<record id="view_frais_douane_produit_form" model="ir.ui.view">
+            <field name="name">frais.douane.produit.form</field>
+            <field name="model">frais.var.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Frais Douane Importation Produits">
+
+			 <sheet><group>
+			<field name="name" string="Nom Frais "/>
+
+                  	 <!--<field name="taux" string="Taux"/>--></group>
+
+			 </sheet>
+
+		</form>
+            </field>
+        </record>
+
+<record id="view_frais_douane_produit_tree" model="ir.ui.view">
+            <field name="name">frais.douane.produit.tree</field>
+            <field name="model">frais.var.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="Frais Douane Importation Produits">
+                   <field name="name" string="Nom Frais"/>
+                   <!--<field name="taux" string="Taux"/>-->
+                </tree>
+            </field>
+        </record>
+
+
+
+
+ <record id="action_frais_douane_produit" model="ir.actions.act_window">
+            <field name="name">Importation Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">frais.var.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_frais_douane_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_frais_douane_produit_item" name=" Frais par taux" parent="menu_configuration_importation_produit" action="action_frais_douane_produit" groups="base.group_sale_salesman,base.group_sale_manager" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</data>
+</openerp>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         
+        <record id="product_normal_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.normal.form.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <page name="variants" position="replace"/>
+                <field name="ean13" position="replace"/>
+                <group name="status" position="replace"/>
+            </field>
+	</record>
+
+        <record id="product_template_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.form.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <group string="Unit of Measure" position="replace"/>
+                <page string="Inventory" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </page>
+                <page string="Sales" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </page>
+                <xpath expr="//page[@string='Procurements']/group" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <separator string="Description for Suppliers" position="replace"/>
+                <field name="description_purchase"  position="replace"/>
+                <div name="options"  position="inside">
+			<!--<field name="affichage" string="Pour affichage" />-->
+                                <div>
+                                    <field name="affichage"/>
+                                    <label for="affichage"/>
+                                </div>
+                </div>
+		<field name="list_price"  position="after">
+			 <field name="purchase_price" String="Prix d'achat"/>
+   		</field>
+            </field>
+	</record>
+        
+        <record id="view_template_property_form_inherit2" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit2</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <group string="Counter-Part Locations Properties" position="replace"/>
+            </field>
+	</record>
+
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.inherit3</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="property_account_income" position="replace"/>
+                <field name="property_account_expense" position="replace"/>          
+            </field>
+        </record> 
+
+        <record id="view_product_supplierinfo_tree_new_fields" model="ir.ui.view">
+            <field name="name">product.supplierinfo.tree.new_fields</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+	            <field name="product_name" />
+	            <field name="product_code" />
+		    <field name="prix" string ="Prix"/>
+		    <field name="currency_id" string ="Devise"/>
+		    <field name="price_subtotal" string ="Prix Monnaie Locale" readonly="0"/>
+                    <field name="supplier_discount" string ="Remise"/>
+	        </field>
+            </field>
+        </record>
+
+        <record id="product_supplierinfo_form_new_fields" model="ir.ui.view">
+            <field name="name">product.supplierinfo.form.new_fields</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+            <field name="arch" type="xml">
+                <field name="product_code" position="after">
+	            <field name="prix" string ="Prix"/>
+ 		    <field name="currency_id" string ="Devise" on_change="currency_id_change(currency_id)"/>
+		    
+		    <field name="price_subtotal" string ="Prix Monnaie Locale" readonly="0"/>
+                    <field name="supplier_discount" string ="Remise"/>
+
+			
+	        </field>
+			<field name="product_name" position="replace" invisible="1"/>
+                        <field name="product_code" position="replace" invisible="1"/>
+			<field name="delay" position="after">
+				<field name="rate" invisible="1"/>
+		        </field>
+
+                <field name="pricelist_ids" position="replace">
+
+	        </field>
+
+            </field>
+        </record>
+
+        <!--record id="view_product_standard_price_inherit_form" model="ir.ui.view">
+            <field name="name">product.product.standard.price.inherit.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_product_standard_price_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='Update']" position="replace">
+                    <button name="calculer_prix" string="Calculer Prix" type="object" icon="gtk-execute" context="{'product_tmpl_id':1}" attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}"/>
+                </xpath>
+            </field>
+        </record-->
+
+    </data>
+</openerp>
+

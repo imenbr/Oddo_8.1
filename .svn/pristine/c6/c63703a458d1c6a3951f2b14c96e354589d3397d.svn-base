@@ -1,0 +1,181 @@
+-
+   Create a 'partner'
+-
+  !record {model: res.partner, id: partner1}:
+    name : 'hatem'
+-
+   Create a 'partner'
+-
+  !record {model: res.partner, id: partner2}:
+    name : 'adib'
+-
+   Create a 'partner'
+-
+  !record {model: res.partner, id: partner3}:
+    name : 'rim'
+-
+   Create a 'company'
+-
+  !record {model: res.company, id: company1}:
+    name : "EPS"
+-
+   Create a 'company'
+-
+  !record {model: res.company, id: company2}:
+    name : "Equipement de Premiers Secours"
+-
+  I create a Tax Codes
+-
+  !record {model: account.tax.code, id: tax_case}:
+    name: Tax_case
+    company_id: company1
+    sign: 1
+-
+  I create a Tax
+-
+  !record {model: account.tax, id: tax10}:
+    name: Tax 10.0
+    amount: 10.0
+    type: fixed
+    sequence: 1
+    company_id: company1
+    type_tax_use: all
+    tax_code_id: tax_case
+-
+   Create a 'product'
+-
+  !record {model: product.product, id: prod1}:
+    name: "prod1"
+    lst_price: 30.00
+    taxes_id:
+        - tax10
+-
+   Create a 'product'
+-
+  !record {model: product.product, id: prod2}:
+    name: "prod2"
+    lst_price: 10.00
+    taxes_id:
+        - tax10
+-
+   Create a draft 'sale_devis'
+-
+  !record {model: sale.devis, id: sale_devis_test1}:
+    partner_id: partner1
+    reference: 'DEV136'
+    date: '2015-07-25 10:20:13'
+    company_id: company1
+    state: 'draft'
+    devis_lines:
+        - product_id: prod1
+          product_qty: 2.0
+          discount: 0.0
+        - product_id: prod2
+          product_qty: 2.0
+          discount: 0.0
+-
+    check the total of the 'sale_devis'
+-       
+    !python {model: sale.devis}: |
+        new_id = self.browse(cr, uid, ref('sale_devis_test1'))
+        print "amount_total ====", new_id.amount_total
+        print "discount_total ====", new_id.discount_total
+        for l in new_id.devis_lines:
+            print "taxe === ", l.tax_ids
+            print "price_unit === ", l.price_unit
+        try:
+            assert new_id.amount_total == (30.00*2.0 + 10.00*2.0), "OK"
+        except AssertionError:
+            print "Testing False in Total"
+            exit(1) 
+-
+   Create a draft 'sale_devis'
+-
+  !record {model: sale.devis, id: sale_devis_test2}:
+    partner_id: partner2
+    reference: 'DEV140'
+    date: '2015-07-30 10:20:13'
+    company_id: company2
+    state : 'draft'
+    devis_lines:
+        - product_id: prod1
+          product_qty: 2.0
+          discount: 0.0
+-
+   Create a draft 'sale_devis'
+-
+  !record {model: sale.devis, id: sale_devis_test3}:
+    partner_id: partner3
+    reference: 'DEV150'
+    date: '2015-08-02 10:20:13'
+    company_id: company1
+    state : 'draft'
+    devis_lines:
+        - product_id: prod2
+          product_qty: 2.0
+          discount: 0.0
+-
+    check the 'sale_devis'
+-       
+    !python {model: sale.devis}: |
+        new_id = self.browse(cr, uid, ref('sale_devis_test1'))
+        print "state ====", new_id.state
+        print "reference ====", new_id.reference
+        try:
+            assert (new_id.reference != None), "OK"
+            assert new_id.partner_id.name == 'hatem', "OK"
+            assert new_id.company_id.name == 'EPS', "OK"
+            assert new_id.date == '2015-07-25 10:20:13', "OK"
+            print "Testing Sale Devis True"
+        except AssertionError:
+            print "Testing Sale Devis False"
+            exit(1)
+-
+   sent the 'sale_devis'
+-
+  !workflow {model: sale.devis, ref: sale_devis_test1, action: envoyer}
+-
+   confirme the 'sale_devis'
+-
+  !workflow {model: sale.devis, ref: sale_devis_test1, action: confirmer_devis}
+-
+    !python {model: sale.devis}: |
+        new_id = self.pool.get('sale.devis').browse(cr, uid, ref('sale_devis_test1'))
+        self.action_view_order(cr, uid, ref('sale_devis_test1'), context=None)
+        print "state ====", new_id.state
+        print "id sale devis ====", new_id.id
+        if new_id.state == 'confirmed':
+            print "sale order created"
+            bc_id = self.pool.get('sale.order').search(cr,uid,[('devis_id','=',new_id.id)])
+            obj = self.pool.get('sale.order').browse(cr,uid,bc_id[0])
+            print 'reference sale order :',obj.name
+            print 'state sale order : ',obj.state
+            try:
+                assert (new_id.id == obj.devis_id.id), "OK"
+                assert (obj.name != None), "OK"
+                assert (obj.state == 'draft'), "OK"
+                assert (new_id.amount_total == obj.amount_total), "OK"
+                for dev_li in new_id.devis_lines:
+                    pr_id = self.pool.get('sale.order.line').search(cr,uid,[('product_id','=',dev_li.product_id.id)])
+                    obj_so = self.pool.get('sale.order.line').browse(cr,uid,pr_id[0])
+                    assert (dev_li.product_id.id == obj_so.product_id.id), "OK"
+                    assert (dev_li.price_unit == obj_so.price_unit), "OK"
+                    assert (dev_li.product_qty == obj_so.product_uom_qty), "OK"
+                print "Testing Sale Order True"
+            except AssertionError:
+                print "Testing Sale Order False"
+                exit(1)
+-
+    check the 'sale_devis'
+-       
+    !python {model: sale.devis}: |
+        new_id = self.browse(cr, uid, ref('sale_devis_test2'))
+        print "state2 ====", new_id.state
+        try:
+            assert new_id.partner_id.name == 'adib', "OK"
+            assert new_id.company_id.name == u'Equipement de Premiers Secours', "OK"
+            assert new_id.date == '2015-07-30 10:20:13', "OK"
+            print "Testing True"
+        except AssertionError:
+            print "Testing False"
+            exit(1)

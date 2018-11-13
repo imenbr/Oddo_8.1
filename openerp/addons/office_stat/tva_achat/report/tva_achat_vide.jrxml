@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sotebat_price_compare" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="128"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="numerofacture" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/numerofacture]]></fieldDescription>
+	</field>
+	<field name="datefacturation" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/datefacturation]]></fieldDescription>
+	</field>
+	<field name="raison_socaile" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/raison_socaile]]></fieldDescription>
+	</field>
+	<field name="montant_facture" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/montant_facture]]></fieldDescription>
+	</field>
+	<field name="montant_payer2" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/montant_payer2]]></fieldDescription>
+	</field>
+	<field name="reste_a_payer2" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/reste_a_payer2]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/user]]></fieldDescription>
+	</field>
+	<field name="retenue" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/retenue]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/type]]></fieldDescription>
+	</field>
+	<field name="montant_ht" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/montant_ht]]></fieldDescription>
+	</field>
+	<field name="tva12" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/tva12]]></fieldDescription>
+	</field>
+	<field name="tva18" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/tva18]]></fieldDescription>
+	</field>
+	<variable name="somme_ht" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{montant_ht}]]></variableExpression>
+	</variable>
+	<variable name="somme_ttc" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{montant_facture}]]></variableExpression>
+	</variable>
+	<variable name="somme_tva12" class="java.math.BigDecimal" incrementType="Group" incrementGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{tva12}]]></variableExpression>
+	</variable>
+	<variable name="somme_tva18" class="java.math.BigDecimal" resetType="Group" resetGroup="nom_emp" calculation="Sum">
+		<variableExpression><![CDATA[$F{tva18}]]></variableExpression>
+	</variable>
+	<group name="nom_emp">
+		<groupHeader>
+			<band height="96"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="33"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="4"/>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STTC]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ETAT TVA Récupérable]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="110">
+			<staticText>
+				<reportElement x="347" y="49" width="64" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Elaboré le :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="412" y="49" width="143" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="381" y="69" width="30" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Par :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="412" y="69" width="143" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

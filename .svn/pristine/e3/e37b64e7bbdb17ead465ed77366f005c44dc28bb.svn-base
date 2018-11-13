@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="ir_sequence_type_reglementclient0" model="ir.sequence.type">
+			<field name="code">reglement.client</field>
+			<field name="name">Reglement Client</field>
+		</record>
+	</data>
+	<data>
+		<record id="ir_sequence_type_reglementfournisseur0" model="ir.sequence.type">
+			<field name="code">reglement.fournisseur</field>
+			<field name="name">Reglement Fournisseur</field>
+		</record>
+	</data>
+	<data>
+		<record id="ir_sequence_type_reglementclient1" model="ir.sequence.type">
+			<field name="code">reglement.retenu.client</field>
+			<field name="name">Reglement Retenu Client</field>
+		</record>
+	</data>
+	<data>
+		<record id="ir_sequence_type_reglementfournisseur1" model="ir.sequence.type">
+			<field name="code">reglement.retenu.fournisseur</field>
+			<field name="name">Reglement Retenu Fournisseur</field>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="ir_sequence_reglementclient0" model="ir.sequence">
+			<field name="code">reglement.client</field>
+			<field name="name">Reglement Client</field>
+			<field eval="1" name="number_next"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1" name="number_increment"/>
+			<field name="prefix">PRC%(year)s/</field>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="ir_sequence_reglementfournisseur0" model="ir.sequence">
+			<field name="code">reglement.fournisseur</field>
+			<field name="name">Reglement Fournisseur</field>
+			<field eval="1" name="number_next"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1" name="number_increment"/>
+			<field name="prefix">PRF%(year)s/</field>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="ir_sequence_reglementretenuclient1" model="ir.sequence">
+			<field name="code">reglement.retenu.client</field>
+			<field name="name">Reglement Retenu Client</field>
+			<field eval="1" name="number_next"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1" name="number_increment"/>
+			<field name="prefix">RSC%(year)s/</field>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="ir_sequence_reglementretenufournisseur1" model="ir.sequence">
+			<field name="code">reglement.retenu.fournisseur</field>
+			<field name="name">Reglement Retenu Fournisseur</field>
+			<field eval="1" name="number_next"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1" name="number_increment"/>
+			<field name="prefix">RSF%(year)s/</field>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+</openerp>

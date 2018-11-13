@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    <record id="invoice_her_form" model="ir.ui.view">
+        <field name="name">account.invoice_her.form</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="fiscal_position" position="replace" />
+            <field name="journal_id" position="attributes">
+                <attribute name="invisible">True</attribute>     
+            </field>
+            <field name="account_id" position="attributes">
+                <attribute name="invisible">True</attribute>     
+            </field>
+            <field name="amount_untaxed" position="attributes">
+                <attribute name="string">Total Net HT</attribute>     
+            </field> 
+            <field name="amount_untaxed" position="before"> 
+                <field name="undiscount_total" string="Total sans remise" widget="monetary" options="{'currency_field': 'currency_id'}"/>	
+                <field name="discount_total" widget="monetary" options="{'currency_field': 'currency_id'}" />
+            </field>
+            <field name="amount_tax" position="after">
+                <field name="timbre" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </field>
+            <field name="amount_tax" position="attributes">
+                <attribute name="string">Total tax</attribute>     
+            </field> 
+            <!--field name="payment_term" position="replace" >
+                <field name="amount_word" string="Total en toute lettre"/>
+            </field-->
+            <xpath expr="//page[@string='Payments']" position="replace"/>
+            <field name="residual" position="replace">
+                <field name="reste_a_payer" string="Reste à payer"/>
+            </field>
+        </field>
+    </record>
+
+
+	<!--
+            account.invoice remove the page autres informations
+                            add the list of tax for invoice customer
+        -->
+
+        <record id="invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@string='Invoice']/sheet[@string='Invoice']/notebook/page[@string='Other Info']" position="attributes">
+			<attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//form[@string='Invoice']/sheet[@string='Invoice']/notebook/page[@string='Invoice Lines']/group[@class='oe_subtotal_footer oe_right']" position="after">
+		    <div style="width: 50%%">
+                        <field name="tax_line">
+                            <tree editable="bottom" string="Taxes">
+                                <field name="name"/>
+                                <field name="account_id" groups="account.group_account_invoice"/>
+                                <field name="account_analytic_id" domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id)]" groups="analytic.group_analytic_accounting"/>
+                                <field name="base" on_change="base_change(base,parent.currency_id,parent.company_id,parent.date_invoice)" readonly="1"/>
+                                <field name="amount" on_change="amount_change(amount,parent.currency_id,parent.company_id,parent.date_invoice)"/>
+
+                                <field invisible="True" name="base_amount"/>
+                                <field invisible="True" name="tax_amount"/>
+                                <field name="factor_base" invisible="True"/>
+                                <field name="factor_tax" invisible="True"/>
+                            </tree>
+                        </field>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+</data>
+</openerp>
+

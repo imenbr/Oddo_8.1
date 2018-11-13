@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="menu_hr_root_avance" parent="hr.menu_hr_root" name="Avance" sequence="20"/>
+
+<record id="view_hr_avance_form" model="ir.ui.view">
+            <field name="name">hr.avance.form</field>
+            <field name="model">hr.avance</field>
+            <field name="arch" type="xml">
+                <form string="Demande Avance">
+                <header>
+                    <button string="Envoyer" name="envoyer" states="draft" type='object' class="oe_highlight"/>
+                    <button string="Accepter" name="confirmer" states="sent" type='object' groups="base.group_hr_manager"/>
+                    <button string="Refuser " name="refuser" states="sent" type='object' groups="base.group_hr_manager"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,done"/>
+                </header>
+                <sheet>
+			<group ><group >
+			<field name="employee_id" String="Employee" /></group>
+			<group ><field name="date" String="Date d'avance"  />
+			<field name="montant" String="Montant demandé"  />
+			
+</group>
+			</group>
+			<notebook>
+			<page string="Details">
+			<group >
+				<field name="description" String="Description" placeholder="Besoin de l'avance..." />
+			</group>
+		</page>
+                    </notebook>
+		</sheet>
+                </form>
+            </field>
+        </record>
+
+
+<record id="view_hr_avance_tree" model="ir.ui.view">
+            <field name="name">hr.avance.tree</field>
+            <field name="model">hr.avance</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state =='draft';black:state == 'done';gray:state == 'cancel'" string="Avance">
+
+                    <field name="employee_id"/>
+		    <field name="date" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_view_hr_avance_form" model="ir.actions.act_window">
+            <field name="name">Demande Avance</field>
+            <field name="res_model">hr.avance</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_hr_avance_tree"/>
+
+        </record>
+
+<menuitem action="action_view_hr_avance_form" id="menu_demande_avance" parent="menu_hr_root_avance" />     
+
+    </data>
+</openerp>
+

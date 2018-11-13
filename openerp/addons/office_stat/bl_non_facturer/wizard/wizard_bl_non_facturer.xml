@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_bl_non_facturer_view' model="ir.ui.view">
+            <field name="name">Bons Livraison non Facturés</field>
+            <field name="model">wizard.bl.non.facturer</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Bons Livraison non Facturés" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Générer Rapport"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_bl_non_facturer">
+            <field name="name">Bons Livraison non Facturés</field>
+            <field name="res_model">wizard.bl.non.facturer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_bl_non_facturer_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Bons Livraison non Facturés"
+		model="stock.move"
+		auto="True"
+		name="jasper_bl_non_facturer_print"
+		rml="office_stat/bl_non_facturer/report/bl_non_facturer.jrxml"
+		id="bl_non_facturer_client"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_bl_non_facturer_report" name="Bons Livraison non Facturés" action="action_wizard_bl_non_facturer" parent="menu_reporting_office" sequence="6"/>
+    </data>
+</openerp>
+

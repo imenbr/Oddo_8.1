@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_reglement_banque,reglement.banque,model_reglement_banque,account.group_account_invoice,1,1,1,1
+access_reglement_mode,reglement.mode,model_reglement_mode,account.group_account_invoice,1,1,1,1
+access_reglement_piece,reglement.piece,model_reglement_piece,account.group_account_invoice,1,1,1,1
+access_reglement_retenu,reglement.retenu,model_reglement_retenu,account.group_account_invoice,1,1,1,1
+access_reglement_avance,reglement.avance,model_reglement_avance,account.group_account_invoice,1,1,1,1
+access_reglement_paiement,reglement.paiement,model_reglement_paiement,account.group_account_invoice,1,1,1,1
+access_reglement_detail_piece,reglement.detail.piece,model_reglement_detail_piece,account.group_account_invoice,1,1,1,1
+access_reglement_detail_impaye,reglement.detail.impaye,model_reglement_detail_impaye,account.group_account_invoice,1,1,1,1
+access_reglement_detail,reglement.detail,model_reglement_detail,account.group_account_invoice,1,1,1,1
+access_reglement_detail_avoir,reglement.detail.avoir,model_reglement_detail_avoir,account.group_account_invoice,1,1,1,1
+access_reglement_detail_avance,reglement.detail.avance,model_reglement_detail_avance,account.group_account_invoice,1,1,1,1
+access_reglement_retenu_source,reglement.retenu.source,model_reglement_retenu_source,account.group_account_invoice,1,1,1,1
+access_retenue_src_line,retenue.src.line,model_retenue_src_line,account.group_account_invoice,1,1,1,1

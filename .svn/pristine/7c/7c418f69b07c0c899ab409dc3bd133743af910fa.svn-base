@@ -1,0 +1,141 @@
+-
+   Create a 'partner'
+-
+  !record {model: res.partner, id: partner1}:
+    name : 'hatem'
+-
+   Create a 'company'
+-
+  !record {model: res.company, id: company1}:
+    name : "EPS"
+-
+   Create a 'banque'
+-
+  !record {model: reglement.banque, id: banque1}:
+    code : BZ012
+    designation : "ZAYTOUNA"
+-
+   Create a 'reglement_mode'
+-
+  !record {model: reglement.mode, id: mod1}:
+    code : CHK
+    designation : "Chek"
+-
+  I create a Tax Codes
+-
+  !record {model: account.tax.code, id: tax_case}:
+    name: Tax_case
+    company_id: company1
+    sign: 1
+-
+  I create a Tax
+-
+  !record {model: account.tax, id: tax10}:
+    name: Tax 10.0
+    amount: 10.0
+    type: fixed
+    sequence: 1
+    company_id: company1
+    type_tax_use: all
+    tax_code_id: tax_case
+-
+   Create a 'product'
+-
+  !record {model: product.product, id: prod1}:
+    name: "prod1"
+    lst_price: 30.00
+    taxes_id:
+        - tax10
+-
+   Create a 'product'
+-
+  !record {model: product.product, id: prod2}:
+    name: "prod2"
+    lst_price: 10.00
+    taxes_id:
+        - tax10
+-
+   Create a 'regelement piece'
+-
+  !record {model: reglement.piece, id: piece1}:
+    num_cheque_traite: 300868
+    mode_reglement: mod1
+    partner_id: partner1
+    montant_piece: 200.00
+    date_echance: '2015-07-25'
+    date_encaissement: '2015-07-30'
+    num_compte: 560524
+    banque_id: banque1
+    agence: "Sfax"
+    titulaire: "Mohamed"
+-
+    check the fields of the 'reglement_piece'
+-       
+    !python {model: reglement.piece}: |
+        new_id = self.browse(cr, uid, ref('piece1'))
+        #print "reglement_piece ====", new_id.id
+        #print "reglement_piece ====", new_id.mode_reglement.designation
+        #print "reglement_piece ====", new_id.num_cheque_traite
+        #print "reglement_piece ====", new_id.partner_id.name
+        #print "reglement_piece ====", new_id.montant_piece
+        #print "reglement_piece ====", new_id.date_echance
+        #print "reglement_piece ====", new_id.date_encaissement
+        #print "reglement_piece ====", new_id.num_compte
+        #print "reglement_piece ====", new_id.banque_id.designation
+        #print "reglement_piece ====", new_id.agence
+        #print "reglement_piece ====", new_id.titulaire
+        try:
+            assert (new_id.num_cheque_traite == 300868), "OK"
+            assert (new_id.mode_reglement.designation == "Chek"), "OK"
+            assert (new_id.partner_id.name == "hatem"), "OK"
+            assert (new_id.montant_piece == 200.00), "OK"
+            assert (new_id.date_echance == '2015-07-25'), "OK"
+            assert (new_id.date_encaissement == '2015-07-30'), "OK"
+            assert (new_id.num_compte == 560524), "OK"
+            assert (new_id.banque_id.designation == "ZAYTOUNA"), "OK"
+            assert (new_id.agence == "Sfax"), "OK"
+            assert (new_id.titulaire == "Mohamed"), "OK"
+            print "Testing True in Reglement Piece"
+        except AssertionError:
+            print "Testing False in Reglement Piece"
+            exit(1) 
+
+-
+   Create a draft 'reglement_paiement'
+-
+  !record {model: reglement.paiement, id: reglement_paiement_test1}:
+    partner_id: partner1
+    code_reglement: 'PRC2015/5'
+    date_reglement: '2015-07-25'
+    montant_espece: 0.00
+    state: 'draft'
+    reglement_details_piece:
+        - piece_id: piece1
+    reglement_detail:
+        - invoice_id: "FV2015/0011"
+          montant: 300.00
+-
+    check the total of the 'reglement_paiement'
+-       
+    !python {model: reglement.paiement}: |
+        new_id = self.pool.get('reglement.paiement').browse(cr, uid, ref('reglement_paiement_test1'))
+        self.button_dummy(cr, uid, ref('reglement_paiement_test1'))
+        #print "montant total paye ====", new_id.montant_total_paye
+        #print "montant total a paye ====", new_id.montant_total_apaye
+        try:
+            assert (new_id.code_reglement != None), "OK"
+            assert (new_id.partner_id.name == "hatem"), "OK"
+            assert (new_id.date_reglement == '2015-07-25'), "OK"
+            assert (new_id.montant_espece == 0.00), "OK"
+            reg_det_id = self.pool.get('reglement.piece').browse(cr, uid, ref('piece1'))
+            for l in new_id.reglement_details_piece:
+                assert (new_id.num_cheque_traite == reg_det_id.num_cheque_traite), "OK"
+                assert (new_id.montant_piece == reg_det_id.montant_piece), "OK"
+                assert (new_id.titulaire == reg_det_id.titulaire), "OK"
+                assert (new_id.date_echance == reg_det_id.date_echance), "OK"
+            #assert new_id.montant_total_paye == 300.00, "OK"
+            #assert new_id.montant_total_apaye == 300.00, "OK"
+        except AssertionError:
+            print "Testing False in reglement paiement"
+            exit(1) 
+

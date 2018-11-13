@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_invoice_picking,invoice.picking,model_invoice_picking,account.group_account_invoice,1,1,1,1
+access_account_invoice_picking_line,invoice.picking.line,model_invoice_picking_line,account.group_account_invoice,1,1,1,1
+access_account_invoice_picking_taxe,invoice.picking.taxe,model_invoice_picking_tax,account.group_account_invoice,1,1,1,1

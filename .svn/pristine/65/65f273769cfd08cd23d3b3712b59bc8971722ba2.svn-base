@@ -1,0 +1,1 @@
+import etat_inventaire

@@ -1,0 +1,191 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-today OpenERP SA (<http://www.openerp.com>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from datetime import datetime, date
+from lxml import etree
+import time
+from operator import eq
+from openerp import SUPERUSER_ID, api
+from openerp import tools
+from openerp.addons.resource.faces import task as Task
+from openerp.osv import fields, osv
+from openerp.tools import float_is_zero
+from openerp.tools.translate import _
+
+
+class task(osv.osv):
+    _name = "project.task"
+
+    _inherit = 'project.task'
+    
+    
+    @api.onchange('stage_id')			    
+    def onchange_stage(self, cr, uid, ids,stage_id, context=None):		
+	
+		print "danss onchange stage ***********************",stage_id
+		print "danss onchange stage ***********************",self.pool.get('project.task.type').browse(cr, uid, stage_id, context=context).name
+		stage=self.pool.get('project.task.type').browse(cr, uid, stage_id, context=context)
+		stage.sequence
+		#En attente
+		#En cours de preparation
+		#Terminé
+
+    _columns = {
+		'stage_id': fields.many2one('project.task.type', 'Stage',  select=True,
+                        domain="[('project_ids', '=', project_id)]", copy=False),
+
+
+
+
+
+    }
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+
+        # stage change: update date_last_stage_update
+
+
+        stage_id=vals.get('stage_id', False)
+        reviewer_id=vals.get('reviewer_id', False)
+        stage=self.pool.get('project.task.type').browse(cr, uid, stage_id, context=context)
+        task_obj=self.browse(cr, uid, ids, context=context)		
+        if 'stage_id' in vals:
+            vals['date_last_stage_update'] = fields.datetime.now()
+            #print "dans if stage_id changeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaaaaa",type(stage.name)
+            #print "ssssssssssssssss",type(unicode('En cours de preparation'))
+            name_stage='En cours de preparation'
+            vrai=eq(name_stage,stage.name)
+            termine=unicode('Terminé',encoding='utf-8')
+            fin=eq(termine,stage.name)
+            print "resultaaaaaaaaaaattt fin",fin
+            if stage.name=='Envoyer':
+            	
+		        print "envoyeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+		        mail_vals = {
+					'body':'<html>Vous avez une nouvelle tache à réaliser </html>',
+					'record_name':task_obj.name,
+					'res_id':ids[0],
+					'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+					'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+					'model':'project.task',
+					'type':'comment',
+					'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+					'starred':True,
+				}
+		        message = self.pool.get('mail.message').create(cr, uid, mail_vals)
+		        print "messages reeeeeeeeeeeeeeeeeeeeee"
+		        mail_notif_vals = {
+		        
+
+					'partner_id':self.pool.get('res.users').browse(cr, uid,task_obj.user_id.id, context=context).partner_id.id,
+					'message_id':message,
+					'is_read':False,
+					'starred':True,
+						
+		        }
+				
+
+		        self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)		
+            if vrai:				
+		        print "preparatiiiiiiiiiiiooooooooooooooooooooonnnnnnnnnn"
+		        print "0000"
+		        mail_vals = {
+		        	'body':'<html> Tache en cours de préparation </html>',
+		        	'record_name':task_obj.name,
+		        	'res_id':ids[0],
+		        	'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		        	'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+		        	'model':'project.task',
+		        	'type':'comment',
+		        	'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		        	'starred':True,
+		        }
+		        message = self.pool.get('mail.message').create(cr, uid, mail_vals)
+		        mail_notif_vals = {
+		        	'partner_id':self.pool.get('res.users').browse(cr, uid,task_obj.reviewer_id.id, context=context).partner_id.id,
+		        	'message_id':message,
+		        	'is_read':False,
+		        	'starred':True,
+		        }
+		        self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+            if fin :
+		        print "termineeeeeeeeeeeeeeeeeeeeeeeeee"
+		        mail_vals = {
+		        	'body':'<html> Tache Terminé </html>',
+		        	'record_name':task_obj.name,
+		        	'res_id':ids[0],
+		        	'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		        	'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+		        	'model':'project.task',
+		        	'type':'comment',
+		        	'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		        	'starred':True,
+		        }
+		        message = self.pool.get('mail.message').create(cr, uid, mail_vals) 
+		        mail_notif_vals = {
+		        	'partner_id':self.pool.get('res.users').browse(cr, uid,task_obj.reviewer_id.id, context=context).partner_id.id,
+		        	'message_id':message,
+		        	'is_read':False,
+		        	'starred':True,
+		        }
+		        self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+		        
+		                   
+            
+            
+            
+            
+        # user_id change: update date_start
+        if vals.get('user_id') and 'date_start' not in vals:
+            vals['date_start'] = fields.datetime.now()
+
+        # Overridden to reset the kanban_state to normal whenever
+        # the stage (stage_id) of the task changes.
+        if vals and not 'kanban_state' in vals and 'stage_id' in vals:
+            new_stage = vals.get('stage_id')
+            print "new_stage====*************",new_stage
+            vals_reset_kstate = dict(vals, kanban_state='normal')
+            for t in self.browse(cr, uid, ids, context=context):
+                write_vals = vals_reset_kstate if t.stage_id.id != new_stage else vals
+                super(task, self).write(cr, uid, [t.id], write_vals, context=context)
+            result = True
+        else:
+            result = super(task, self).write(cr, uid, ids, vals, context=context)
+
+        if any(item in vals for item in ['stage_id', 'remaining_hours', 'user_id', 'kanban_state']):
+            self._store_history(cr, uid, ids, context=context)
+        return result
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+

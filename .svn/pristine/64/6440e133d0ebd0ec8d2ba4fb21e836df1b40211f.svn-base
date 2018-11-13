@@ -1,0 +1,1044 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* sotebat_reglement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2013-09-09 15:51+0000\n"
+"PO-Revision-Date: 2013-09-09 15:51+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_detail_avoir
+#: field:reglement.paiement,reglement_detail_avoir:0
+msgid "Reglement Detail Avoir"
+msgstr " Détails du Règlement Avoir"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+msgid "Encaisser"
+msgstr "Encaisser"
+
+#. module: sotebat_reglement
+#: view:reglement.detail.avoir:0
+msgid "Refund Détails"
+msgstr " Détails Avoir"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:531
+#: code:addons/sotebat_reglement/reglement.py:582
+#, python-format
+msgid "Please check Invoice"
+msgstr "Veuillez vérifier la facture"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_reglement_form_client
+#: model:ir.ui.menu,name:sotebat_reglement.menu_regelement_client
+msgid "Reglement Client"
+msgstr "Règlement Client"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+#: selection:reglement.piece,state:0
+msgid "Partially Impaid"
+msgstr "Partiellement Impayé"
+
+#. module: sotebat_reglement
+#: selection:reglement.piece,state:0
+msgid "Integrated"
+msgstr "Intégré"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid " "
+msgstr " "
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_retenu_source_form
+#: model:ir.ui.menu,name:sotebat_reglement.menu_retenu_source_item
+msgid "Source Retenu"
+msgstr "Retenue Facture"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+#: selection:reglement.piece,state:0
+msgid "Free"
+msgstr "Libre"
+
+#. module: sotebat_reglement
+#: field:reglement.paiement,montant_espece:0
+msgid "Cash Amount"
+msgstr "Montant en espèces"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.impaye,piece_id:0
+msgid "Piece ID"
+msgstr "ID. Pièce"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:364
+#: code:addons/sotebat_reglement/reglement.py:408
+#: code:addons/sotebat_reglement/reglement.py:447
+#: code:addons/sotebat_reglement/reglement.py:482
+#, python-format
+msgid "Le Montant que vous allez payer est superieur au montant restant !"
+msgstr "Le Montant que vous allez payer est supérieur au montant restant !"
+
+#. module: sotebat_reglement
+#: view:reglement.retenu.source:0
+msgid "A Deduction At Source"
+msgstr "Retenue Facture"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_mode_reg_form
+#: model:ir.ui.menu,name:sotebat_reglement.menu_mode_reg_form
+#: field:reglement.avance,mode_reglement:0
+#: view:reglement.mode:0
+msgid "Mode Reglement"
+msgstr "Mode Règlement"
+
+#. module: sotebat_reglement
+#: view:reglement.detail:0
+#: view:reglement.detail.avance:0
+#: view:reglement.detail.avoir:0
+#: view:reglement.retenu.source:0
+msgid "Num. Invoice"
+msgstr "Num. Facture"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_reglement_form_fournisseur
+#: model:ir.ui.menu,name:sotebat_reglement.menu_regelement_fournisseur
+msgid "Reglement Fournisseur"
+msgstr "Règlement Fournisseur"
+
+#. module: sotebat_reglement
+#: view:reglement.detail:0
+#: field:reglement.detail,montant:0
+#: view:reglement.detail.avance:0
+#: view:reglement.detail.avoir:0
+#: view:reglement.detail.impaye:0
+#: field:reglement.detail.impaye,montant_piece:0
+#: field:reglement.detail.piece,montant_piece:0
+#: field:reglement.piece,montant_piece:0
+msgid "Amount"
+msgstr "Montant"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,nature_piece:0
+msgid "Nature Piece"
+msgstr "Nature Pièce"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:563
+#, python-format
+msgid "La facture a deja un retenu !"
+msgstr "La facture a déjà une retenue !"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,montant_avance:0
+#: field:reglement.detail.avance,montant_avance:0
+msgid "Montant Avance"
+msgstr "Montant Avance"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:387
+#: code:addons/sotebat_reglement/reglement.py:468
+#: code:addons/sotebat_reglement/reglement.py:493
+#, python-format
+msgid "Veuillez selectionner un partenaire  !"
+msgstr "Veuillez sélectionner un partenaire  !"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,code_avance:0
+#: field:reglement.banque,code:0
+#: field:reglement.mode,code:0
+#: field:reglement.paiement,code_reglement:0
+#: field:reglement.piece,code_piece:0
+msgid "Reference"
+msgstr "Référence"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,num_compte:0
+msgid "Account Number"
+msgstr "Numéro de Compte"
+
+#. module: sotebat_reglement
+#: view:reglement.detail.impaye:0
+msgid "Unpaid Détails"
+msgstr "Détails des Impayés"
+
+#. module: sotebat_reglement
+#: selection:reglement.piece,nature_piece:0
+msgid "Notre Propre Piece"
+msgstr "Notre Propre Pièce"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Facture"
+msgstr "Facture"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_detail
+#: field:reglement.paiement,reglement_detail:0
+msgid "Reglement Detail"
+msgstr " Détails Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.avoir,avoir_id:0
+msgid "Refund Ref"
+msgstr "Ref. Avoir"
+
+#. module: sotebat_reglement
+#: field:account.invoice,montant_paye:0
+#: field:reglement.detail,montant_paye:0
+msgid "Paid Amount"
+msgstr "Montant Payé"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement_avance.py:39
+#, python-format
+msgid "Le montant de l avance est null !"
+msgstr "Le montant de l' avance est null !"
+
+#. module: sotebat_reglement
+#: view:reglement.detail.avance:0
+msgid "Payment on Account Details"
+msgstr "Détails Avance"
+
+#. module: sotebat_reglement
+#: view:reglement.detail.piece:0
+msgid "Payment Documents"
+msgstr "Pièces Paiements"
+
+#. module: sotebat_reglement
+#: field:reglement.paiement,montant_total_paye:0
+msgid "Total Paiement"
+msgstr "Total Paiement"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,state:0
+#: field:reglement.paiement,state:0
+#: field:reglement.piece,state:0
+#: field:reglement.retenu.source,state:0
+msgid "State"
+msgstr "État"
+
+#. module: sotebat_reglement
+#: field:reglement.detail,montant_rest:0
+msgid "Risidual Amount"
+msgstr "Montant Résiduel"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,mode_reglement:0
+msgid "Payment Mode"
+msgstr "Mode de Paiement"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_banque_form
+#: model:ir.ui.menu,name:sotebat_reglement.menu_banque_form
+#: view:reglement.banque:0
+msgid "Banque"
+msgstr "Banque"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_detail_impaye
+#: model:ir.model,name:sotebat_reglement.model_reglement_detail_piece
+#: view:reglement.detail.piece:0
+msgid "Payment Document"
+msgstr "Pièces Paiements"
+
+#. module: sotebat_reglement
+#: model:ir.module.module,shortdesc:sotebat_reglement.module_meta_information
+msgid "reglement"
+msgstr "Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.avance,montant:0
+#: field:reglement.detail.avoir,montant:0
+#: field:reglement.detail.impaye,montant:0
+msgid "Montant"
+msgstr "Montant"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.avance,montant_rest:0
+#: field:reglement.detail.avoir,montant_rest:0
+#: field:reglement.detail.impaye,montant_rest:0
+#: field:reglement.piece,montant_paye:0
+msgid "Montant Restant"
+msgstr "Montant Restant"
+
+#. module: sotebat_reglement
+#: view:reglement.detail:0
+#: view:reglement.detail.avoir:0
+#: field:reglement.detail.avoir,ttc:0
+#: selection:reglement.retenu,type:0
+#: view:reglement.retenu.source:0
+msgid "TTC"
+msgstr "TTC"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.impaye,titulaire:0
+#: field:reglement.detail.piece,titulaire:0
+#: field:reglement.piece,titulaire:0
+msgid "Holder"
+msgstr "Titulaire"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_piece_form
+#: model:ir.ui.menu,name:sotebat_reglement.menu_piece_form
+msgid "Piece Reglement"
+msgstr "Pièce Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,num_cheque_traite:0
+msgid "N Cheque/Traite"
+msgstr "Num. Chèque/Traité"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+msgid "Impayer"
+msgstr "Impayer"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:277
+#, python-format
+msgid "Le cheque a ete utilise dans une autre facture !"
+msgstr "Le chèque a été utilisé dans une autre facture !"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:531
+#: code:addons/sotebat_reglement/reglement.py:537
+#: code:addons/sotebat_reglement/reglement.py:582
+#: code:addons/sotebat_reglement/reglement.py:588
+#, python-format
+msgid "You Can not apply withholding tax !"
+msgstr "Vous ne pouvez pas appliquer la retenue à la source!"
+
+#. module: sotebat_reglement
+#: view:reglement.detail:0
+#: view:reglement.detail.avance:0
+#: view:reglement.detail.avoir:0
+#: view:reglement.detail.impaye:0
+msgid "Outstanding Amount"
+msgstr "Montant Restant à Payé"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,partner_id:0
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.avoir,num_facture:0
+msgid "N Avoir"
+msgstr "Num. Avoir"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+#: selection:reglement.piece,state:0
+msgid "Impaid"
+msgstr "Impayé"
+
+#. module: sotebat_reglement
+#: selection:reglement.avance,state:0
+msgid "Partially Paid"
+msgstr "Partiellement Payé"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.avance,avance_id:0
+msgid "Payment on account Ref"
+msgstr "Ref. Avance"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement_ref.py:85
+#, python-format
+msgid "Veuillez verifier la piece"
+msgstr "Veuillez verifier la piece"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+msgid "Pièce Client"
+msgstr "Pièce Client"
+
+#. module: sotebat_reglement
+#: view:reglement.retenu.source:0
+msgid "Deduction at source"
+msgstr "Retenue Facture"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:134
+#, python-format
+msgid "Veuillez verifier la facture %s\" %rd.invoice_id.number,))\n"
+"                if(rd.montant<(ttc-montant_paye)):\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"montant_paye:%s\"%montant_paye)\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"rd.montant_rest:%s\"%rd.montant_rest)\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"rd.montant:%s\"%rd.montant)\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s , residual=%s WHERE id=%s', (rd.montant, 'ppaid',rd.montant_rest-rd.montant , rd.invoice_id.id,))\n"
+"                else:\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, residual=%s WHERE id=%s', (rd.montant, 'paid', rd.montant_rest-rd.montant, rd.invoice_id.id,))\n"
+"\n"
+"\n"
+"            # Mise a jour  des Avoirs\n"
+"            rda_obj = self.pool.get('reglement.detail.avoir')\n"
+"            ai_obj = self.pool.get('account.invoice')\n"
+"            for rda_id in rda_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):\n"
+"                rda=rda_obj.browse(cr, uid, rda_id)\n"
+"		cr.execute(\"SELECT \n"
+"  reglement_detail_avoir.ttc, \n"
+"  reglement_detail_avoir.montant_rest, \n"
+"  account_invoice.montant_paye, \n"
+"  reglement_detail_avoir.montant\n"
+"FROM \n"
+"  account_invoice, \n"
+"  reglement_detail_avoir\n"
+"WHERE \n"
+"  reglement_detail_avoir.avoir_id = account_invoice.id and account_invoice.id=%s and reglement_detail_avoir.id =%s\n"
+"		      \",(rda.avoir_id.id,rda_id)\n"
+"			 ) \n"
+"      		line = cr.dictfetchall()[0]\n"
+"		var=0.0\n"
+"		montant_rest=line['montant_rest']\n"
+"		montant_paye=line['montant_paye']\n"
+"		montant=line['montant']\n"
+"		ttc=line['ttc']\n"
+"		var=ttc-(montant_paye+rda.montant)\n"
+"		if var<0:\n"
+"		  raise osv.except_osv(_('Les montants ont ete modifies !'),_(\"Veuillez verifier avoir numero %s\" %rda.avoir_id.number,))\n"
+"                if(rda.montant<(ttc-montant_paye)):\n"
+"                #if(rda.montant<rda.montant_rest):\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, residual=%s WHERE id=%s', (rda.montant, 'ppaid',rda.montant_rest-rda.montant, rda.avoir_id.id,))\n"
+"                else:\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, residual=%s WHERE id=%s', (rda.montant, 'paid',rda.montant_rest-rda.montant, rda.avoir_id.id,))\n"
+"\n"
+"            # Mise a jour  des Avances\n"
+"            rda_obj = self.pool.get('reglement.detail.avance')\n"
+"            ra_obj = self.pool.get('reglement.avance')\n"
+"            for rda_id in rda_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):\n"
+"                rda=rda_obj.browse(cr, uid, rda_id)\n"
+"				\n"
+"\n"
+"		cr.execute(\"SELECT \n"
+"  reglement_detail_avance.montant_avance, \n"
+"  reglement_detail_avance.montant_rest, \n"
+"  reglement_avance.montant_paye, \n"
+"  reglement_detail_avance.montant\n"
+"FROM \n"
+"  reglement_avance, \n"
+"  reglement_detail_avance\n"
+"WHERE \n"
+"  reglement_detail_avance.avance_id = reglement_avance.id and reglement_avance.id=%s and reglement_detail_avance.id =%s\n"
+"		      \",(rda.avance_id.id,rda_id)\n"
+"			 ) \n"
+"      		line = cr.dictfetchall()[0]\n"
+"		var=0.0\n"
+"		montant_rest=line['montant_rest']\n"
+"		montant_paye=line['montant_paye']\n"
+"		montant=line['montant']\n"
+"		montant_avance=line['montant_avance']\n"
+"		var=montant_avance-(montant_paye+rda.montant)\n"
+"		if var<0:\n"
+"		  raise osv.except_osv(_('Les montants ont ete modifies !'),_(\"Veuillez verifier avoir de montant %s\" %rda.avance_id.montant_avance,))\n"
+"\n"
+"\n"
+"		\n"
+"                #if(rda.montant<rda.montant_rest):\n"
+"                if(rda.montant<(montant_avance-montant_paye)):\n"
+"                  cr.execute('UPDATE  reglement_avance SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rda.montant, 'ppaid', rda.avance_id.id,))\n"
+"                else:\n"
+"                  cr.execute('UPDATE  reglement_avance SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rda.montant, 'paid', rda.avance_id.id,))\n"
+"\n"
+"            # Mise a jour  des impayes\n"
+"            rdi_obj = self.pool.get('reglement.detail.impaye')\n"
+"            rp_obj = self.pool.get('reglement.piece')\n"
+"            a=rdi_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)])\n"
+"            for rdi_id in rdi_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):\n"
+"                rdi=rdi_obj.browse(cr, uid, rdi_id)\n"
+"\n"
+"\n"
+"		cr.execute(\"SELECT \n"
+"  reglement_detail_impaye.montant_piece, \n"
+"  reglement_detail_impaye.montant_rest, \n"
+"  reglement_piece.montant_paye, \n"
+"  reglement_detail_impaye.montant\n"
+"FROM \n"
+"  reglement_piece, \n"
+"  reglement_detail_impaye\n"
+"WHERE \n"
+"  reglement_detail_impaye.piece_id = reglement_piece.id and reglement_piece.id=%s and reglement_detail_impaye.id =%s\n"
+"		      \",(rdi.piece_id.id,rdi_id)\n"
+"			 ) \n"
+"      		line = cr.dictfetchall()[0]\n"
+"		var=0.0\n"
+"		montant_rest=line['montant_rest']\n"
+"		montant_paye=line['montant_paye']\n"
+"		montant=line['montant']\n"
+"		montant_piece=line['montant_piece']\n"
+"		var=montant_piece-(montant_paye+rdi.montant)\n"
+"		if var<0:\n"
+"		  raise osv.except_osv(_('Les montants ont ete modifies !'),_(\"Veuillez verifier imapye numero %s\" %rdi.piece_id.num_cheque_traite,))\n"
+"\n"
+"                if(rdi.montant<rdi.montant_rest):\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"REG.- %s\" % rdi.piece_id.id)\n"
+"                  cr.execute('UPDATE  reglement_piece SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rdi.montant, 'pimpaid', rdi.piece_id.id,))\n"
+"                else:\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"test2"
+msgstr "Veuillez verifier la facture %s\" %rd.invoice_id.number,))\n"
+"                if(rd.montant<(ttc-montant_paye)):\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"montant_paye:%s\"%montant_paye)\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"rd.montant_rest:%s\"%rd.montant_rest)\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"rd.montant:%s\"%rd.montant)\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s , residual=%s WHERE id=%s', (rd.montant, 'ppaid',rd.montant_rest-rd.montant , rd.invoice_id.id,))\n"
+"                else:\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, residual=%s WHERE id=%s', (rd.montant, 'paid', rd.montant_rest-rd.montant, rd.invoice_id.id,))\n"
+"\n"
+"\n"
+"            # Mise a jour  des Avoirs\n"
+"            rda_obj = self.pool.get('reglement.detail.avoir')\n"
+"            ai_obj = self.pool.get('account.invoice')\n"
+"            for rda_id in rda_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):\n"
+"                rda=rda_obj.browse(cr, uid, rda_id)\n"
+"		cr.execute(\"SELECT \n"
+"  reglement_detail_avoir.ttc, \n"
+"  reglement_detail_avoir.montant_rest, \n"
+"  account_invoice.montant_paye, \n"
+"  reglement_detail_avoir.montant\n"
+"FROM \n"
+"  account_invoice, \n"
+"  reglement_detail_avoir\n"
+"WHERE \n"
+"  reglement_detail_avoir.avoir_id = account_invoice.id and account_invoice.id=%s and reglement_detail_avoir.id =%s\n"
+"		      \",(rda.avoir_id.id,rda_id)\n"
+"			 ) \n"
+"      		line = cr.dictfetchall()[0]\n"
+"		var=0.0\n"
+"		montant_rest=line['montant_rest']\n"
+"		montant_paye=line['montant_paye']\n"
+"		montant=line['montant']\n"
+"		ttc=line['ttc']\n"
+"		var=ttc-(montant_paye+rda.montant)\n"
+"		if var<0:\n"
+"		  raise osv.except_osv(_('Les montants ont ete modifies !'),_(\"Veuillez verifier avoir numero %s\" %rda.avoir_id.number,))\n"
+"                if(rda.montant<(ttc-montant_paye)):\n"
+"                #if(rda.montant<rda.montant_rest):\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, residual=%s WHERE id=%s', (rda.montant, 'ppaid',rda.montant_rest-rda.montant, rda.avoir_id.id,))\n"
+"                else:\n"
+"                  cr.execute('UPDATE  account_invoice SET montant_paye= montant_paye + %s , state=%s, residual=%s WHERE id=%s', (rda.montant, 'paid',rda.montant_rest-rda.montant, rda.avoir_id.id,))\n"
+"\n"
+"            # Mise a jour  des Avances\n"
+"            rda_obj = self.pool.get('reglement.detail.avance')\n"
+"            ra_obj = self.pool.get('reglement.avance')\n"
+"            for rda_id in rda_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):\n"
+"                rda=rda_obj.browse(cr, uid, rda_id)\n"
+"				\n"
+"\n"
+"		cr.execute(\"SELECT \n"
+"  reglement_detail_avance.montant_avance, \n"
+"  reglement_detail_avance.montant_rest, \n"
+"  reglement_avance.montant_paye, \n"
+"  reglement_detail_avance.montant\n"
+"FROM \n"
+"  reglement_avance, \n"
+"  reglement_detail_avance\n"
+"WHERE \n"
+"  reglement_detail_avance.avance_id = reglement_avance.id and reglement_avance.id=%s and reglement_detail_avance.id =%s\n"
+"		      \",(rda.avance_id.id,rda_id)\n"
+"			 ) \n"
+"      		line = cr.dictfetchall()[0]\n"
+"		var=0.0\n"
+"		montant_rest=line['montant_rest']\n"
+"		montant_paye=line['montant_paye']\n"
+"		montant=line['montant']\n"
+"		montant_avance=line['montant_avance']\n"
+"		var=montant_avance-(montant_paye+rda.montant)\n"
+"		if var<0:\n"
+"		  raise osv.except_osv(_('Les montants ont ete modifies !'),_(\"Veuillez verifier avoir de montant %s\" %rda.avance_id.montant_avance,))\n"
+"\n"
+"\n"
+"		\n"
+"                #if(rda.montant<rda.montant_rest):\n"
+"                if(rda.montant<(montant_avance-montant_paye)):\n"
+"                  cr.execute('UPDATE  reglement_avance SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rda.montant, 'ppaid', rda.avance_id.id,))\n"
+"                else:\n"
+"                  cr.execute('UPDATE  reglement_avance SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rda.montant, 'paid', rda.avance_id.id,))\n"
+"\n"
+"            # Mise a jour  des impayes\n"
+"            rdi_obj = self.pool.get('reglement.detail.impaye')\n"
+"            rp_obj = self.pool.get('reglement.piece')\n"
+"            a=rdi_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)])\n"
+"            for rdi_id in rdi_obj.search(cr, uid, [('reglement_id', '=', reg[0].id)]):\n"
+"                rdi=rdi_obj.browse(cr, uid, rdi_id)\n"
+"\n"
+"\n"
+"		cr.execute(\"SELECT \n"
+"  reglement_detail_impaye.montant_piece, \n"
+"  reglement_detail_impaye.montant_rest, \n"
+"  reglement_piece.montant_paye, \n"
+"  reglement_detail_impaye.montant\n"
+"FROM \n"
+"  reglement_piece, \n"
+"  reglement_detail_impaye\n"
+"WHERE \n"
+"  reglement_detail_impaye.piece_id = reglement_piece.id and reglement_piece.id=%s and reglement_detail_impaye.id =%s\n"
+"		      \",(rdi.piece_id.id,rdi_id)\n"
+"			 ) \n"
+"      		line = cr.dictfetchall()[0]\n"
+"		var=0.0\n"
+"		montant_rest=line['montant_rest']\n"
+"		montant_paye=line['montant_paye']\n"
+"		montant=line['montant']\n"
+"		montant_piece=line['montant_piece']\n"
+"		var=montant_piece-(montant_paye+rdi.montant)\n"
+"		if var<0:\n"
+"		  raise osv.except_osv(_('Les montants ont ete modifies !'),_(\"Veuillez verifier imapye numero %s\" %rdi.piece_id.num_cheque_traite,))\n"
+"\n"
+"                if(rdi.montant<rdi.montant_rest):\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"REG.- %s\" % rdi.piece_id.id)\n"
+"                  cr.execute('UPDATE  reglement_piece SET montant_paye= montant_paye + %s , state=%s WHERE id=%s', (rdi.montant, 'pimpaid', rdi.piece_id.id,))\n"
+"                else:\n"
+"                  logger.notifyChannel(\"server\", netsvc.LOG_INFO, \"test2"
+
+#. module: sotebat_reglement
+#: view:reglement.detail.avance:0
+msgid "Detail"
+msgstr "Détails"
+
+#. module: sotebat_reglement
+#: field:reglement.paiement,montant_total_apaye:0
+msgid "Total A Payer"
+msgstr "Total A Payer"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:537
+#: code:addons/sotebat_reglement/reglement.py:588
+#, python-format
+msgid "Please check Tax Type"
+msgstr "Veuillez vérifier le type du taxe"
+
+#. module: sotebat_reglement
+#: selection:reglement.avance,state:0
+#: view:reglement.paiement:0
+#: selection:reglement.paiement,state:0
+#: selection:reglement.piece,state:0
+#: selection:reglement.retenu.source,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: sotebat_reglement
+#: selection:reglement.avance,state:0
+#: selection:reglement.paiement,state:0
+msgid "Closed"
+msgstr "Fermé"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+#: selection:reglement.piece,state:0
+msgid "Cashed"
+msgstr "Encaissé"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "payment on account"
+msgstr "Avance"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_detail_avance
+#: field:reglement.paiement,reglement_detail_avance:0
+msgid "Reglement Detail Avance"
+msgstr "Détails Règlement Avance"
+
+#. module: sotebat_reglement
+#: field:reglement.detail,ttc:0
+#: field:reglement.retenu.source,ttc:0
+msgid "Total Amount"
+msgstr "Montant Total"
+
+#. module: sotebat_reglement
+#: selection:reglement.avance,state:0
+msgid "Paid"
+msgstr "Payé"
+
+#. module: sotebat_reglement
+#: field:reglement.paiement,date_reglement:0
+msgid "Payment Date"
+msgstr "Date Paiement"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,piece_id:0
+msgid "Cheque"
+msgstr "Chèque"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,date_avance:0
+#: field:reglement.detail,date_invoice:0
+#: field:reglement.detail.avance,date_avance:0
+#: field:reglement.detail.avoir,date_invoice:0
+#: field:reglement.retenu.source,date_retenu:0
+msgid "Date"
+msgstr "Date"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Payment on account"
+msgstr "Avance"
+
+#. module: sotebat_reglement
+#: selection:reglement.retenu,type:0
+msgid "TVA"
+msgstr "TVA"
+
+#. module: sotebat_reglement
+#: view:reglement.avance:0
+msgid "Avance"
+msgstr "Avance"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+#: view:reglement.retenu.source:0
+msgid "Valider"
+msgstr "Valider"
+
+#. module: sotebat_reglement
+#: field:reglement.retenu.source,retenu_id:0
+msgid "Ref Retenu"
+msgstr "Ref. Retenue"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Compute"
+msgstr "Calculer"
+
+#. module: sotebat_reglement
+#: field:reglement.banque,designation:0
+#: field:reglement.mode,designation:0
+#: field:reglement.retenu,code:0
+msgid "Designation"
+msgstr "Désignation"
+
+#. module: sotebat_reglement
+#: view:reglement.retenu:0
+msgid "Retenu"
+msgstr "Retenue"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_retenu_form
+#: model:ir.ui.menu,name:sotebat_reglement.menu_retenu_form
+msgid "Taux Source Retenu"
+msgstr "Taxe Retenue "
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Unpaid"
+msgstr "Impayé"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.impaye,date_echance:0
+#: field:reglement.detail.piece,date_echance:0
+#: field:reglement.piece,date_echance:0
+msgid "Maturity Date"
+msgstr "Date d'échéance"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,partner_id:0
+msgid "Client"
+msgstr "Client"
+
+#. module: sotebat_reglement
+#: selection:reglement.paiement,type:0
+msgid "Supplier Payment"
+msgstr "Paiement Fournisseur"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:134
+#: code:addons/sotebat_reglement/reglement.py:169
+#: code:addons/sotebat_reglement/reglement.py:203
+#: code:addons/sotebat_reglement/reglement.py:241
+#, python-format
+msgid "Les montants ont ete modifies !"
+msgstr "Les montants ont été modifiés !"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Refund"
+msgstr "Avoir"
+
+#. module: sotebat_reglement
+#: field:reglement.detail,invoice_id:0
+#: field:reglement.retenu.source,invoice_id:0
+msgid "Invoice Ref"
+msgstr "Ref. Facture"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:364
+#: code:addons/sotebat_reglement/reglement.py:408
+#: code:addons/sotebat_reglement/reglement.py:447
+#: code:addons/sotebat_reglement/reglement.py:482
+#, python-format
+msgid "Veuillez modifier ce montant  !"
+msgstr "Veuillez modifier ce montant  !"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_piece
+#: field:reglement.paiement,reglement_details_piece:0
+msgid "Reglement Piece"
+msgstr "Règlement Pièce"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.piece,num_cheque_traite:0
+msgid "Number"
+msgstr "Numéro"
+
+#. module: sotebat_reglement
+#: selection:reglement.piece,nature_piece:0
+msgid "Piece Client"
+msgstr "Pièce Client"
+
+#. module: sotebat_reglement
+#: view:reglement.detail:0
+msgid "Invoice Details"
+msgstr "Détails Facture"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:289
+#, python-format
+msgid "Les montants de debit et de credit sont differents !"
+msgstr "Les montants de débit et de crédit sont différents !"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_account_invoice
+#: view:reglement.paiement:0
+#: view:reglement.retenu.source:0
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: sotebat_reglement
+#: view:reglement.avance:0
+#: view:reglement.paiement:0
+#: selection:reglement.retenu.source,state:0
+msgid "Close"
+msgstr "Fermer"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.piece,piece_id:0
+msgid "Numero Piece"
+msgstr "Numéro Pièce"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+msgid "Settlement"
+msgstr "Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,montant_paye:0
+msgid "Montant Paye"
+msgstr "Montant Payé"
+
+#. module: sotebat_reglement
+#: view:reglement.piece:0
+msgid "Notre Propre Pièce"
+msgstr "Notre Propre Pièce"
+
+#. module: sotebat_reglement
+#: model:ir.actions.act_window,name:sotebat_reglement.action_avance_form
+#: model:ir.ui.menu,name:sotebat_reglement.menu_avance_form
+msgid "Avance Client"
+msgstr "Avance Client"
+
+#. module: sotebat_reglement
+#: selection:reglement.paiement,type:0
+msgid "Customer Payment"
+msgstr "Paiement Client"
+
+#. module: sotebat_reglement
+#: view:reglement.detail.impaye:0
+msgid "Montant Pièce"
+msgstr "Montant Pièce"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_mode
+msgid "Reglement Mode"
+msgstr "Mode Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.avoir,montant_reglement:0
+msgid "Montant Reglement"
+msgstr "Montant Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,agence:0
+msgid "Bank Agency"
+msgstr "Agence Bancaire"
+
+#. module: sotebat_reglement
+#: view:reglement.retenu.source:0
+msgid "Deduction at source Type"
+msgstr "Type Retenue à la source"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.impaye,reglement_id:0
+msgid "Payment ID"
+msgstr "ID. Paiement"
+
+#. module: sotebat_reglement
+#: field:reglement.paiement,reglement_detail_impaye:0
+msgid "Reglement Detail Impaye"
+msgstr "Détails Règlement Impayé"
+
+#. module: sotebat_reglement
+#: field:reglement.paiement,type:0
+#: field:reglement.retenu,type:0
+#: field:reglement.retenu.source,type:0
+msgid "Type"
+msgstr "Type"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:277
+#, python-format
+msgid "Veuillez verifier la piece %s\" %line['num_cheque_traite'],))\n"
+"                		res[rp.id]['debit_total'] += cheque.montant_piece \n"
+"			for line in rp.reglement_detail:\n"
+"                		res[rp.id]['credit_total'] += line.montant\n"
+"			for avoir in rp.reglement_detail_avoir:\n"
+"                		res[rp.id]['debit_total'] +=avoir.montant \n"
+"			for avance in rp.reglement_detail_avance:\n"
+"                		res[rp.id]['debit_total'] += avance.montant\n"
+"			for impaye in rp.reglement_detail_impaye:\n"
+"                		res[rp.id]['credit_total'] += impaye.montant	\n"
+"                	res[rp.id]['debit_total'] += rp.montant_espece\n"
+"            if res[rp.id]['debit_total'] != res[rp.id]['credit_total']:\n"
+"               raise osv.except_osv(_('Les montants de debit et de credit sont differents !'),_(\"Veuillez verifier toutes les pieces de paiement !"
+msgstr "Veuillez verifier la piece %s\" %line['num_cheque_traite'],))\n"
+"                		res[rp.id]['debit_total'] += cheque.montant_piece \n"
+"			for line in rp.reglement_detail:\n"
+"                		res[rp.id]['credit_total'] += line.montant\n"
+"			for avoir in rp.reglement_detail_avoir:\n"
+"                		res[rp.id]['debit_total'] +=avoir.montant \n"
+"			for avance in rp.reglement_detail_avance:\n"
+"                		res[rp.id]['debit_total'] += avance.montant\n"
+"			for impaye in rp.reglement_detail_impaye:\n"
+"                		res[rp.id]['credit_total'] += impaye.montant	\n"
+"                	res[rp.id]['debit_total'] += rp.montant_espece\n"
+"            if res[rp.id]['debit_total'] != res[rp.id]['credit_total']:\n"
+"               raise osv.except_osv(_('Les montants de debit et de credit sont differents !'),_(\"Veuillez verifier toutes les pieces de paiement !"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_retenu
+msgid "Retenu A La Source"
+msgstr "Retenue Facture"
+
+#. module: sotebat_reglement
+#: field:reglement.detail.piece,reglement_id:0
+msgid "Numero Payment"
+msgstr "Numéro Paiement"
+
+#. module: sotebat_reglement
+#: field:reglement.piece,banque_id:0
+msgid "Bank"
+msgstr "Banque"
+
+#. module: sotebat_reglement
+#: view:reglement.paiement:0
+#: field:reglement.paiement,partner_id:0
+#: field:reglement.retenu.source,partner_id:0
+msgid "Customer"
+msgstr "Client"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement_avance.py:39
+#, python-format
+msgid "Veuillez saisir un montant different de 0 !"
+msgstr "Veuillez saisir un montant différent de 0 !"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:387
+#: code:addons/sotebat_reglement/reglement.py:468
+#: code:addons/sotebat_reglement/reglement.py:493
+#, python-format
+msgid "Pas de partenaire choisi !"
+msgstr "Pas de partenaire choisi !"
+
+#. module: sotebat_reglement
+#: field:account.invoice,statu_retenu:0
+msgid "Etat retenu"
+msgstr "État Retenue"
+
+#. module: sotebat_reglement
+#: view:reglement.avance:0
+msgid "Numéro Pièce"
+msgstr "Numéro Pièce"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_banque
+#: model:ir.model,name:sotebat_reglement.model_reglement_paiement
+msgid "Reglement Banque"
+msgstr "Règlement Banque"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_retenu_source
+msgid "reglement.retenu.source"
+msgstr "reglement.retenu.source"
+
+#. module: sotebat_reglement
+#: view:reglement.mode:0
+msgid "Mode"
+msgstr "Mode"
+
+#. module: sotebat_reglement
+#: field:reglement.retenu,designation:0
+#: field:reglement.retenu.source,designation:0
+msgid "Taux"
+msgstr "Taux"
+
+#. module: sotebat_reglement
+#: view:reglement.avance:0
+msgid "Avances"
+msgstr "Avances"
+
+#. module: sotebat_reglement
+#: model:ir.model,name:sotebat_reglement.model_reglement_avance
+msgid "Reglement Avance"
+msgstr "Règlement Avance"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement.py:563
+#, python-format
+msgid "Veuillez verifier la facture "
+msgstr "Veuillez vérifier la facture "
+
+#. module: sotebat_reglement
+#: model:ir.module.module,description:sotebat_reglement.module_meta_information
+#: model:ir.ui.menu,name:sotebat_reglement.menu_reglement
+#: field:reglement.detail,reglement_id:0
+#: field:reglement.detail.avance,reglement_id:0
+#: field:reglement.detail.avoir,reglement_id:0
+#: view:reglement.piece:0
+#: field:reglement.retenu.source,reglement_id:0
+msgid "Reglement"
+msgstr "Règlement"
+
+#. module: sotebat_reglement
+#: field:reglement.avance,currency_id:0
+msgid "Devise"
+msgstr "Devise"
+
+#. module: sotebat_reglement
+#: code:addons/sotebat_reglement/reglement_ref.py:85
+#, python-format
+msgid "le montant du cheque ne peut pas etre nul !"
+msgstr "le montant du cheque ne peut pas etre nul !"
+

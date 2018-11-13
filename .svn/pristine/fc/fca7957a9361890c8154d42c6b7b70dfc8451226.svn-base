@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <button name="do_print_picking" position="replace"/>
+                <button name="action_confirm" position="replace">
+                    <button name="action_confirm" states="draft" string="Mark as Todo" type="object" class="oe_highlight" groups="base.group_user"/>
+                </button>
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">"draft,assigned,done"</attribute>
+                </field>
+                <field name="partner_id" position="after">
+                    <!--field name="do_filter"  attrs="{'invisible': [('picking_type_id', '=', 2)]}"/>
+                    <field name="purchase_id"  attrs="{'invisible': [('picking_type_id', '=', 2)]}" domain="[('partner_id','=',partner_id)]" string="Bon de Commande" on_change="onchange_filter(do_filter,purchase_id)"/-->
+                    <!--field name="product_domain" invisible="1"/-->
+                </field>
+                <xpath expr="//field[@name='move_lines']" position="after">
+                    <group>
+                        <group>
+                            <field name="tax_line" nolabel="1">
+                                <tree editable="bottom" string="Taxes">
+                                        <field name="name"/>
+                                        <field name="account_id" groups="account.group_account_invoice"/>
+                                        <field name="base" on_change="base_change(base,parent.currency_id,parent.company_id,parent.date_invoice)" readonly="1"/>
+                                        <field name="amount" on_change="amount_change(amount,parent.currency_id,parent.company_id,parent.date_invoice)"/>
+                                        <field invisible="True" name="base_amount"/>
+                                        <field invisible="True" name="tax_amount"/>
+                                        <field name="factor_base" invisible="True"/>
+                                        <field name="factor_tax" invisible="True"/>
+                                </tree>
+                            </field>
+                        </group>
+	            
+ 		        <group class="oe_right">
+                            <button colspan="2" name="button_reset_taxes" string="Compute Taxes" type="object" icon="terp-stock_format-scientific"/>                               
+			    <field name="undiscount_total" />
+                            <label string="" colspan="2"/>
+		            <field name="discount_total" />
+                            <label string="" colspan="2"/>
+		            <field name="amount_untaxed"  string ="Total NHT"/>
+                            <label string="" colspan="2"/>
+                            <field name="amount_tax"  string="Total Taxes"/>
+                            <field name="amount_total"/>
+                            <!-- TODO pourquoi ce bouton -->
+                            <button name="draft_validate" states="draft" string="Process Now" type="object" icon="gtk-yes" colspan="4"/>        
+                        </group>                    
+                    </group>
+               </xpath>
+<!-- 
+	champs inutils
+ -->
+		<xpath expr="//page[@string='Additional Info']" position="attributes">
+			<attribute name="invisible">True</attribute>
+		</xpath>
+            </field>
+        </record>
+
+	<record id="view_move_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.move.form.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="replace">
+                    <field name="product_id" on_change="onchange_product_id(product_id,location_id,location_dest_id, parent.partner_id)"/>
+                    <field name="default_code" string="Référence"/>
+                    <field name="price_unit" />
+                    <field name="discount"/>
+                    <!--field name="product_order_qty" attrs="{'invisible': [('picking_type_id', '=', 2)]}" readonly="1"/>
+                    <field name="product_reste_qty" attrs="{'invisible': [('picking_type_id', '=', 2)]}" readonly="1"/-->
+                </field>
+                <xpath expr="//group[@string='Locations']" position="before">
+                    <group string="Taxes">
+                        <field colspan="4" name="move_tax_id" domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]" nolabel="1"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@name='quants_grp']" position="replace"/>
+                <button name="%(stock.move_scrap)d"
+                                            position="replace"/> 
+                <xpath expr="//form[@string='Stock Moves']/group/group[2]" position="attributes"> 
+                     <attribute name="invisible">True</attribute>
+                </xpath> 
+                <xpath expr="//group[@string='Locations']" position="attributes">   
+                    <attribute name="invisible">True</attribute>
+                </xpath> 
+            </field>
+        </record> 
+
+        <record id="view_move_picking_tree_inherit" model="ir.ui.view">
+            <field name="name">stock.move.tree.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_uom_qty" position="after">
+                    <field name="price_unit"/>
+                    <field name="discount"/>
+                </field>
+                <field name="product_uos_qty" position="replace"/>
+                <field name="product_uos" position="replace"/>
+                <field name="location_dest_id" position="replace"/>
+                <field name="string_availability_info" position="replace"/>
+                <button name="%(stock.move_scrap)d" position="replace"/>
+                <field name="state" position="after">
+                    <field name="price_subtotal"/>  
+                </field>
+            </field>
+        </record>   
+
+    </data>
+</openerp>
+

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sotebat_price_compare" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2396694214876043"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="35"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="LOGO_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/home/odoo/odoo-8/openerp/addons/office_stat/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="raison_sociale" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/raison_sociale]]></fieldDescription>
+	</field>
+	<field name="num_BonReception" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/num_BonReception]]></fieldDescription>
+	</field>
+	<field name="date_br" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/date_br]]></fieldDescription>
+	</field>
+	<field name="ref_article" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/ref_article]]></fieldDescription>
+	</field>
+	<field name="designation_article" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/designation_article]]></fieldDescription>
+	</field>
+	<field name="qte_article" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/qte_article]]></fieldDescription>
+	</field>
+	<field name="num_article" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/num_article]]></fieldDescription>
+	</field>
+	<field name="chantier" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/chantier]]></fieldDescription>
+	</field>
+	<field name="montant_article" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/montant_article]]></fieldDescription>
+	</field>
+	<field name="product_udm" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/product_udm]]></fieldDescription>
+	</field>
+	<field name="matricule_fiscale" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/matricule_fiscale]]></fieldDescription>
+	</field>
+	<field name="ref_fournisseur" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/ref_fournisseur]]></fieldDescription>
+	</field>
+	<field name="header1" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/header1]]></fieldDescription>
+	</field>
+	<field name="header2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/header2]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/user]]></fieldDescription>
+	</field>
+	<field name="stat_path" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/stat_path]]></fieldDescription>
+	</field>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{montant_article}]]></variableExpression>
+	</variable>
+	<group name="nom_emp">
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement x="168" y="12" width="143" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Désignation]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="311" y="12" width="37" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[QTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="348" y="12" width="43" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[UDM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="477" y="12" width="78" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Montant]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="12" width="77" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="12" width="90" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[N°BR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="391" y="12" width="86" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Chantier ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="28">
+				<staticText>
+					<reportElement x="1" y="0" width="476" height="23"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Montant Total  :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="477" y="0" width="78" height="23"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{variable1}.setScale(3)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="4"/>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="0" width="200" height="44"/>
+				<imageExpression><![CDATA[$F{stat_path} + "logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="13" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Etat Des Bons  De Réception Non Facturés]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="55" width="110" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Fournisseur :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="55" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{raison_sociale}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="95" width="110" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Matricule Fiscale :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="95" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricule_fiscale}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="75" width="110" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Référence :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="75" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ref_fournisseur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="345" y="55" width="69" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Elaboré le :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="414" y="55" width="141" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="391" y="0" width="86" height="21"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{chantier}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="0" width="78" height="21"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montant_article}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="348" y="0" width="43" height="21"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_udm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="0" width="37" height="21"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qte_article}.setScale(0)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="168" y="0" width="143" height="21"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{designation_article}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="77" height="21"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_br}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="0" width="90" height="21"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num_BonReception}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="71" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

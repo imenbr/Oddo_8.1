@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_stock_inventory_view' model="ir.ui.view">
+            <field name="name">Stock inventory</field>
+            <field name="model">wizard.stock.inventory</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Modèle d'inventaire" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        <field name="inventory_id" required='1' domain="[('state','=','confirm')]"/>
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Annuler"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Générer Rapport"/>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_stock_inventory">
+            <field name="name">Stock inventory</field>
+            <field name="res_model">wizard.stock.inventory</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_stock_inventory_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Modèle d'inventaire"
+		model="stock.inventory"
+		auto="True"
+		name="jasper_report_stock_inventory_print"
+		rml="office_stat/stock_inventory/report/stock_inventory.jrxml"
+		id="report_stock_inventory"
+		menu="False"
+		/>
+
+        <menuitem id="submenu_stock_inventory" name="Modèle d'Inventaire" action="action_wizard_stock_inventory" parent="menu_reporting_office" sequence="10"/>
+
+    </data>
+</openerp>
+

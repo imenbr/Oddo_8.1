@@ -1,0 +1,333 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from datetime import datetime, timedelta
+import openerp.addons.decimal_precision as dp
+from openerp.osv import fields, osv
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP
+from openerp import api
+class importation_produit(osv.osv):
+    _name = "importation.produit"
+    _description = "Importation Produit"
+
+
+    @api.one
+    @api.depends('importation_lines.price_subtotal_dt','importation_lines.price_subtotal_euro','importation_lines.DD','charges_importation_lines.amount_charge')
+    def _amount_all(self):
+        '''
+           Methode qui calcule les montants suivants
+           amount_untaxed
+           amount_tax
+           amount_total
+           undiscount_total
+           discount_total  
+        '''  
+		#self.amount_untaxed = sum(line.price_subtotal for line in self.devis_lines)
+
+
+        
+ 
+        self.amount_total_euro = sum(line.price_subtotal_euro for line in self.importation_lines)
+        self.amount_total_dt = sum(line.price_subtotal_dt for line in self.importation_lines)
+        self.amount_total_chrage_dt = sum(line.amount_charge for line in self.charges_importation_lines)
+        self.amount_total_DD = sum(line.DD for line in self.importation_lines)
+
+
+
+
+
+    _columns = {
+        'name' : fields.char('Référence', required=True),
+        'date' : fields.datetime('Date', required=True),
+        'partner_id' : fields.many2one('res.partner', required=True,domain="[('supplier','=',True)]",string="Fournisseur"),
+        'facture_id' : fields.many2one('account.invoice', required=True,string="Facture"),
+        'taux': fields.float('Taux Douane',required=True, digits_compute= dp.get_precision('Payment Term')),
+        'amount_invoice_euro': fields.float('Montant Facture €', readonly=True, digits_compute= dp.get_precision('Account')),
+        'amount_invoice_DT': fields.float('Montant Facture DT', readonly=True, digits_compute= dp.get_precision('Account')),
+        'importation_lines': fields.one2many('importation.produit.line', 'importation_id', ' '),        	'amount_total_euro':fields.float(string='Total €', digits_compute=dp.get_precision('Account'),
+        store=True, readonly=True, compute='_amount_all', track_visibility='always'),
+	'amount_total_dt':fields.float(string='Total DT', digits_compute=dp.get_precision('Account'),
+        store=True, readonly=True, compute='_amount_all', track_visibility='always'),
+        'charges_importation_lines': fields.one2many('charge.importation.produit.line', 'importation_id', ' '),       
+	'amount_total_chrage_dt':fields.float(string='Total Charges DT', digits_compute=dp.get_precision('Account'),
+        store=True, readonly=True, compute='_amount_all', track_visibility='always'),
+        'categ_lines': fields.one2many('importation.produit.categ', 'importation_id'," "),   
+	'amount_total_DD':fields.float(string='Total DD DT', digits_compute=dp.get_precision('Account'),
+        store=True, readonly=True, compute='_amount_all', track_visibility='always'),    
+
+
+
+
+    }
+
+    def button_calcul_categ(self, cr, uid, ids, context=None):
+		print "****************"
+		imporation_obj=self.browse(cr, uid, ids)
+		categ_ids = self.pool.get('product.category.douane').search(cr, uid, [])
+		categ_obj = self.pool.get('product.category.douane').browse(cr, uid,categ_ids)
+		if imporation_obj.categ_lines:
+			for line in imporation_obj.categ_lines:
+				self.pool.get('importation.produit.categ').unlink(cr, uid, line.id)
+				print "ancien supp"
+		if categ_obj:
+			for categ in categ_obj:
+				print "==============",categ.category_lines[0]['taux']
+				print "==============",categ.category_lines[0]['frais_id'].name
+				import_lines_ids=self.pool.get('importation.produit.line').search(cr, uid, [('importation_id','=',ids[0]),('categ_id','=',categ.id)])
+				import_lines=self.pool.get('importation.produit.line').browse(cr, uid,import_lines_ids)
+				if import_lines:
+					montant_total_categ=0.0
+
+					for line in import_lines:
+						print "les calcules"
+						montant_total_categ+=line.price_subtotal_dt
+					total=(montant_total_categ*categ.category_lines[0]['taux'])+(montant_total_categ*categ.category_lines[1]['taux'])+(montant_total_categ*categ.category_lines[2]['taux'])+(montant_total_categ*categ.category_lines[4]['taux'])
+					for line in import_lines:
+						taux_DD= line.price_subtotal_dt / montant_total_categ
+						DD=taux_DD*total
+						FF=line.taux_FF*imporation_obj.amount_total_chrage_dt
+						price_subtotal_revient_dt=line.price_subtotal_dt+DD+FF
+						price_unit_revient_dt=price_subtotal_revient_dt / line.product_qty
+						marge_35=price_unit_revient_dt*1.35
+						marge_50=price_unit_revient_dt*1.5
+						coeff_rev=price_unit_revient_dt/line.price_unit
+						self.pool.get('importation.produit.line').write(cr, uid, line.id,{ 'taux_DD': taux_DD,'DD':DD, 'FF':FF ,'price_subtotal_revient_dt':price_subtotal_revient_dt, 'price_unit_revient_dt':price_unit_revient_dt, 'marge_35':marge_35, 'marge_50':marge_50,'coeff_rev':coeff_rev })
+					val={
+						'name':categ.name,
+						'taux_1':categ.category_lines[0]['taux'],
+						'taux_2':categ.category_lines[1]['taux'],
+						'taux_3':categ.category_lines[2]['taux'],
+						'taux_4':categ.category_lines[3]['taux'],
+						'taux_5':categ.category_lines[4]['taux'],
+						'total':total,
+						'importation_id':ids[0],
+					}
+					inv_id=self.pool.get('importation.produit.categ').create(cr,uid,val)
+
+
+
+
+
+
+    def button_add_invoice(self, cr, uid, ids, context=None):
+	 
+
+		imporation_obj=self.browse(cr, uid, ids)
+		print "*****************",imporation_obj.facture_id.id
+		if not imporation_obj.taux :
+			raise osv.except_osv(('Taux erroné'), ('Veuillez mentionner le Taux '))
+		for invoice in self.pool.get('account.invoice').browse(cr, uid,imporation_obj.facture_id.id):
+			amount_invoice_euro=invoice.amount_total
+			amount_invoice_DT=amount_invoice_euro*imporation_obj.taux
+		self.write(cr, uid, ids,{ 'amount_invoice_euro': amount_invoice_euro,'amount_invoice_DT': amount_invoice_DT,})
+		invoice_lines_id = self.pool.get('account.invoice.line').search(cr, uid, [('invoice_id', '=', imporation_obj.facture_id.id)])
+		invoice_lines_obj = self.pool.get('account.invoice.line').browse(cr, uid,invoice_lines_id)
+		for line in invoice_lines_obj:
+			
+				val={
+					'product_id':line.product_id.id,
+					'designation':line.name,
+					'price_unit':line.price_unit,
+					'product_qty':line.quantity,
+					'price_subtotal_euro':line.price_subtotal,
+					'price_subtotal_dt':line.price_subtotal * imporation_obj.taux,
+					'taux_FF':(line.price_subtotal * imporation_obj.taux)/imporation_obj.amount_invoice_DT,
+					'importation_id':ids[0],
+
+				}
+
+				inv_id=self.pool.get('importation.produit.line').create(cr,uid,val)
+
+
+
+importation_produit()
+
+
+class importation_produit_line(osv.osv):
+    _name = "importation.produit.line"
+    _description = "Importation Produit Line"
+
+
+
+    @api.one
+    @api.depends('price_unit', 'product_qty','product_id', 'importation_id.taux')#, 'devis_id.currency_id')
+    def _amount_line(self):
+        '''
+           Methode qui permet de calculer le sous total d'une ligne
+        '''
+        if self.importation_id.taux:
+		
+		    #taxes = self.tax_ids.compute_all(price, self.product_qty, product=self.product_id, partner=self.devis_id.partner_id)
+		    self.price_subtotal_euro = self.price_unit * self.product_qty
+		    self.price_subtotal_dt = self.price_subtotal_euro / self.importation_id.taux
+		    #print "000000",self.importation_id.currency_id.rate_silent
+
+		
+
+
+
+
+    _columns = {
+
+        'importation_id' : fields.many2one('importation.produit' , 'Importation Produit' , ondelete='cascade'),
+        'categ_id' : fields.many2one('product.category.douane' , 'NGP' , ondelete='cascade'),
+        'product_id': fields.many2one('product.product', 'Produit', ondelete='restrict'),
+        'designation': fields.char('Désignation '),
+        'taux_FF': fields.float('% FF',readonly=True, digits_compute= dp.get_precision('Account')),
+        'taux_DD': fields.float('% DD',readonly=True, digits_compute= dp.get_precision('Account')),
+        'FF': fields.float('F Fixes',readonly=True, digits_compute= dp.get_precision('Account')),
+        'DD': fields.float('DD',readonly=True, digits_compute= dp.get_precision('Account')),
+        'price_unit': fields.float('PU €', digits_compute= dp.get_precision('Account')),
+        'product_qty': fields.float('Qté',digits_compute= dp.get_precision('Discount')),
+        'price_subtotal_dt': fields.float('Prix Total DT', digits_compute= dp.get_precision('Account'),store=True, readonly=True, compute='_amount_line'),
+        'price_subtotal_revient_dt': fields.float('Prix Total Revient', digits_compute= dp.get_precision('Account'),store=True, readonly=True, compute='_amount_line'),
+        'price_unit_revient_dt': fields.float('Prix U revient', digits_compute= dp.get_precision('Account')),
+        'marge_35': fields.float('Marge 35 %', digits_compute= dp.get_precision('Account')),
+        'marge_50': fields.float('Marge 50 %', digits_compute= dp.get_precision('Account')),
+        'coeff_rev': fields.float('Coeff rev', digits_compute= dp.get_precision('Account')),
+        #'price_subtotal_DD': fields.float('Sous Total Douane', digits_compute= dp.get_precision('Account'),store=True, readonly=True, compute='_amount_line'),
+        #'tax_ids': fields.many2many('account.tax', 'importation_produit_line_tax', 'importation_line_id', 'tax_id', 'Taxes', ),
+        'price_subtotal_euro':fields.float(string='Prix Total €', digits_compute= dp.get_precision('Account'),
+        store=True, readonly=True, compute='_amount_line'),
+
+
+    }
+
+
+    _defaults = {
+        'product_qty': lambda *a: 1.00,
+
+        'price_unit': lambda *a:  0.0,
+    }
+
+
+    def product_id_change(self, cr, uid, ids, product,  context=None):
+
+	res_final = {}
+        if product:
+            #les informations sur le produit
+			
+            taux=0.0
+            product_obj = self.pool.get('product.product').browse(cr,uid,product,context=context)
+            print "categorie =====",product_obj.categ_id.id
+            product_categ_obj = self.pool.get('product.category').browse(cr,uid,product_obj.categ_id.id,context=context)
+            #product_DD_obj = self.pool.get('frais.douane.produit').browse(cr,uid,product_categ_obj.faris_douane_id.id,context=context)
+            designation=product_obj.name_template
+            #if product_DD_obj:
+				#taux=product_DD_obj.taux
+            #price = product_obj.lst_price
+            #les informations sur les taxes du produit
+	    taxes = self.pool.get('product.product').browse(cr,uid,product,context=context)
+
+            res_final = {'value':{'designation':designation ,}}#'tax_ids': taxes.supplier_taxes_id,'taux':taux
+        return res_final
+
+
+importation_produit_line()
+
+class charge_importation_produit(osv.osv):
+
+    _name = "charge.importation.produit"
+    _description = "Charge Importation Produit"
+
+
+    _columns = {
+
+        'name' : fields.char("Name" ,required=True),
+
+
+
+
+
+    }
+charge_importation_produit()
+
+class importation_produit_categ(osv.osv):
+
+    _name = "importation.produit.categ"
+    _description = "importation produit par categ"
+
+
+    _columns = {
+
+        'importation_id' : fields.many2one('importation.produit' , ' ' , ondelete='cascade'),
+        'name' : fields.char("Catégorie" ,required=True),
+        'taux_1' : fields.float('001' ,required=True,digits_compute= dp.get_precision('Account')),
+        'taux_2' : fields.float('093' ,required=True,digits_compute= dp.get_precision('Account')),
+        'taux_3' : fields.float('473' ,required=True,digits_compute= dp.get_precision('Account')),
+        'taux_4' : fields.float('105' ,required=True,digits_compute= dp.get_precision('Account')),
+        'taux_5' : fields.float('AIR' ,required=True,digits_compute= dp.get_precision('Account')),
+        'total' : fields.float('TOTAL' ,required=True,digits_compute= dp.get_precision('Account')),
+
+
+
+
+    }
+
+
+
+
+importation_produit_categ()
+
+
+
+class frais_var_produit(osv.osv):
+
+    _name = "frais.var.produit"
+    _description = "Frais Variable Importation Produit"
+
+
+    _columns = {
+
+        'name' : fields.char('Name' ,required=True),
+        #'taux' : fields.float('Taux Douane' ,required=True),
+
+
+
+
+
+    }
+frais_var_produit()
+
+
+
+
+
+
+
+
+class charge_importation_produit_line(osv.osv):
+    _name = "charge.importation.produit.line"
+    _description = "Charge Importation Produit"
+
+
+    _columns = {
+        'importation_id' : fields.many2one('importation.produit' , 'Importation Produit' , ondelete='cascade'),
+        'charge_id' : fields.many2one('charge.importation.produit' ,'Type Charge'),
+        'amount_charge': fields.float('Montant', digits_compute= dp.get_precision('Account')),
+
+
+
+
+    }
+charge_importation_produit_line()
+
+

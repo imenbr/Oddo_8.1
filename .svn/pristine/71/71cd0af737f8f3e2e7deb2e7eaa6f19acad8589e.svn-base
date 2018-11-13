@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_conge_view' model="ir.ui.view">
+            <field name="name">Les conges des employees </field>
+            <field name="model">wizard.conge</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Les conges des employees " >
+                    <group col="2" fill="0" colspan="4">
+			
+                        <field name="employee_id" string="Employee" />
+                        <field name="date_from" />
+			<field name="date_to" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_conge">
+            <field name="name">Les conges d'un employee</field>
+            <field name="res_model">wizard.conge</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_conge_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Les conges des employees"
+		model="hr.holidays"
+		auto="True"
+		name="jasper_conge_print"
+		rml="office_hr_holidays/report/conge_emp.jrxml"
+		id="emp_conge"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_conge_report" name="Etat conges employée" action="action_wizard_conge" parent="hr_holidays.menu_open_ask_holidays"  sequence="12" groups="base.group_hr_manager" />
+    </data>
+</openerp>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <record id="view_partner_form_extension" model="ir.ui.view">
+            <field name="name">partner.form.extension</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="reference" readonly="1"/>
+                    <field name="mf" />
+                    <field name="code_tva" />
+                    <field name="code_categ" />
+                    <field name="num_etab" />
+              	</field>
+                <xpath expr="//page[@string='Sales &amp; Purchases']/group/group[2]/field[@name='supplier']" position="after">
+		    <field name="exoner" />
+		    <field name="timbre" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_liste_cheque_fournisseur_view' model="ir.ui.view">
+            <field name="name">Liste Des Chéques</field>
+            <field name="model">wizard.liste.cheque.fournisseur</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Liste Des Chéques" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <field name="partner_ids" string="Fournisseur" domain="[('supplier','=',True)]"/><!-- liste des fournisseurs -->
+                        <field name="type_paiement"/><!-- type de paiement Traite ou Chèque -->
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_liste_cheque_fournisseur">
+            <field name="name">Liste Des Chéques</field>
+            <field name="res_model">wizard.liste.cheque.fournisseur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_liste_cheque_fournisseur_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Liste Des Chéques"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_liste_cheque_fournisseur_print"
+		rml="office_stat/liste_cheque_fournisseurs/report/liste_cheque.jrxml"
+		id="etat_liste_cheque_fournisseur"
+		menu="False"
+		/>
+        <!--
+            REGLEMENT/RAPPORTS/ECHEANCE CHEQUE FOURNISSEUR 
+        -->
+        <menuitem id="submenu_wizard_liste_cheque_fournisseur" name="Echéance Chèque Fournisseur" action="action_wizard_liste_cheque_fournisseur" parent="menu_rapport_reglement" sequence="6"/>
+
+    </data>
+</openerp>
+

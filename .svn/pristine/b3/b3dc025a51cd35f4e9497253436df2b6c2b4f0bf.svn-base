@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sale_order_report" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="OPENERP_RELATIONS" value="[&apos;order_line&apos;]"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/mehdi/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreport1" class="java.lang.Object"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Taxes-amount_tax" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Taxes-amount_tax]]></fieldDescription>
+	</field>
+	<field name="Total-amount_total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Total-amount_total]]></fieldDescription>
+	</field>
+	<field name="Montant_hors_taxe-amount_untaxed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Montant_hors_taxe-amount_untaxed]]></fieldDescription>
+	</field>
+	<field name="Description-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Description-name]]></fieldDescription>
+	</field>
+	<field name="Sous_total-price_subtotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Sous_total-price_subtotal]]></fieldDescription>
+	</field>
+	<field name="Prix_unitaire-price_unit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Prix_unitaire-price_unit]]></fieldDescription>
+	</field>
+	<field name="Unite_de_mesure-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Unite_de_mesure-product_uom/Unite_de_mesure-name]]></fieldDescription>
+	</field>
+	<field name="Quantite-product_uom_qty" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Quantite-product_uom_qty]]></fieldDescription>
+	</field>
+	<field name="Remise-discount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Remise-discount]]></fieldDescription>
+	</field>
+	<field name="Reference_commande-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Reference_commande-name]]></fieldDescription>
+	</field>
+	<field name="Reference_interne-default_code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Product_Template-product_tmpl_id/Reference_interne-default_code]]></fieldDescription>
+	</field>
+	<field name="Date-date_order" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Date-date_order]]></fieldDescription>
+	</field>
+	<field name="Date_de_confirmation-date_confirm" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Date_de_confirmation-date_confirm]]></fieldDescription>
+	</field>
+	<field name="Price_Reduce-price_reduce" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_la_commande-order_line/Price_Reduce-price_reduce]]></fieldDescription>
+	</field>
+	<group name="line">
+		<groupExpression><![CDATA[$F{Reference_commande-name}]]></groupExpression>
+		<groupHeader>
+			<band height="175">
+				<staticText>
+					<reportElement x="88" y="154" width="156" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Désignation]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="244" y="154" width="56" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Quantité]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="300" y="154" width="53" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Unité]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="353" y="154" width="70" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PUHT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="423" y="154" width="65" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[%Remise]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="488" y="154" width="84" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Net HT]]></text>
+				</staticText>
+				<rectangle radius="10">
+					<reportElement x="0" y="16" width="159" height="56"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="24" width="159" height="20"/>
+					<box topPadding="3">
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bon de commande N°]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="48" width="159" height="21"/>
+					<box topPadding="3"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{Reference_commande-name}]]></textFieldExpression>
+				</textField>
+				<rectangle radius="10">
+					<reportElement x="423" y="16" width="149" height="53"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="423" y="22" width="149" height="20"/>
+					<box topPadding="3">
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<rectangle radius="10">
+					<reportElement x="293" y="83" width="279" height="21"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="295" y="84" width="132" height="20"/>
+					<box leftPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date de livraison :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="154" width="88" height="21"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[REF]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="426" y="46" width="144" height="20"/>
+					<box topPadding="3"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{Date-date_order}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="427" y="84" width="145" height="21"/>
+					<box leftPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{Date_de_confirmation-date_confirm}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="190">
+				<rectangle radius="10">
+					<reportElement x="390" y="13" width="170" height="90"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="396" y="48" width="74" height="20"/>
+					<box topPadding="3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Taxes :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="71" width="74" height="21"/>
+					<box topPadding="3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="17" y="166" width="466" height="21"/>
+					<box topPadding="3" leftPadding="3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Veuillez agréer, Monsieur, notre parfaite considération]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="24" width="74" height="21"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total NHT :]]></text>
+				</staticText>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="480" y="24" width="79" height="20"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{Montant_hors_taxe-amount_untaxed}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="480" y="72" width="79" height="20"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{Total-amount_total}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="481" y="48" width="79" height="20"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{Taxes-amount_tax}.setScale(3)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="93" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="87" width="572" height="1"/>
+			</line>
+			<subreport>
+				<reportElement x="9" y="5" width="553" height="77"/>
+				<subreportParameter name="company_id"/>
+				<dataSourceExpression><![CDATA[$P{subreport1}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="88" y="0" width="156" height="20"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Description-name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="244" y="0" width="56" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Quantite-product_uom_qty}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="53" height="20"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Unite_de_mesure-name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="70" height="20"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Prix_unitaire-price_unit}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="423" y="0" width="65" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Remise-discount}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="488" y="0" width="84" height="20"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Sous_total-price_subtotal}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="88" height="20"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Reference_interne-default_code}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="112" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="4" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="263" y="79" width="46" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

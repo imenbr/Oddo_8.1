@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="workflow" id="wkf_reglement">
+            <field name="name">reglement.wkf</field>
+            <field name="osv">reglement.paiement</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="act_draft">
+            <field name="wkf_id" ref="wkf_reglement" />
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">reg_draft()</field>
+        </record>
+
+        <record model="workflow.activity" id="act_close">
+            <field name="wkf_id" ref="wkf_reglement" />
+            <field name="name">close</field>
+            <field name="kind">function</field>
+            <field name="action">reg_close()</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.activity" id="act_cancel">
+            <field name="wkf_id" ref="wkf_reglement" />
+            <field name="name">cancel</field>
+            <field name="kind">function</field>
+            <field name="action">reg_cancel()</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.transition" id="t2">
+            <field name="act_from" ref="act_draft" />
+            <field name="act_to" ref="act_close" />
+            <field name="signal">reg_close</field>
+        </record>
+
+        <record model="workflow.transition" id="t4">
+            <field name="act_from" ref="act_close" />
+            <field name="act_to" ref="act_cancel" />
+            <field name="signal">reg_cancel</field>
+        </record>
+
+
+
+
+
+        <record model="workflow" id="wkf_avance">
+            <field name="name">avance.wkf</field>
+            <field name="osv">reglement.avance</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="avance_act_draft">
+            <field name="wkf_id" ref="wkf_avance" />
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">reg_draft()</field>
+        </record>
+
+        <record model="workflow.activity" id="avance_act_close">
+            <field name="wkf_id" ref="wkf_avance" />
+            <field name="name">close</field>
+            <field name="kind">function</field>
+            <field name="action">reg_close()</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+
+        <record model="workflow.transition" id="avance_draft_close">
+            <field name="act_from" ref="avance_act_draft" />
+            <field name="act_to" ref="avance_act_close" />
+            <field name="signal">reg_close</field>
+        </record>
+
+
+        <record model="workflow" id="wkf_piece">
+            <field name="name">piece.wkf</field>
+            <field name="osv">reglement.piece</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="piece_act_draft">
+            <field name="wkf_id" ref="wkf_piece" />
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">reg_draft()</field>
+        </record>
+
+        <record model="workflow.activity" id="piece_act_free">
+            <field name="wkf_id" ref="wkf_piece" />
+            <field name="name">free</field>
+            <field name="kind">function</field>
+            <field name="action">reg_free()</field>
+        </record>
+
+        <record model="workflow.activity" id="piece_act_impaid">
+            <field name="wkf_id" ref="wkf_piece" />
+            <field name="name">impaid</field>
+            <field name="kind">function</field>
+            <field name="action">reg_impaid()</field>
+            <field name="flow_stop">True</field> 
+        </record>
+
+
+        <record model="workflow.activity" id="piece_act_cashed">
+            <field name="wkf_id" ref="wkf_piece" />
+            <field name="name">cashed</field>
+            <field name="kind">function</field>
+            <field name="action">reg_cashed()</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+
+        <record model="workflow.transition" id="piece_draft_free">
+            <field name="act_from" ref="piece_act_draft" />
+            <field name="act_to" ref="piece_act_free" />
+            <field name="signal">reg_free</field>
+        </record>
+
+        <record model="workflow.transition" id="piece_free_impaid">
+            <field name="act_from" ref="piece_act_free"/>
+            <field name="act_to" ref="piece_act_impaid"/>
+            <field name="signal">reg_impaid</field>
+        </record>
+
+        <record model="workflow.transition" id="piece_free_cashed">
+            <field name="act_from" ref="piece_act_free" />
+            <field name="act_to" ref="piece_act_cashed" />
+            <field name="signal">reg_cashed</field>
+        </record>
+
+
+    </data>
+</openerp>

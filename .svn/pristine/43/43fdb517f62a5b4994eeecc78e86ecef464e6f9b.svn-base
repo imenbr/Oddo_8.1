@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase.trans_router_invoice" model="workflow.transition">
+            <field name="act_from" ref="purchase.act_router"/>
+            <field name="act_to" ref="purchase.act_invoice"/>
+            <!-- ajouter la condition create_invoice==True pour stopper la creation de la facure à partir de la bc -->
+            <field name="condition">invoice_method=='order' and create_invoice==True</field>
+        </record>
+        <record id="purchase.act_done" model="workflow.activity">
+            <field name="wkf_id" ref="purchase.purchase_order"/>
+            <field name="name">done</field>
+            <field name="action">wkf_po_done()</field>
+            <field name="kind">function</field>
+            <field name="flow_stop">True</field>
+            <!--field name="join_mode">AND</field-->
+            <!-- rendre le BC terminee si toutes les livraisons reliées à cette commande sont livrées-->
+            <field name="join_mode">XOR</field>
+        </record>
+
+	 <record id="purchase.trans_confirmed_router" model="workflow.transition">
+            <field name="act_from" ref="purchase.act_confirmed"/>
+            <field name="act_to" ref="purchase.act_router"/>
+	    <field name="condition">create_pick</field>
+
+        </record>
+
+	<record id="act_new" model="workflow.activity">
+            <field name="wkf_id" ref="purchase.purchase_order"/>
+            <field name="name">new</field>
+            <field name="split_mode">OR</field>
+            <field name="kind">function</field>
+            <field name="join_mode">AND</field>
+            <field name="action">wkf_approve_order()</field>
+        </record>
+	 <record id="trans_confirmed_new" model="workflow.transition">
+            <field name="act_from" ref="purchase.act_confirmed"/>
+            <field name="act_to" ref="act_new"/>
+            <!-- <field name="signal">purchase_approve</field> removed from simplification/useability -->
+       </record>
+	
+
+    </data>
+</openerp>

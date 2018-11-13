@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="maroua_rapport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Ville-city" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Client-partner_id/Ville-city]]></fieldDescription>
+	</field>
+	<field name="Nom-display_name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Client-partner_id/Nom-display_name]]></fieldDescription>
+	</field>
+	<field name="Reference-reference" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Reference-reference]]></fieldDescription>
+	</field>
+	<field name="Date-date" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Date-date]]></fieldDescription>
+	</field>
+	<field name="Courriel-email" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Courriel-email]]></fieldDescription>
+	</field>
+	<field name="Fax-fax" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Fax-fax]]></fieldDescription>
+	</field>
+	<field name="Nom_de_la_societe-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Nom_de_la_societe-name]]></fieldDescription>
+	</field>
+	<field name="Tel.-phone" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Tel.-phone]]></fieldDescription>
+	</field>
+	<field name="Adresse_complete-contact_address" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Client-partner_id/Adresse_complete-contact_address]]></fieldDescription>
+	</field>
+	<field name="Designation__commentaire-designation" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ligne_de_devis-devis_lines/Designation__commentaire-designation]]></fieldDescription>
+	</field>
+	<field name="Remise-discount" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ligne_de_devis-devis_lines/Remise-discount]]></fieldDescription>
+	</field>
+	<field name="Prix-price_unit" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ligne_de_devis-devis_lines/Prix-price_unit]]></fieldDescription>
+	</field>
+	<field name="Reference_interne-default_code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ligne_de_devis-devis_lines/Produit-product_id/Reference_interne-default_code]]></fieldDescription>
+	</field>
+	<field name="Montant-amount" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_Tax-tax_lines/Montant-amount]]></fieldDescription>
+	</field>
+	<field name="Nom_de_la_case_de_taxe-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_Tax-tax_lines/Code_Taxe-tax_code_id/Nom_de_la_case_de_taxe-name]]></fieldDescription>
+	</field>
+	<field name="Designation__commentaire-designation2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ligne_de_devis-devis_lines/Designation__commentaire-designation]]></fieldDescription>
+	</field>
+	<group name="line">
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement  x="12" y="28" width="71" height="20"/>
+					<textElement/>
+					<text><![CDATA[Reference]]></text>
+				</staticText>
+				<staticText>
+					<reportElement  x="88" y="28" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Designation]]></text>
+				</staticText>
+				<staticText>
+					<reportElement  x="193" y="28" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Prix Unitaire]]></text>
+				</staticText>
+				<staticText>
+					<reportElement  x="299" y="28" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Remise]]></text>
+				</staticText>
+				<staticText>
+					<reportElement  x="399" y="28" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[TVA]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="706">
+			<textField>
+				<reportElement  x="293" y="88" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Remise-discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement  x="13" y="88" width="71" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Reference_interne-default_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement  x="194" y="88" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Prix-price_unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement  x="89" y="90" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Designation__commentaire-designation2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement  x="391" y="22" width="36" height="20"/>
+				<textElement/>
+				<text><![CDATA[Client:]]></text>
+			</staticText>
+			<textField>
+				<reportElement  x="427" y="22" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Nom-display_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="391" y="58" width="36" height="20"/>
+				<textElement/>
+				<text><![CDATA[Adresse]]></text>
+			</staticText>
+			<textField>
+				<reportElement  x="427" y="58" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Ville-city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement  x="426" y="73" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Fax-fax}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="103" splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="50"/>
+	</noData>
+</jasperReport>

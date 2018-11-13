@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+<!--==================== wizard View ==================-->
+        <record id='wizard_dec_cnss_view' model="ir.ui.view">
+            <field name="name">Declaration CNSS</field>
+            <field name="model">declaration.cnss.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Declaration CNSS" >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <!--<field name="date_debut" />-->
+			<field name="trimestre" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_dec_cnss">
+            <field name="name">Declaration CNSS</field>
+            <field name="res_model">declaration.cnss.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_dec_cnss_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Declaration CNSS"
+		model="hr.payslip"
+		auto="True"
+		name="jasper_declaration_cnss_print"
+		rml="pay_report/declaration_cnss/report/declaration_cnss.jrxml"
+		id="dec_cnss"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_dec_cnss_report" name="Declaration CNSS" action="action_wizard_dec_cnss" parent="menu_hr_root_payroll_report"  sequence="2"/>
+    </data>
+</openerp>
+

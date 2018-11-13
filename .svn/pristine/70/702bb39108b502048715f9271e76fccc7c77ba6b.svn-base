@@ -1,0 +1,104 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* sotebat_quotation_request
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2013-08-12 22:26+0000\n"
+"PO-Revision-Date: 2013-08-12 22:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request.line,product_id:0
+msgid "Product"
+msgstr "Produit"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request,name:0
+msgid "Description"
+msgstr "Description"
+
+#. module: sotebat_quotation_request
+#: view:quotation.request:0
+msgid "Reference"
+msgstr "Référence"
+
+#. module: sotebat_quotation_request
+#: model:ir.actions.act_window,name:sotebat_quotation_request.quotation_request_action
+msgid "Requests for Quotation"
+msgstr "Demande de prix"
+
+#. module: sotebat_quotation_request
+#: view:quotation.request:0
+msgid "Request for quotation"
+msgstr "Demande de prix"
+
+#. module: sotebat_quotation_request
+#: view:quotation.request:0
+#: field:quotation.request,notes:0
+msgid "Notes"
+msgstr "Notes"
+
+#. module: sotebat_quotation_request
+#: model:ir.model,name:sotebat_quotation_request.model_quotation_request
+msgid "quotation.request"
+msgstr "quotation.request"
+
+#. module: sotebat_quotation_request
+#: view:quotation.request.line:0
+msgid "Request for quotation Line"
+msgstr "Lignes de Demande de prix"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request,quotation_request_ref:0
+#: field:quotation.request.line,quotation_request_id:0
+msgid "Quotation Request Reference"
+msgstr "Référence"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request.line,product_uom:0
+msgid "Product UOM"
+msgstr "Unité"
+
+#. module: sotebat_quotation_request
+#: view:quotation.request:0
+msgid "Request for quotation Lines"
+msgstr "Lignes de Demande de prix"
+
+#. module: sotebat_quotation_request
+#: model:ir.model,name:sotebat_quotation_request.model_quotation_request_line
+msgid "quotation.request.line"
+msgstr "quotation.request.line"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request,quotation_request_line:0
+msgid "Quotation Request Line"
+msgstr "Lignes de Demande de prix"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request,date_quotation_req:0
+msgid "Date Quotation Request"
+msgstr "Date"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request.line,product_qty:0
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request,partner_id:0
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: sotebat_quotation_request
+#: field:quotation.request.line,name:0
+msgid "Name"
+msgstr "Nom"
+

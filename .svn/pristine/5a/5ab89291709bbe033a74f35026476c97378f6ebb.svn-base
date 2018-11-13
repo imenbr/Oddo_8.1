@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_etat_caution_view' model="ir.ui.view">
+            <field name="name">Etat Cautions et Garantie</field>
+            <field name="model">wizard.etat.caution</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Etat Cautions et Garantie" >
+                   <group col="2" fill="0" colspan="4">
+			
+                      
+			
+			
+                        <field name="date_debut"  />
+			<field name="date_fin"  />
+			
+			
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<!--<button type="object" name="calculer"  string="calculer"/>-->
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_etat_caution">
+            <field name="name">Etat Cautions et Garanties</field>
+            <field name="res_model">wizard.etat.caution</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_etat_caution_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Etat Cautions et Garantie"
+		model="office.caution"
+		auto="True"
+		name="jasper_etat_caution_print"
+		rml="office_cautions/report/report_caution.jrxml"
+		id="etat_caution"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_etat_caution_report" name="Etat Cautions et Garanties" action="action_wizard_etat_caution" parent="main_stfn_menu"  sequence="8"/>
+    </data>
+</openerp>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<record id="view_sample_data_form" model="ir.ui.view">
+        <field name="name">sample.data.form</field>
+        <field name="model">sample.data</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Export">
+              <group colspan="4" col="4">               
+                 <button  icon="gtk-ok" name="action_sample_data"  string="Generate Data" type="object"/>                
+               <field name="file"  filename="filename"/>
+            </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generate_data" model="ir.actions.act_window">
+        <field name="name">Data</field>
+        <field name="res_model">sample.data</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+       <field name="view_id" ref="view_sample_data_form"/>
+       <field name="target">new</field>
+       <field name="context">{'model':'sample.data'}</field>
+    </record>  
+
+   <act_window name="Data"
+               res_model="sample.data"
+               src_model="sample.data"
+               view_mode="form"
+               target="new"
+               key2="client_action_multi"
+               id="window_action_sample_data_download"/>
+
+
+
+ <menuitem id="submenu_wizar_report" name="dec disq cnss" action="window_action_sample_data_download" parent="pay_report.menu_hr_root_payroll_report" sequence="6"/>
+
+    </data>
+</openerp>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_reception_stock_view' model="ir.ui.view">
+            <field name="name">Receptions</field>
+            <field name="model">reception.stock</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Reception des commandes" >
+			<group col="2" fill="0" colspan="4">
+                   <field name="qt_recu" String="Quantité réçu"/>
+		   <field name="product_id" />
+			<field name="commande_id" />
+		<!--<field name="message" />-->
+		</group>
+		<group colspan="2">
+                            <div class="oe_button_box oe_right">
+
+				<button special="cancel" icon="gtk-cancel" string="Annuler"/>
+	                        <button type="object" name="create_move" icon="gtk-go-forward" string="Valider"/>
+			    </div>
+                        </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_wizard_reception_stock">
+            <field name="name">Reception</field>
+            <field name="res_model">reception.stock</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_reception_stock_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="submenu_wizard_reception_stock" name="Reception" action="action_wizard_wizard_reception_stock" parent="aaa_openacademy.openacademy_menu"  sequence="4" />
+    </data>
+</openerp>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_compare_prices_view' model="ir.ui.view">
+            <field name="name">Compare prices</field>
+            <field name="model">price.compare</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Compare supplier prices" >
+                    <group col="2" fill="0" states="choose">
+                        <separator string="Suppliers" />
+ 			<field name="supplier_ids" colspan="4" nolabel="1" required="1"/>
+			<separator string="Products"/>
+ 			<field name="product_ids" colspan="4" nolabel="1" required="1"/>
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_compare_prices">
+            <field name="name">Comparer prix fournisseurs</field>
+            <field name="res_model">price.compare</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_compare_prices_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Supplier"
+		model="product.supplierinfo"
+		auto="True"
+		name="jasper_report_price_print"
+		rml="office_stat/price_compare/report/supplier_price_compare.jrxml"
+		id="supplier_compare_prices"
+		menu="False"
+		/>
+        <!--
+            ENTREPOT/OFFICE RAPPORT/COMPARER PRIX FOURNISSEURS
+        -->
+        <menuitem id="submenu_report_price" name="Comparer prix fournisseurs" action="action_compare_prices" sequence ="1" parent="menu_reporting_office"/>
+
+    </data>
+</openerp>
+

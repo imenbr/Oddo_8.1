@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="liste_cheque" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2396694214876043"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="LOGO_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/home/odoo/odoo-8/openerp/addons/office_stat/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="header1" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/header1]]></fieldDescription>
+	</field>
+	<field name="header2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/header2]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/user]]></fieldDescription>
+	</field>
+	<field name="partenaire" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/partenaire]]></fieldDescription>
+	</field>
+	<field name="num_cheque_traite" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/num_cheque_traite]]></fieldDescription>
+	</field>
+	<field name="date_echeance" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/date_echeance]]></fieldDescription>
+	</field>
+	<field name="montant_piece" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/montant_piece]]></fieldDescription>
+	</field>
+	<field name="nature_piece" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/nature_piece]]></fieldDescription>
+	</field>
+	<field name="mode_reglement" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/mode_reglement]]></fieldDescription>
+	</field>
+	<field name="etat_piece" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/etat_piece]]></fieldDescription>
+	</field>
+	<field name="nom_banque" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/nom_banque]]></fieldDescription>
+	</field>
+	<field name="stat_path" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/stat_path]]></fieldDescription>
+	</field>
+	<variable name="montant_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{montant_piece}]]></variableExpression>
+	</variable>
+	<group name="nom_emp">
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="119" height="20"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Partenaire]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="119" y="0" width="111" height="20"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[N°Chèque/Traite]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="379" y="0" width="98" height="20"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Mode Reglement]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="0" width="80" height="20"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date Echéance ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="310" y="0" width="69" height="20"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Etat]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="477" y="0" width="78" height="20"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Montant]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<staticText>
+					<reportElement x="379" y="0" width="98" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Montant Total  :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="false">
+					<reportElement x="477" y="0" width="78" height="20"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montant_total}.setScale(3)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="4"/>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="200" height="44"/>
+				<imageExpression><![CDATA[$F{stat_path}+ "logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="13" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[LISTE DES CHEQUES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="34" width="69" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Elaboré le :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="414" y="34" width="141" height="20"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="119" height="23"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{partenaire}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="0" width="111" height="23"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{num_cheque_traite}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="80" height="23"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{date_echeance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="379" y="0" width="98" height="23"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{mode_reglement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="69" height="23"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{etat_piece}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="0" width="78" height="23"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{montant_piece}.setScale(3)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="487"/>
+	</columnFooter>
+</jasperReport>

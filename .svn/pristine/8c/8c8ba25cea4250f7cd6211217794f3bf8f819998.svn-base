@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<record id="view_report_xls_form" model="ir.ui.view">
+        <field name="name">xls.report.view</field>
+        <field name="model">xls.report</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Export">
+              <group colspan="4" col="4">               
+                 <button  icon="gtk-ok" name="report_xls"  string="Generate Data" type="object"/>                
+
+            </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_xls_report" model="ir.actions.act_window">
+        <field name="name">xls report</field>
+        <field name="res_model">xls.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+
+
+
+    </record>  
+
+   
+
+    </data>
+</openerp>
+

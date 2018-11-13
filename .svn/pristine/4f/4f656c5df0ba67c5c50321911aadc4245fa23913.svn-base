@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="purchase.menu_procurement_management_invoice" name="Invoice Control"
+        parent="base.menu_purchase_root" groups="base.group_no_one" sequence="6"/>
+<menuitem id="purchase.menu_procurement_management_inventory" name="Incoming Products"
+            parent="base.menu_purchase_root" sequence="4" groups="base.group_no_one"  />
+        <!--
+            purchase.order
+        -->
+        <record id="view_purchase_order_form_inherited" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <button name="bid_received" position="replace"/>
+                <button name="wkf_send_rfq" position="replace"/>
+                <button name="wkf_send_rfq" position="replace"/>
+                <button name="print_quotation" position="replace"/>
+                <button name="print_quotation" position="replace"/>
+                <button name="wkf_send_rfq" position="replace"/>
+                <field name="partner_ref" position="replace"/>
+		<button name="view_picking" position="replace"/>
+                    <button name="view_invoice" position="replace" />
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,bid,approved,done" position="attributes">
+                    <attribute name="statusbar_visible">"draft,approved,done"</attribute>
+                </field>
+                <xpath expr="//form[@string='Purchase Order']/sheet/group/group[2]/field[@name='company_id']" position="replace"/>
+                <xpath expr="//form[@string='Purchase Order']/sheet/group/group[2]/field[@name='picking_type_id']" position="attributes">
+                    <attribute name="invisible">True</attribute> 
+                </xpath>
+                <xpath expr="//form[@string='Purchase Order']/sheet/group/group[2]/field[@name='date_order']" position="after">
+                    <field name="date_shipping" required="1"/>
+                    <field name="create_invoice" invisible="1"/>
+                </xpath>
+                <page string="RFQ &amp; Bid" position="replace"/>
+                
+                <xpath expr="//page[@string='Deliveries &amp; Invoices']" position="attributes">
+                    <attribute name="invisible">True</attribute> 
+                </xpath>
+                <xpath expr="//page[@string='Products']/field[@name='order_line']/tree/field[@name='product_qty']" position="replace"> 
+                    <field name="default_code"/>
+                    <field name="ref_supplier" invisible="1"/>
+                    <field name="name_prod_supplier" invisible="1"/>
+	            <!--field name="rest_product_qty" invisible="1"/--> 
+                    <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,False,parent.state,context)"/>
+                </xpath>
+                <xpath expr="//page[@string='Products']/field[@name='order_line']/tree/field[@name='date_planned']" position="attributes">
+                    <attribute name="invisible">True</attribute> 
+                </xpath>
+                <xpath expr="//page[@string='Products']/field[@name='order_line']/tree/field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">True</attribute> 
+                </xpath>
+                <xpath expr="//page[@string='Products']/field[@name='order_line']/tree/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="invisible">True</attribute> 
+                </xpath>
+                <xpath expr="//page[@string='Products']/field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                    <field name="discount"/>
+                </xpath>
+                
+                <xpath expr="//form[@string='Purchase Order']/sheet/notebook/page[@string='Products']" position="after">                   
+                    <page string="Résiliation">
+                        <group>
+                            <field name="resiliation_cause" colspan="4" />
+			   <field name="create_pick" invisible="1" />
+                        </group>
+                    </page>
+
+                </xpath>
+		<xpath expr="//form[@string='Purchase Order']/sheet/div[@class='oe_title']/h1/label[position()=1]" position="replace">
+			<label string="Purchase Order " attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="purchase_order_tree_inherited" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="shipped_rate" widget="progressbar" string="Réception (%)"/>
+                </field>
+            </field>
+        </record>
+
+        <!--
+            purchase.order.line
+        -->
+        <record id="purchase_order_line_inherited_form" model="ir.ui.view">
+            <field name="name">purchase.order.line.inherited.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@string='Purchase Order Line']/sheet/group/group[1]/field[@name='product_id']" position="after">
+	            <field name="default_code"/>
+                    <field name="ref_supplier" invisible="1"/>
+                    <field name="name_prod_supplier" invisible="1"/>
+                </xpath>
+                <!--xpath expr="//form[@string='Purchase Order Line']/sheet/group/group[1]/div/field[@name='product_qty']" position="replace">
+                    <field name="product_qty" on_change='on_qty_change(product_qty,rest_product_qty)'/>
+	            <field name="rest_product_qty" />
+                </xpath-->
+                <xpath expr="//form[@string='Purchase Order Line']/sheet/group/group[1]/field[@name='price_unit']" position="before">
+	            <field name="discount"/>
+                </xpath>
+            </field>
+        </record>
+        <delete model="ir.ui.menu" id="purchase.menu_purchase_rfq"/>
+        <delete model="ir.ui.menu"  id="purchase.menu_purchase_form_action" />
+
+        <record id="purchase_form_action3" model="ir.actions.act_window">
+            <field name="name">Purchase Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form,graph,calendar</field>
+            <field name="context">{}</field>
+            <!--field name="domain">[('state','not in',('bid'))]</field-->
+            <!--field name="search_view_id" ref="view_purchase_order_filter"/-->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation that will be converted into a purchase order. 
+              </p><p>
+                Use this menu to search within your purchase orders by
+                references, supplier, products, etc. For each purchase order,
+                you can track the related discussion with the supplier, control
+                the products received and control the supplier invoices.
+              </p>
+            </field>
+        </record>
+        <menuitem name="Bons de Commande" action="purchase_form_action3" id="menu_purchase_form_action3" parent="purchase.menu_procurement_management" sequence="6"/>
+<!--        <menuitem action="purchase.purchase_rfq" id="purchase.menu_purchase_rfq"
+            parent="purchase.menu_procurement_management"
+            sequence="7"/>-->
+    </data>
+</openerp>
+

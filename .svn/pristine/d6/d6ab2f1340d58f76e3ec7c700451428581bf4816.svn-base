@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Resource: sale.devis -->
+        <record id="test_devis_1" model="sale.devis">
+            <field model="res.partner" name="partner_id" search="[]"/>
+            <field model="res.company" name="company_id" search="[]"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M')" search="[]"/>
+        </record>
+
+    </data>
+</openerp>

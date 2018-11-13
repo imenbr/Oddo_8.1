@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+ <record id="product_category_douane_form" model="ir.ui.view">
+            <field name="name">product.category.douane.form</field>
+            <field name="model">product.category.douane</field>
+            <field name="type">form</field>
+
+            <field name="arch" type="xml">
+
+	            <sheet><group>
+			<field name="name" string="Nom Catégorie "/>
+
+                  	 </group>
+			
+			<field name="category_lines"  widget="one2many_list">
+			     <tree string="Charge Importation Produit">
+				  <field name="frais_id"/>
+			          <field name="taux"/>
+                		
+
+			     </tree>
+
+			<form string="Frais Categorie">
+                                  <group>
+				      <field name="frais_id"/>
+			          <field name="taux"/>
+                                  </group>
+			     </form>
+		
+			</field>	
+
+			 </sheet>
+			
+            </field>
+        </record>
+
+
+
+
+	
+	<record id="view_product_category_douane_tree" model="ir.ui.view">
+            <field name="name">product.category.douane.tree</field>
+            <field name="model">product.category.douane</field>
+
+            <field name="arch" type="xml">
+                <tree string="Categorie">
+                   <field name="name"/>
+                   
+                </tree>
+            </field>
+        </record>
+
+
+<record id="action_product_category_douane" model="ir.actions.act_window">
+            <field name="name">Categorie Douane</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.category.douane</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_product_category_douane_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_product_category_douane_item" name="Categorie Douane" parent="menu_configuration_importation_produit" action="action_product_category_douane" groups="base.group_sale_salesman,base.group_sale_manager" />
+
+
+
+
+
+
+
+ </data>
+</openerp>
+

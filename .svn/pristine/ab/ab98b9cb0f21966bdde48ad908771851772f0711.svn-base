@@ -1,0 +1,316 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from datetime import datetime, timedelta
+#from dateutil.relativedelta import relativedelta
+import openerp.addons.decimal_precision as dp
+from openerp.osv import fields, osv
+#from openerp.tools.translate import _
+#from openerp.tools.float_utils import float_compare
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP
+from openerp import api
+class sale_order_line(osv.osv):
+
+    	_name = 'sale.order.line'
+    	_inherit = 'sale.order.line'
+	
+        
+
+
+    	_columns = {
+		#'discount': fields.float('Discount (%)'),
+		#'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Discount'), readonly=True, states={'draft': [('readonly', False)]}),
+		#'state': fields.selection(
+                #[('cancel', 'Cancelled'),('draft', 'Draft'),('confirmed', 'Confirmed'),('exception', 'Exception'),('done', 'Done')],
+                #'Status', required=True, readonly=True, copy=False,
+                #help='* The \'Draft\' status is set when the related sales order in draft status. \
+                   # \n* The \'Confirmed\' status is set when the related sales order is confirmed. \
+                    #\n* The \'Exception\' status is set when the related sales order is set as exception. \
+                    #\n* The \'Done\' status is set when the sales order line has been picked. \
+                    #\n* The \'Cancelled\' status is set when a user cancel the sales order related.'),
+		'default_code' : fields.char('Référence', size=64),
+		'product_uom_qty': fields.float('Quantity', digits_compute= dp.get_precision('Product UoS'), required=True, readonly=True, states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)], 'done': [('readonly', False)]}),
+		'price_unit': fields.float('Unit Price', required=True, digits_compute= dp.get_precision('Product Price'), readonly=True, states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)], 'done': [('readonly', False)]}),
+		'name': fields.text('Description', required=True, readonly=True, states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)], 'done': [('readonly', False)]}),
+		'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], change_default=True, readonly=True, states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)], 'done': [('readonly', False)]}, ondelete='restrict'),
+		'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Discount'), readonly=True, states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)], 'done': [('readonly', False)]}),
+		'tax_id': fields.many2many('account.tax', 'sale_order_tax', 'order_line_id', 'tax_id', 'Taxes', readonly=True, states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)], 'done': [('readonly', False)]}),
+    		}
+	def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=None):
+		context = context or {}
+		lang = lang or context.get('lang', False)
+		if not partner_id:
+		    raise osv.except_osv(_('No Customer Defined!'), _('Before choosing a product,\n select a customer in the sales form.'))
+		warning = False
+		product_uom_obj = self.pool.get('product.uom')
+		partner_obj = self.pool.get('res.partner')
+		product_obj = self.pool.get('product.product')
+		context = {'lang': lang, 'partner_id': partner_id}
+		partner = partner_obj.browse(cr, uid, partner_id)
+		lang = partner.lang
+		context_partner = {'lang': lang, 'partner_id': partner_id}
+
+		if not product:
+		    return {'value': {'th_weight': 0,
+		        'product_uos_qty': qty}, 'domain': {'product_uom': [],
+		           'product_uos': []}}
+		if not date_order:
+		    date_order = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
+
+		result = {}
+		warning_msgs = ''
+		product_obj = product_obj.browse(cr, uid, product, context=context_partner)
+
+		uom2 = False
+		if uom:
+		    uom2 = product_uom_obj.browse(cr, uid, uom)
+		    if product_obj.uom_id.category_id.id != uom2.category_id.id:
+		        uom = False
+		if uos:
+		    if product_obj.uos_id:
+		        uos2 = product_uom_obj.browse(cr, uid, uos)
+		        if product_obj.uos_id.category_id.id != uos2.category_id.id:
+		            uos = False
+		    else:
+		        uos = False
+
+		fpos = False
+		if not fiscal_position:
+		    fpos = partner.property_account_position or False
+		else:
+		    fpos = self.pool.get('account.fiscal.position').browse(cr, uid, fiscal_position)
+		if update_tax: #The quantity only have changed
+		    result['tax_id'] = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, product_obj.taxes_id)
+
+		if not flag:
+		    result['name'] = self.pool.get('product.product').name_get(cr, uid, [product_obj.id], context=context_partner)[0][1]
+		    if product_obj.description_sale:
+		        result['name'] += '\n'+product_obj.description_sale
+		domain = {}
+		if (not uom) and (not uos):
+		    result['product_uom'] = product_obj.uom_id.id
+		    if product_obj.uos_id:
+		        result['product_uos'] = product_obj.uos_id.id
+		        result['product_uos_qty'] = qty * product_obj.uos_coeff
+		        uos_category_id = product_obj.uos_id.category_id.id
+		    else:
+		        result['product_uos'] = False
+		        result['product_uos_qty'] = qty
+		        uos_category_id = False
+		    result['th_weight'] = qty * product_obj.weight
+		    domain = {'product_uom':
+		                [('category_id', '=', product_obj.uom_id.category_id.id)],
+		                'product_uos':
+		                [('category_id', '=', uos_category_id)]}
+		elif uos and not uom: # only happens if uom is False
+		    result['product_uom'] = product_obj.uom_id and product_obj.uom_id.id
+		    result['product_uom_qty'] = qty_uos / product_obj.uos_coeff
+		    result['th_weight'] = result['product_uom_qty'] * product_obj.weight
+		elif uom: # whether uos is set or not
+		    default_uom = product_obj.uom_id and product_obj.uom_id.id
+		    q = product_uom_obj._compute_qty(cr, uid, uom, qty, default_uom)
+		    if product_obj.uos_id:
+		        result['product_uos'] = product_obj.uos_id.id
+		        result['product_uos_qty'] = qty * product_obj.uos_coeff
+		    else:
+		        result['product_uos'] = False
+		        result['product_uos_qty'] = qty
+		    result['th_weight'] = q * product_obj.weight        # Round the quantity up
+
+		if not uom2:
+		    uom2 = product_obj.uom_id
+		# get unit price
+
+		if not pricelist:
+		    warn_msg = _('You have to select a pricelist or a customer in the sales form !\n'
+		            'Please set one before choosing a product.')
+		    warning_msgs += _("No Pricelist ! : ") + warn_msg +"\n\n"
+		else:
+		    price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],
+		            product, qty or 1.0, partner_id, {
+		                'uom': uom or result.get('product_uom'),
+		                'date': date_order,
+		                })[pricelist]
+		    if price is False:
+		        warn_msg = _("Cannot find a pricelist line matching this product and quantity.\n"
+		                "You have to change either the product, the quantity or the pricelist.")
+
+		        warning_msgs += _("No valid pricelist line found ! :") + warn_msg +"\n\n"
+		    else:
+		        result.update({'price_unit': price})
+		if warning_msgs:
+		    warning = {
+		               'title': _('Configuration Error!'),
+		               'message' : warning_msgs
+		            }
+		result['default_code'] = product_obj.default_code
+		return {'value': result, 'domain': domain, 'warning': warning}
+	
+
+class sale_order(osv.osv):
+   
+	_name = 'sale.order'
+	_inherit = 'sale.order'
+    
+	def _shipped_rate(self, cr, uid, ids, name, arg, context=None):
+		if not ids: return {}
+		res = {}
+		for id in ids:
+			res[id] = [0.0,0.0]
+        
+		cr.execute('''SELECT
+				so.id, sum(m.product_qty), m.state
+			FROM
+				stock_move m
+			LEFT JOIN
+				sale_order so on (so.name = m.origin)
+			WHERE
+				so.id IN %s GROUP BY m.state, so.id''',(tuple(ids),))
+		for oid,nbr,state in cr.fetchall():
+			if state=='cancel':
+				continue
+			if state=='done':
+				res[oid][0] += nbr or 0.0
+				res[oid][1] += nbr or 0.0
+			else:
+				res[oid][1] += nbr or 0.0
+		for r in res:
+			if not res[r][1]:
+				res[r] = 0.0
+			else:
+				res[r] = 100.0 * res[r][0] / res[r][1]
+		return res
+
+
+	def _amount_line_tax(self, cr, uid, line, context=None):
+		val = 0.0
+		for c in self.pool.get('account.tax').compute_all(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, line.product_id, line.order_id.partner_id)['taxes']:
+			val += c.get('amount', 0.0)
+        
+		return val
+
+	def _amount_all_wrapper(self, cr, uid, ids, field_name, arg, context=None):
+		""" Wrapper because of direct method passing as parameter for function fields """
+		return self._amount_all(cr, uid, ids, field_name, arg, context=context)
+
+	def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
+		cur_obj = self.pool.get('res.currency')
+		res = {}
+		for order in self.browse(cr, uid, ids, context=context):
+			res[order.id] = {
+                'amount_untaxed': 0.0,
+                'amount_tax': 0.0,
+                'amount_total': 0.0,
+            }
+			val = val1 = 0.0
+			cur = order.pricelist_id.currency_id
+			for line in order.order_line:
+				res[order.id]['amount_untaxed'] += line.price_subtotal
+				#val += self._amount_line_tax(cr, uid, line, context=context)
+				res[order.id]['amount_tax'] +=self._amount_line_tax(cr, uid, line, context=context)
+			if order.partner_id.exoner==True:
+				#res[order.id]['amount_tax'] = cur_obj.round(cr, uid, cur, val)
+				res[order.id]['amount_tax'] =0.0
+			#res[order.id]['amount_untaxed'] = cur_obj.round(cr, uid, cur, val1)
+			res[order.id]['amount_total'] = res[order.id]['amount_untaxed'] + res[order.id]['amount_tax']
+		return res
+
+	def _get_order(self, cr, uid, ids, context=None):
+		result = {}
+		for line in self.pool.get('sale.order.line').browse(cr, uid, ids, context=context):
+			result[line.order_id.id] = True
+		return result.keys()
+
+
+
+	@api.one
+	@api.depends('discount_total','undiscount_total','order_line')
+	def _amount_line(self):
+		'''
+		   Methode qui calcule les montants suivants
+		   
+		   undiscount_total
+		   discount_total  
+		'''  
+
+		self.discount_total = sum( (line.product_uom_qty * line.price_unit * ((line.discount or 0.0)/100.0) ) for line in self.order_line ) 
+
+		self.undiscount_total = sum(line.product_uom_qty * line.price_unit for line in self.order_line) 
+        
+	_columns = {
+		'devis_id':fields.many2one('sale.devis', 'Devis'),
+		'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=False, states={'draft': [('readonly', False)], 'sent': [('readonly', False)], 'manual': [('readonly', False)], 'done': [('readonly', False)]}, copy=True),   
+		'state': fields.selection([
+			('draft', 'Draft'),
+			('sent', 'Quotation Sent'),
+			('cancel', 'Cancelled'),
+			('waiting_date', 'Waiting Schedule'),
+			('progress', 'Sales Order'),
+			('manual', 'Confirmé'),
+			('shipping_except', 'Shipping Exception'),
+			('invoice_except', 'Invoice Exception'),
+			('done', 'Terminé'),
+			], 'Status', readonly=True, copy=False, help="Gives the status of the quotation or sales order.\
+			  \nThe exception status is automatically set when a cancel operation occurs \
+			  in the invoice validation (Invoice Exception) or in the picking list process (Shipping Exception).\nThe 'Waiting Schedule' status is set when the invoice is confirmed\
+			   but waiting for the scheduler to run on the order date.", select=True),
+		'shipped_rate': fields.function(_shipped_rate, string='Livraison', type='float'),
+		'date_order': fields.datetime('Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)],'manual': [('readonly', False)],'done': [('readonly', False)] }, copy=False),
+		#'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines'),
+		'discount_total':fields.float(string='Total Remise', digits_compute=dp.get_precision('Account'),
+		store=True, readonly=True, compute='_amount_line', track_visibility='always'),
+		'undiscount_total':fields.float(string='Total HT sans remise', digits_compute=dp.get_precision('Account'),
+		store=True, readonly=True, compute='_amount_line', track_visibility='always'),
+		'amount_total': fields.function(_amount_all_wrapper, digits_compute=dp.get_precision('Account'), string='Total',
+			store={
+				'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
+				'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+			},
+			multi='sums', help="The total amount."),
+	}
+
+	def button_add_devis(self, cr, uid, ids, context=None):
+		'''
+           		Methode permet la création du Bon de commande
+        	'''
+		sale_order_obj=self.browse(cr, uid, ids)
+		sale_lines_ids = self.pool.get('sale.devis.line').search(cr, uid, [('devis_id', '=', sale_order_obj['devis_id'].reference)])
+		 
+		sale_line = self.pool.get('sale.devis.line').browse(cr, uid,sale_lines_ids)
+		for ligne in sale_line :
+			ligne_vals = {
+                    
+		            'order_id':ids[0],
+		            'product_id':ligne.product_id.id,
+		            'name':ligne.designation,
+		            'price_unit':ligne.price_unit,
+		            'discount':ligne.discount,
+		            'product_uom_qty':ligne.product_qty,
+		            'tax_id':[(6, 0, [x.id for x in ligne.tax_ids])],                  
+			}
+			new_line_id = self.pool.get('sale.order.line').create(cr, uid, ligne_vals)
+    
+   
+   
+
+

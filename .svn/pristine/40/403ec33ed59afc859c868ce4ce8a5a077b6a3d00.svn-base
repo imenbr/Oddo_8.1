@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="1">
+
+   <!-- <record id="group_uos" context="{'noadmin':True}" model="res.groups">
+        <field name="name">Warehouse / vvvvvvvvv</field>
+    </record>-->
+<record model="ir.ui.menu" id="stock.menu_stock_sched">
+  <field name="groups_id" eval="[(6,0,[ref('stock.group_stock_manager')])]"/>
+</record>
+
+
+</data>
+</openerp>

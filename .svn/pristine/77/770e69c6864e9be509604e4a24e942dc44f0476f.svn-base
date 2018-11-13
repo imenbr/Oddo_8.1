@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_lignFact" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="code_number-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/code_number-code]]></fieldDescription>
+	</field>
+	<field name="Date_Facture-date" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Date_Facture-date]]></fieldDescription>
+	</field>
+	<field name="ID-id" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Produit-id_prod/ID-id]]></fieldDescription>
+	</field>
+	<field name="code_number-code2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/num_facture-id_fact/code_number-code]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="39" width="149" height="20"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{code_number-code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="159" y="41" width="142" height="20"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Date_Facture-date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="19" width="149" height="20"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Code Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="19" width="142" height="20"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Date Facture]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="19" width="121" height="20"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Produit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="19" width="133" height="20"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Num Fact]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="301" y="39" width="121" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ID-id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="41" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{code_number-code2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

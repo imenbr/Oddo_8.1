@@ -1,0 +1,188 @@
+# -*- coding: utf-8 -*-
+import openerp.addons.decimal_precision as dp
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+import time
+from datetime import datetime
+from openerp import api
+
+class wizard_etat_profit(osv.osv_memory):
+    _name = "wizard.etat.profit"
+    _description = "Etat Profit Wizard "
+
+    #def _calculer_stock(self, cr, uid, ids, field_name, arg, context):
+	#res = {}
+	#print "dans calculer stock "
+	#for wizard in self.browse(cr, uid, ids, context=context):
+		#print "dans foooorrr"
+		#res[wizard.id] =100
+	#return res
+    
+	
+
+    _columns = { 
+	#'caisse_id':fields.many2one('account.bank.statement', 'Caisse',required=True),
+        'date_debut': fields.date('Date Debut', required=True, select=True), 
+        'date_fin': fields.date('Date Fin', required=True, select=True),
+	'date_aujourd': fields.date('Date ', required=True, select=True),
+	'compte_biat': fields.float('Compte BIAT', digits_compute= dp.get_precision('Account'),),
+	'compte_zitouna': fields.float('Compte Zitouna', digits_compute= dp.get_precision('Account'),),
+	'cheque_antidates': fields.float('Cheques antidates', digits_compute= dp.get_precision('Account'),readonly=True),
+	'factures_clients': fields.float('Factures Clients', digits_compute= dp.get_precision('Account'),readonly=True),
+	'solde_caisse': fields.float('Solde Caisses Ouvertes', digits_compute= dp.get_precision('Account'),readonly=True),
+	'cheque_circ': fields.float('Cheques en circulation', digits_compute= dp.get_precision('Account'),readonly=True),
+	'fact_etrangr': fields.float('Facture Fournisseurs Etrangere', digits_compute= dp.get_precision('Account'),readonly=True),
+	'fact_locaux': fields.float('Facture Fournisseurs Locaux', digits_compute= dp.get_precision('Account'),readonly=True),
+	'stock': fields.float('Stock', digits_compute= dp.get_precision('Account'),readonly=True),
+	#'stock':fields.function(_calculer_stock, type="float", method=True),
+	'caution':fields.float('Cautions et Garantie', digits_compute= dp.get_precision('Account'),readonly=True),
+
+    }
+    _defaults = {
+	'date_aujourd': fields.datetime.now,
+	'factures_clients': 0.00,
+	'cheque_antidates':0.00,
+	'solde_caisse':0.00,
+    }
+	
+
+    
+
+    def create_report(self, cr, uid, ids, context={}):
+        data = self.read(cr,uid,ids,)[0]
+	#data = self.read(cr,uid,ids,)[-1] 
+        print data,' create_report('
+	res={}
+	res={
+            'type'         : 'ir.actions.report.xml',
+            'report_name'   : 'jasper_etat_profit_print',
+            'datas': {
+                    'model':'wizard.etat.profit',
+                    'id': context.get('active_ids') and context.get('active_ids')[0] or False,
+                    'ids': context.get('active_ids') and context.get('active_ids') or [],
+                    
+                    'form':data
+                    },
+            'nodestroy': False
+        }
+        return res
+
+    
+    def calculer(self, cr, uid,ids,date_debut,date_fin,date_aujourd,context=None):
+	
+	res ={}
+        res_final = {}
+	
+	#montant facture clients non payées 
+	factures_clients=0
+	fact_ids = self.pool.get('account.invoice').search(cr, uid, [('date_invoice','>=',date_debut),('date_invoice','<=',date_fin),('state','not in',['paid']),('type','=','out_invoice')])
+	fact_objs = self.pool.get('account.invoice').browse(cr, uid, fact_ids)
+	
+	res['factures_clients'] =factures_clients
+	if fact_objs:
+                for fact in fact_objs:	
+			factures_clients=factures_clients+fact.reste_a_payer
+		res['factures_clients'] =factures_clients	
+	
+
+	#montant cheque antidates
+	cheque_antidates=0
+	res['cheque_antidates'] =cheque_antidates
+	pieces_ids = self.pool.get('reglement.piece').search(cr, uid, [('date_echance','>',date_aujourd),('mode_reglement','=','Chèque'),('type','=','out'),('state','=','integrated')])   
+        pieces_objs = self.pool.get('reglement.piece').browse(cr, uid, pieces_ids)
+	if pieces_objs:
+		for piece in pieces_objs:
+			cheque_antidates=cheque_antidates+piece.montant_piece
+		res['cheque_antidates'] =cheque_antidates
+
+	
+	#solde caisse ouverte
+	solde_caisse=0
+	res['solde_caisse'] =solde_caisse
+	cash_ids = self.pool.get('account.bank.statement').search(cr, uid, [('state','=','open')])
+	cash_objs = self.pool.get('account.bank.statement').browse(cr, uid, cash_ids)
+	if cash_objs:
+		for cash in cash_objs:
+			solde_caisse=solde_caisse+cash.balance_end_real
+		res['solde_caisse'] =solde_caisse
+		
+	#montant cheque en circulation
+	cheque_circ=0
+	res['cheque_circ'] =cheque_circ
+	cheq_ids = self.pool.get('reglement.piece').search(cr, uid, [('date_encaissement','>',date_debut),('mode_reglement','=','Chèque'),('type','=','in'),('state','=','integrated')])
+            
+        cheq_objs = self.pool.get('reglement.piece').browse(cr, uid, cheq_ids)
+	if cheq_objs:
+		for cheq in cheq_objs:
+			cheque_circ=cheque_circ+cheq.montant_piece
+		res['cheque_circ'] =cheque_circ
+
+
+	#factures fourns entrangere
+	fact_etrangr=0
+	res['fact_etrangr'] =fact_etrangr
+	facture_ids = self.pool.get('account.invoice').search(cr, uid, [('date_invoice','>=',date_debut),('date_invoice','<=',date_fin),('state','not in',['paid','draft']),('type','=','in_invoice'),('currency_id','!=','TND')])
+            
+        facture_objs = self.pool.get('account.invoice').browse(cr, uid, facture_ids)
+	if facture_objs:		
+		for facture in facture_objs:
+			currency=facture.currency_id.id,
+                        currency_obj = self.pool.get('res.currency').browse(cr,uid,currency,context=context)
+                        rate = currency_obj.rate_silent
+                        montant_local=facture.reste_a_payer / rate
+			fact_etrangr=fact_etrangr+montant_local
+		res['fact_etrangr'] =fact_etrangr		
+
+
+	#facture fourns locaux
+	local_ids = self.pool.get('account.invoice').search(cr, uid, [('date_invoice','>=',date_debut),('date_invoice','<=',date_fin),('state','not in',['draft','paid']),('type','=','in_invoice'),('currency_id','=','TND')])
+            
+        local_objs = self.pool.get('account.invoice').browse(cr, uid, local_ids)
+	fact_locaux=0
+	res['fact_locaux'] =fact_locaux
+	if local_objs:
+		for facture in local_objs:
+			fact_locaux=fact_locaux+facture.reste_a_payer
+		res['fact_locaux'] =fact_locaux
+
+
+	
+		
+	# Stock
+	stock=0
+	res['stock'] =stock
+	cr.execute('SELECT * FROM product_product')
+	products = cr.dictfetchall()
+	if len(products)>0 :
+		for product in products:
+			prod_ids = self.pool.get('product.template').search(cr, uid, [('product_variant_ids','=',product['id'])])
+			prod_objs=self.pool.get('product.template').browse(cr,uid,prod_ids,context=context)
+			prodd_ids = self.pool.get('product.product').search(cr, uid, [('id','=',product['id'])])
+			prodd_objs=self.pool.get('product.product').browse(cr,uid,prodd_ids,context=context)
+			purchase_price=prod_objs.purchase_price
+			#print "purchase_price",purchase_price
+			#Qte=product['qty_available']
+			Qte=prodd_objs.qty_available
+			#print "Qteeeeeeeeeeeee==",Qte
+			stock=stock+(purchase_price*Qte)
+		res['stock'] =stock
+
+	# cautions et garantie
+
+	caution_ids = self.pool.get('office.caution').search(cr, uid, [('date_caution','>=',date_debut),('date_fin_caution','<=',date_fin),('libere','=',False)])
+            
+        caution_objs = self.pool.get('office.caution').browse(cr, uid, caution_ids)
+	caution=0
+	res['caution'] =caution
+	if caution_objs:
+		for caut in caution_objs:
+			caution=caution+caut.montant
+		res['caution'] =caution
+
+	
+	res_final = {'value':res}
+	return res_final
+
+
+  
+wizard_etat_profit()

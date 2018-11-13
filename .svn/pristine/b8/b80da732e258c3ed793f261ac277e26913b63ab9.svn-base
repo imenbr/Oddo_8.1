@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_journal_vente_view' model="ir.ui.view">
+            <field name="name">Journal Vente</field>
+            <field name="model">wizard.journal.vente</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Journal Vente" >
+                    <group col="2" fill="0" colspan="4">
+                        <field name="date_debut" />
+                        <field name="date_fin" />
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Annuler"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_journal_vente">
+            <field name="name">Journal vente</field>
+            <field name="res_model">wizard.journal.vente</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_journal_vente_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Journal Vente"
+		model="account.invoice"
+		auto="True"
+		name="jasper_journal_vente_print"
+		rml="office_stat/journal_vente/report/journal_vente.jrxml"
+		id="journal_vente"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_journal_vente_report" name="Journal Vente" action="action_wizard_journal_vente" parent="menu_comptabilite_report" sequence="6"/>
+    </data>
+</openerp>
+

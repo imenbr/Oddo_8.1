@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="reglement_mode_0" model="reglement.mode">
+	    <field name="code">TRT</field>
+	    <field name="designation">Traite</field>
+	</record>
+    </data>
+
+    <data>
+	<record id="reglement_mode_1" model="reglement.mode">
+	    <field name="code">CHQ</field>
+	    <field name="designation">Chèque</field>
+	</record>
+    </data>
+
+    <data>
+	<record id="reglement_mode_2" model="reglement.mode">
+	    <field name="code">VRMT</field>
+	    <field name="designation">Virement</field>
+	</record>
+    </data>
+
+    <data>
+	<record id="reglement_mode_3" model="reglement.mode">
+	    <field name="code">EPC</field>
+	    <field name="designation">Espèce</field>
+	</record>
+    </data>
+</openerp>

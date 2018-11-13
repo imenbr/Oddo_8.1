@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_stock_order_view' model="ir.ui.view">
+            <field name="name">Etat des commandes par Stock</field>
+            <field name="model">wizard.stock.order</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Etat des commandes par Stock" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+ 			<field name="from_date" required='1'/>
+                        <field name="to_date" required='1' />
+                        <field name="location_id" required='1' domain="[('active','=','TRUE'),('usage','=','internal')]" string="Stock"/>
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Create Report"/>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_wizard_stock_order">
+            <field name="name">Etat des commandes par Stock</field>
+            <field name="res_model">wizard.stock.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_stock_order_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Stock order"
+		model="stock.picking"
+		auto="True"
+		name="jasper_report_stock_order_print"
+		rml="office_stat/stock_order/report/stock_order.jrxml"
+		id="report_stock_order"
+		menu="False"
+		/>
+
+        <menuitem id="submenu_stock_order" name="Etat des commandes par Stock" action="action_wizard_stock_order" parent="menu_reporting_office" sequence="5"/>
+
+    </data>
+</openerp>
+

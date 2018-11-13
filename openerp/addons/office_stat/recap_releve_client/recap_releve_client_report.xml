@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='recap_releve_client_wizard_view' model="ir.ui.view">
+            <field name="name">Recap Relevéclient</field>
+            <field name="model">recap.releve.client.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Recap Relevé client">
+                    <group col="2" >
+                        
+                        <field name="type_affichage"/>
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>  
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_recap_releve_client_wizard">
+            <field name="name">Recap Relevé client</field>
+            <field name="res_model">recap.releve.client.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="recap_releve_client_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <!--==================== report spec ========================-->
+        <report string="Recap Relevé client"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_rapport_recap_releve_client_print"
+		rml="office_stat/recap_releve_client/recap_releve_client_report.jrxml"
+		id="etat_recap_releve_client"
+		menu="False"
+	/>
+        <menuitem action="action_recap_releve_client_wizard" id="menu_recap_releve_client"  parent="menu_rapport_reglement"  sequence="6"/>
+        
+    </data>
+</openerp>
+
+

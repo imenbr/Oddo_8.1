@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_liste_cheque_view_1' model="ir.ui.view">
+            <field name="name">Liste Des Chéques</field>
+            <field name="model">wizard.liste.cheque.sttc</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Liste Des Chéques" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <field name="partner_ids" string="Client" domain="[('customer','=',True)]"/><!-- liste des Clients -->
+                        <field name="type_paiement"/><!-- type de paiement Traite ou Chèque -->
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_liste_cheque_1">
+            <field name="name">Liste Des Chéques</field>
+            <field name="res_model">wizard.liste.cheque.sttc</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_liste_cheque_view_1"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <report string="Liste Des Chéques"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_liste_cheque_print_1"
+		rml="office_stat/liste_cheque_1/report/liste_cheque.jrxml"
+		id="etat_liste_cheque_1"
+		menu="False"
+		/>
+
+        <!--
+            REGLEMENT/RAPPORTS 
+        -->
+        <menuitem name="Rapports" id="menu_rapport_reglement" parent="office_reglement.menu_reglement" sequence="10"/>
+        <!--
+            REGLEMENT/RAPPORTS/ECHEANCE CHEQUE CLIENT 
+        -->
+        <menuitem id="submenu_wizard_liste_cheque1" name="Echéance Chèque Client" action="action_wizard_liste_cheque_1" parent="menu_rapport_reglement" sequence="6"/>
+    </data>
+</openerp>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Contract Types -->
+        <record id="hr_contract.hr_contract_type_emp" model="hr.contract.type">
+            <field name="name">CDI</field>
+        </record>
+
+        <record id="hr_contract.hr_contract_type_wrkr" model="hr.contract.type">
+            <field name="name">CDD</field>
+        </record>
+
+        <record id="hr_contract.hr_contract_type_sub" model="hr.contract.type">
+            <field name="name">SIVP</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sequences for homologation.produit -->
+        <record id="seq_type_homologation" model="ir.sequence.type">
+            <field name="name">Homologation</field>
+            <field name="code">homologation.produit</field>
+        </record>
+
+        <record id="seq_homologation" model="ir.sequence">
+            <field name="name">Homologation</field>
+            <field name="code">homologation.produit</field>
+            <field name="prefix">NH</field>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</openerp>

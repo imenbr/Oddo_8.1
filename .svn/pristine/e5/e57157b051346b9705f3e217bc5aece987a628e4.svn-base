@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- 
+            REGLEMENT/AVANCE 
+        -->
+        <menuitem name="Avance"  id="menu_avances"  parent="menu_reglement" sequence="3" /> 
+
+        <record model="ir.ui.view" id="view_avance_tree">
+            <field name="name">Avance</field>
+            <field name="model">reglement.avance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+		 <tree string="Avance">
+                     <field name="code_avance" select="1"/>
+	             <field name="partner_id" select="1"/>
+		     <field name="date_avance" />
+	             <field name="montant_avance" />
+                     <field name="state" select="1"/>
+                 </tree>
+            </field>
+        </record>
+
+	<record id="view_avance_form" model="ir.ui.view">
+            <field name="name">avance.form</field>
+            <field name="model">reglement.avance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Avances">
+                    <header>
+                        <button name="reg_close" string="Close" states="draft" icon="gtk-jump-to"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,closed,ppaid,paid"/>
+                    </header>
+                    <group col="4" colspan="4">                      
+                        <field name="code_avance"/>
+			<field name="date_avance"/>
+		        <newline/>
+		        <field name="partner_id"/>
+		        <newline/>
+                        <field name="mode_reglement"/>
+			<field name="montant_avance" digits="(16, 3)"/>
+			<field name="currency_id"/>
+			<field name="piece_id" string="Numéro Pièce"/>         
+		    </group> 
+		</form>
+            </field>
+        </record>
+
+        <record id="action_avance_client_form" model="ir.actions.act_window">
+            <field name="name">Avance Client</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.avance</field>
+            <field name="view_type">form</field>
+            <field name="context">{'type':'client'}</field>
+            <field name="domain">[('type','=','client')]</field>
+        </record>
+        <!--
+            REGLEMENT/AVANCE/AVANCE CLIENT
+        -->
+        <menuitem name="Avance Client" action="action_avance_client_form" id="menu_avance_form"  parent="menu_avances" sequence="10" /> 
+
+        <record id="action_avance_supplier_form" model="ir.actions.act_window">
+            <field name="name">Avance Fournisseur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.avance</field>
+            <field name="view_type">form</field>
+            <field name="context">{'type':'supplier'}</field>
+            <field name="domain">[('type','=','supplier')]</field>
+        </record>
+
+        <!--
+            REGLEMENT/AVANCE/AVANCE FOURNISSEUR
+        -->
+        <menuitem name="Avance Fournisseur" action="action_avance_supplier_form" id="menu_avance_supplier_form"  parent="menu_avances" sequence="2"/> 
+
+  </data>
+</openerp>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_devis_manager,sale.devis.manager,model_sale_devis,base.group_sale_manager,1,1,1,1
+access_sale_devis_line_manager,sale.devis.line.manager,model_sale_devis_line,base.group_sale_manager,1,1,1,1
+access_sale_devis_taxe_manager,sale.devis.taxe.manager,model_sale_devis_taxe,base.group_sale_manager,1,1,1,1

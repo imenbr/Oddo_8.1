@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="homologation_produit" name="Homologation" sequence="40"/>
+<menuitem id="menu_homologation_produit" name="Homologation" parent="homologation_produit"  sequence="1" />
+<menuitem id="menu_configuration_homologation_produit" name="Configuration" parent="homologation_produit"  sequence="12" />
+
+
+<record id="view_homologation_produit_form" model="ir.ui.view">
+            <field name="name">homologation.produit.form</field>
+            <field name="model">homologation.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="homologation Produits">
+                    <header>
+                    			<button name="brouillon" string="Retour au Brouillon" states="confirm" type="object"/>
+								<button name="confirmer_homologation" string="Confirmer" states="draft" type="object"/>
+                    		<field name="state" widget="statusbar" statusbar_visible="draft,confirm" />
+
+		    		</header>
+		    		<sheet>
+		    			<group>
+							<group>                    	
+								<field name="partner_id" string="Fournisseur" />
+							</group>
+			  
+ 							<group>
+								<field name="name" string="Référence"/>
+			  					<field name="date" string="Date"/>
+								<field name="facture_id" string="Facture" domain="[('partner_id','=', partner_id) ]"/>
+								<button colspan="2" name="button_add_invoice" string="Ajouter Produits Facture et Frais" type="object" /> 		
+		                	
+						</group>
+						<group>
+							<field name="marge_max" string="Marge Max"/>
+							<field name="marge_min" string="Marge Min"/>
+							<field name="mode_reglement" string="Mode Réglement"/>
+						</group>
+			
+						<group>
+							<field name="taux" string="Cours"/>
+							<field name="amount_invoice_euro" string="Montant Facture €"/>
+							<field name="amount_invoice_DT" string="Montant Facture DT"/>
+						</group>
+					</group>
+					<group>
+						<group colspan="4">
+							<notebook>
+								<page string="Produits">
+									<field name="homologation_lines"  widget="one2many_list" col="4" colspan="4">
+			     						<tree string="homologation Produit">
+				      						<field name="categ_id"/>
+			          						<field name="designation"/>
+                		  					<field name="price_unit"/>
+                		  					<field name="product_qty"/>
+					                      <field name="price_subtotal_euro"/>
+					                      <field name="price_subtotal_dt"/>
+					                      <field name="taux_FF"/>
+					                      <field name="taux_DD"/>
+					                      <field name="FF"/>
+					                      <field name="DD"/>
+					                      <field name="price_subtotal_revient_dt"/>
+					                      <field name="price_unit_revient_dt"/>
+					                      <field name="marge_min"/>
+					                      <field name="marge_max"/>
+					                      <field name="coeff_rev"/>
+			     						</tree>
+
+									<form string="homologation Produit">
+                                  		<group>
+
+				      					  <field name="product_id" on_change="product_id_change(product_id)"/>
+										  <field name="categ_id"/>
+										  <field name="designation"/>
+						    		      <field name="price_unit"/>
+						    		      <field name="product_qty"/>
+					                  	  <field name="price_subtotal_euro"/>
+					                  	  <field name="price_subtotal_dt"/>
+							              <field name="taux_FF"/>
+							              <field name="taux_DD"/>
+							              <field name="FF"/>
+							              <field name="DD"/>
+							              <field name="price_subtotal_revient_dt"/>
+							              <field name="price_unit_revient_dt"/>
+							              <field name="marge_min"/>
+							              <field name="marge_max"/>
+							              <field name="coeff_rev"/>
+                                  </group>
+			     			</form>
+						</field>
+					</page>
+
+					<page string="Les Frais Fixe">
+
+						<field name="charges_homologation_lines"  widget="one2many_list" >
+			     			<tree string="Charge homologation Produit">
+				  				<field name="charge_id"/>
+			          			<field name="amount_charge"/>
+			     			</tree>
+
+							<form string="Charge homologation Produit">
+                            	<group>
+				      				<field name="charge_id"/>
+			          				<field name="amount_charge"/>
+                                </group>
+			    		    </form>
+						</field>
+					</page>
+               </notebook>
+			</group>
+			<group >
+    			<div>
+					<field name="categ_lines"  widget="one2many_list"   >
+			     		<tree string=" ">
+					  	  <field name="name" readonly="1"/>
+			        	  <field name="taux_1" string="001"/>
+			        	  <field name="taux_2" string="093"/>
+			        	  <field name="taux_3" string="473"/>
+			        	  <field name="taux_4" string="105"/>
+			        	  <field name="taux_5" string="AIR"/>
+			        	  <field name="total"/>
+			    		</tree>
+			    		<form string=" ">
+			    			<group>
+					  			<field name="name" readonly="1"/>
+					  			<field name="total"/>
+					  		</group>
+					  		<group>
+			        	  		<field name="taux_1" readonly="1" string="001"/>
+			        	  		<field name="taux_2" readonly="1" string="093"/>
+			        	  		<field name="taux_3" readonly="1" string="473"/>
+			        	  		<field name="taux_4" readonly="1" string="105"/>
+			        	  		<field name="taux_5" string="AIR"/>
+			        	  	</group>
+			    		 </form>
+				</field>
+			</div> 
+			<div>
+				<group class="oe_right">
+					<button colspan="2" name="button_calcul_categ" string="Calculer Tous" type="object" icon="terp-stock_format-scientific"/> 
+                                                         
+                    <label string="" colspan="2"/>
+                    <field name="amount_total_DD"  string="Total DD DT"/>
+                    <field name="amount_total_euro"/>
+                    <field name="amount_total_dt"/>
+                    <field name="amount_total_chrage_dt"/>
+                            
+               </group>
+           </div>
+      </group>
+  </group>
+
+	</sheet>
+		</form>
+  </field>
+</record>
+
+
+
+
+
+	<record id="view_homologation_produit_tree" model="ir.ui.view">
+            <field name="name">homologation.produit.tree</field>
+            <field name="model">homologation.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="homologation Produits">
+                   <field name="name"/>
+                    <field name="date"/>
+                    <field name="state" string="Etat"/>
+                    <field name="partner_id"/>
+		<field name="amount_total_euro"/>
+                      <field name="amount_total_dt"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+
+
+ <record id="action_homologation_produit" model="ir.actions.act_window">
+            <field name="name">homologation Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">homologation.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_homologation_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_homologation_produit_item" name="homologation Produit" parent="menu_homologation_produit" action="action_homologation_produit" sequence="6"/>
+
+
+
+<record id="view_charge_homologation_produit_form" model="ir.ui.view">
+            <field name="name">charge.homologation.produit.form</field>
+            <field name="model">charge.homologation.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Charge homologation Produits">
+			 <sheet><group>
+
+			<field name="name" string="Type Charge"/>
+
+</group>
+ 			</sheet>
+
+
+		</form>
+            </field>
+        </record>
+
+<record id="view_charge_homologation_produit_tree" model="ir.ui.view">
+            <field name="name">charge.homologation.produit.tree</field>
+            <field name="model">charge.homologation.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="Charge homologation Produits">
+                   <field name="name" string="Type Charge"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+ <record id="action_charge_homologation_produit" model="ir.actions.act_window">
+            <field name="name">homologation Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">charge.homologation.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_charge_homologation_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_charge_homologation_produit_item" name="Frais Fixes" parent="menu_configuration_homologation_produit" action="action_charge_homologation_produit" sequence="20" />
+
+
+
+
+
+<!-- Frais par taux-->
+
+<record id="view_frais_douane_produit_form" model="ir.ui.view">
+            <field name="name">frais.douane.produit.form</field>
+            <field name="model">frais.var.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Frais Douane homologation Produits">
+
+			 <sheet><group>
+			<field name="name" string="Nom Frais "/>
+
+                  	 <!--<field name="taux" string="Taux"/>--></group>
+
+			 </sheet>
+
+		</form>
+            </field>
+        </record>
+
+<record id="view_frais_douane_produit_tree" model="ir.ui.view">
+            <field name="name">frais.douane.produit.tree</field>
+            <field name="model">frais.var.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="Frais Douane homologation Produits">
+                   <field name="name" string="Nom Frais"/>
+                   <!--<field name="taux" string="Taux"/>-->
+                </tree>
+            </field>
+        </record>
+
+
+
+
+ <record id="action_frais_douane_produit" model="ir.actions.act_window">
+            <field name="name">homologation Produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">frais.var.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_frais_douane_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_frais_douane_produit_item" name=" Frais par taux" parent="menu_configuration_homologation_produit" action="action_frais_douane_produit" sequence="16" />
+
+
+
+
+
+<!--Les Marges Min Max -->
+
+
+<record id="view_marge_produit_form" model="ir.ui.view">
+            <field name="name">marge.produit.form</field>
+            <field name="model">marge.produit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Marges  Produits">
+
+			 <sheet><group>
+			<field name="name" string="Nom marge "/>
+
+                  	 <field name="taux" string="Taux"/></group>
+
+			 </sheet>
+
+		</form>
+            </field>
+        </record>
+
+<record id="view_marge_produit_tree" model="ir.ui.view">
+            <field name="name">marge.produit.tree</field>
+            <field name="model">marge.produit</field>
+
+            <field name="arch" type="xml">
+                <tree string="Marges  Produits">
+                   <field name="name" string="Nom marge "/>
+                   <field name="taux" string="Taux"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+ <record id="action_marge_produit" model="ir.actions.act_window">
+            <field name="name">marge produit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">marge.produit</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_marge_produit_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+<menuitem id="menu_marge_produit_item" name=" Marges Produits" parent="menu_configuration_homologation_produit" action="action_marge_produit" sequence="18" />
+
+
+
+
+
+</data>
+</openerp>

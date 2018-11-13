@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <record model="ir.ui.view" id="view_caution_form">
+            <field name="name">caution.form</field>
+            <field name="model">office.caution</field>
+            <field name="arch" type="xml">
+		<form string="Caution Form">
+   		  <sheet>
+			<group>
+			    <separator string="Cations et garantie" colspan="2"/>
+                            <field name="partner_id"/>
+			    <field name="banque"/>
+			    <field name="montant"/>
+			    <field name="date_caution"/>
+			    <field name="date_fin_caution"/>
+			    <field name="tt"/>
+			    <field name="libere"/>
+                        </group> 
+			<notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Description de l'appel d'offre..." />
+                            </page>
+ 			</notebook>
+                    </sheet>
+		</form>
+	   </field>
+       </record>
+       <record model="ir.ui.view" id="tree_caution_view">
+            <field name="name">caution.true</field>
+            <field name="model">office.caution</field>
+            <field name="arch" type="xml">
+                <tree string="Caution Tree">
+                    <field name="partner_id"/>
+		    <field name="banque"/>
+		    <field name="montant"/>
+		    <field name="date_caution"/>
+		    <field name="date_fin_caution"/>
+		    <field name="description" />
+		    <field name="tt"/>
+		    <field name="libere"/>
+        	</tree>
+            </field>
+        </record>
+
+ 	<record model="ir.actions.act_window" id="caution_action">
+            <field name="name">Caution</field>
+            <field name="res_model">office.caution</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create"> Create the first Cautions Garantie </p>
+            </field>
+        </record>
+
+        <menuitem id="main_stfn_menu" name="Situation Financier" parent="account.menu_finance" sequence="5" groups="account.group_account_invoice" />
+        <menuitem id="caution_menu" name="Cautions et Garanties" parent="main_stfn_menu" action="caution_action" sequence="1" groups="account.group_account_invoice" />
+    </data>
+</openerp>
+

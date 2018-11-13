@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sale_order_subreport_report" language="groovy" pageWidth="600" pageHeight="100" columnWidth="600" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="OPENERP_RELATIONS" value="[&apos;company_id&apos;]"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="company_id" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Fax-fax" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Societe-company_id/Fax-fax]]></fieldDescription>
+	</field>
+	<field name="Tel.-phone" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Societe-company_id/Tel.-phone]]></fieldDescription>
+	</field>
+	<field name="Logo-logo" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Societe-company_id/Logo-logo]]></fieldDescription>
+	</field>
+	<field name="Rue-street" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Societe-company_id/Rue-street]]></fieldDescription>
+	</field>
+	<field name="Societe-company_id" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Societe-company_id]]></fieldDescription>
+	</field>
+	<field name="Taxe_ID-vat" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Taxe_ID-vat]]></fieldDescription>
+	</field>
+	<field name="Courriel-email" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Courriel-email]]></fieldDescription>
+	</field>
+	<field name="Registre__de_la_societe-company_registry" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Registre__de_la_societe-company_registry]]></fieldDescription>
+	</field>
+	<field name="Ville-city2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Ville-city]]></fieldDescription>
+	</field>
+	<field name="Fax-fax2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Fax-fax]]></fieldDescription>
+	</field>
+	<field name="Rue-street2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Rue-street]]></fieldDescription>
+	</field>
+	<field name="Rue__suite-street2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Rue__suite-street2]]></fieldDescription>
+	</field>
+	<field name="Code_Postal-zip2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Code_Postal-zip]]></fieldDescription>
+	</field>
+	<field name="Nom_de_la_banque-bank_name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Comptes_bancaires-bank_ids/Nom_de_la_banque-bank_name]]></fieldDescription>
+	</field>
+	<field name="Numero_de_compte-acc_number" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Comptes_bancaires-bank_ids/Numero_de_compte-acc_number]]></fieldDescription>
+	</field>
+	<field name="Site_Web-website2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Site_Web-website]]></fieldDescription>
+	</field>
+	<field name="Tel.-phone2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Tel.-phone]]></fieldDescription>
+	</field>
+	<field name="Nom_de_la_societe-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Company-company_id/Nom_de_la_societe-name]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="30" y="11" width="175" height="71"/>
+				<imageExpression><![CDATA["/home/odoo/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="385" y="33" width="23" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fax :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="301" y="66" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Taxe_ID-vat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="55" width="29" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CCB : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="274" y="11" width="173" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Rue-street2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="22" width="217" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Rue__suite-street2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="11" width="30" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Code_Postal-zip2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="11" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ville-city2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="66" width="28" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[TVA :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="302" y="55" width="28" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nom_de_la_banque-bank_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="55" width="113" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Numero_de_compte-acc_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="441" y="55" width="29" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/ RC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="469" y="55" width="57" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Registre__de_la_societe-company_registry}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="44" width="39" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[E_mail :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="312" y="44" width="135" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Courriel-email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="77" width="299" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Site_Web-website2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="33" width="109" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fax-fax2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="33" width="23" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="296" y="33" width="89" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tel.-phone2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="0" width="228" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nom_de_la_societe-name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>

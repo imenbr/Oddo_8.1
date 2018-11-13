@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_stock_product_purchase_view' model="ir.ui.view">
+            <field name="name">stock product purcahse</field>
+            <field name="model">wizard.stock.product.purchase</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Stock product purcahse" >
+                    <group col="2" fill="0" states="choose">
+                        <separator string="Choose stock" colspan="4"/>
+ 			<field name="from_date" required='1'/>
+                        <field name="to_date" required='1' />
+                        <field name="stock_ids" required='1' domain="[('active','=','TRUE'),('location_id','in',(10,12))]"/>
+                        <field name="product_ids" domain="[('active','=','TRUE')]"/>
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Create Report"/>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_wizard_stock_product_purchase">
+            <field name="name">stock product purcahse</field>
+            <field name="res_model">wizard.stock.product.purchase</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_stock_product_purchase_view"/>
+            <field name="target">new</field>
+        </record>
+<!--==================== report spec ========================-->
+        <report string="Stock product statement"
+		model="stock.move"
+		auto="True"
+		name="jasper_report_stock_product_purchase"
+		rml="sotebat_stat/stock_product_purchase/report/stock_product_purchase.jrxml"
+		id="report_stock_product_purchase"
+		menu="False"
+		/>
+
+        <menuitem id="submenu_wizard_stock_product_purchase" name="Stock product statement" action="action_wizard_stock_product_purchase" parent="menu_sotebat_reporting" sequence="4"/>
+
+    </data>
+</openerp>
+

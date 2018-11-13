@@ -1,0 +1,752 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* sotebat_stat
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2013-07-26 12:36+0000\n"
+"PO-Revision-Date: 2013-07-26 12:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "Date livraison"
+msgstr "Date livraison"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "/data/record/destination"
+msgstr "/data/record/destination"
+
+#. module: sotebat_stat
+#: model:ir.actions.act_window,name:sotebat_stat.action_wizard_internal_move
+#: model:ir.actions.report.xml,name:sotebat_stat.internal_moves
+#: view:wizard.internal.move:0
+msgid "Internal moves"
+msgstr "Mouvements Inter Chantier"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "$F{ref}"
+msgstr "$F{ref}"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+msgid "$F{quantity}"
+msgstr "$F{quantity}"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "$F{order_name}"
+msgstr "$F{order_name}"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "$F{depart}"
+msgstr "$F{depart}"
+
+#. module: sotebat_stat
+#: model:ir.actions.report.xml,name:sotebat_stat.supplier_prices
+#: field:price.compare,supplier_ids:0
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "Fournisseur"
+msgstr "Fournisseur"
+
+#. module: sotebat_stat
+#: model:ir.model,name:sotebat_stat.model_price_compare
+#: model:ir.model,name:sotebat_stat.model_wizard_internal_move
+#: model:ir.model,name:sotebat_stat.model_wizard_product_order_statement
+#: model:ir.model,name:sotebat_stat.model_wizard_stock_location
+#: model:ir.model,name:sotebat_stat.model_wizard_stock_order
+#: model:ir.model,name:sotebat_stat.model_wizard_stock_product_purchase
+msgid " "
+msgstr " "
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "CHANTIER :"
+msgstr "CHANTIER :"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "Ecart"
+msgstr "Écart"
+
+#. module: sotebat_stat
+#: selection:price.compare,report_type:0
+#: selection:wizard.internal.move,report_type:0
+#: selection:wizard.product.order.statement,report_type:0
+#: selection:wizard.stock.location,report_type:0
+#: selection:wizard.stock.order,report_type:0
+#: selection:wizard.stock.product.purchase,report_type:0
+msgid "HTML"
+msgstr "HTML"
+
+#. module: sotebat_stat
+#: selection:price.compare,state:0
+#: selection:wizard.internal.move,state:0
+#: selection:wizard.product.order.statement,state:0
+#: selection:wizard.stock.location,state:0
+#: selection:wizard.stock.order,state:0
+#: selection:wizard.stock.product.purchase,state:0
+msgid "choose"
+msgstr "Sélectionner"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "/data/record/received"
+msgstr "/data/record/received"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_product_purchase:0
+msgid "/data/record/subtotal"
+msgstr "/data/record/subtotal"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "$F{partner}"
+msgstr "$F{partner}"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "Centre urbain nord Imm Nour City A6.3 2035, C. KHADRA Tunis tn"
+msgstr "Centre urbain nord Imm Nour City A6.3 2035, C. KHADRA Tunis tn"
+
+#. module: sotebat_stat
+#: model:ir.actions.report.xml,name:sotebat_stat.report_stock_product_purchase
+#: model:ir.ui.menu,name:sotebat_stat.submenu_wizard_stock_product_purchase
+msgid "Stock product statement"
+msgstr "État Achats Produits Par Chantier"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "\"Page \"+$V{PAGE_NUMBER}+\" sur\""
+msgstr "\"Page \"+$V{PAGE_NUMBER}+\" sur\""
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "$F{quantity_order}"
+msgstr "$F{quantity_order}"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "ETAT DE MOUVEMENTS DES PRODUITS INTER CHANTIER"
+msgstr "ÉTAT DE MOUVEMENTS DES PRODUITS INTER CHANTIER"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "/data/record/supplier_product_name"
+msgstr "/data/record/supplier_product_name"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "$F{quantity_picking}"
+msgstr "$F{quantity_picking}"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+msgid "/data/record/product_name"
+msgstr "/data/record/product_name"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "Chantier destination"
+msgstr "Chantier destination"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "Produit :"
+msgstr "Produit :"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "\"/home/openerp/openerp-server-6.0.3/bin/addons/sotebat_logo.jpg\""
+msgstr "\"/home/openerp/openerp-server-6.0.3/bin/addons/sotebat_logo.jpg\""
+
+#. module: sotebat_stat
+#: model:ir.actions.act_window,name:sotebat_stat.action_wizard_stock_product_purchase
+msgid "stock product purcahse"
+msgstr "Achats de produit par chantier"
+
+#. module: sotebat_stat
+#: view:wizard.stock.product.purchase:0
+msgid "Stock product purcahse"
+msgstr "Achats de produit par chantier"
+
+#. module: sotebat_stat
+#: model:ir.ui.menu,name:sotebat_stat.menu_sotebat_reporting
+msgid "Sotebat Reports"
+msgstr "Rapports SOTEBAT"
+
+#. module: sotebat_stat
+#: field:wizard.internal.move,from_date:0
+#: field:wizard.stock.order,from_date:0
+#: field:wizard.stock.product.purchase,from_date:0
+msgid "From"
+msgstr "De"
+
+#. module: sotebat_stat
+#: selection:price.compare,report_type:0
+#: selection:wizard.internal.move,report_type:0
+#: selection:wizard.product.order.statement,report_type:0
+#: selection:wizard.stock.location,report_type:0
+#: selection:wizard.stock.order,report_type:0
+#: selection:wizard.stock.product.purchase,report_type:0
+msgid "Excel"
+msgstr "Excel"
+
+#. module: sotebat_stat
+#: field:wizard.stock.order,location_id:0
+msgid "Location"
+msgstr "Chantier"
+
+#. module: sotebat_stat
+#: model:ir.actions.report.xml,name:sotebat_stat.order_statement
+msgid "Order statement"
+msgstr "État des Commandes"
+
+#. module: sotebat_stat
+#: field:price.compare,report_type:0
+#: field:wizard.internal.move,report_type:0
+#: field:wizard.product.order.statement,report_type:0
+#: field:wizard.stock.location,report_type:0
+#: field:wizard.stock.order,report_type:0
+#: field:wizard.stock.product.purchase,report_type:0
+msgid "Type"
+msgstr "Type"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "$V{prix}.setScale(3)"
+msgstr "$V{prix}.setScale(3)"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "$F{supplier_product_name}"
+msgstr "$F{supplier_product_name}"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "/data/record/product_qty"
+msgstr "/data/record/product_qty"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "Reçu"
+msgstr "Reçu"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "Prix minimal :"
+msgstr "Prix minimal :"
+
+#. module: sotebat_stat
+#: model:ir.actions.act_window,name:sotebat_stat.action_product_order_statement
+#: model:ir.ui.menu,name:sotebat_stat.submenu_product_order_statement
+#: view:wizard.product.order.statement:0
+msgid "Product Order Statement"
+msgstr "État des Produits Livrés par rapport au Commande"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "/data/record/pourcentage"
+msgstr "/data/record/pourcentage"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "Etat de vérification des produits livrés"
+msgstr "État de vérification des produits livrés"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "TTC"
+msgstr "TTC"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "Qté commandée"
+msgstr "Qté commandée"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "$F{date}"
+msgstr "$F{date}"
+
+#. module: sotebat_stat
+#: field:wizard.internal.move,to_date:0
+#: field:wizard.stock.order,to_date:0
+#: field:wizard.stock.product.purchase,to_date:0
+msgid "To"
+msgstr "A"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "Chantier :"
+msgstr "Chantier :"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "Société Travaux et Études Des Batiments"
+msgstr "Société Travaux et Études Des Batiments"
+
+#. module: sotebat_stat
+#: model:ir.actions.act_window,name:sotebat_stat.action_wizard_stock_order
+#: model:ir.actions.report.xml,name:sotebat_stat.report_stock_order
+msgid "Stock order"
+msgstr "Commande Stock"
+
+#. module: sotebat_stat
+#: model:ir.module.module,description:sotebat_stat.module_meta_information
+msgid "SOTEBAT's specefic module for Reporting"
+msgstr "Module de création de rapport spécifique pour SOTEBAT"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "/data/record/amount_total"
+msgstr "/data/record/amount_total"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "ETAT COMPARATIF DE PRIX"
+msgstr "État COMPARATIF DE PRIX"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "$F{price}.setScale(3)"
+msgstr "$F{price}.setScale(3)"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "$F{product_code}"
+msgstr "$F{product_code}"
+
+#. module: sotebat_stat
+#: model:ir.ui.menu,name:sotebat_stat.submenu_report_price
+#: view:price.compare:0
+msgid "Compare supplier prices"
+msgstr "État Comparatif des Prix Fournisseurs"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "/data/record/date"
+msgstr "/data/record/date"
+
+#. module: sotebat_stat
+#: model:ir.module.module,shortdesc:sotebat_stat.module_meta_information
+msgid "Sotebat commercial Reports"
+msgstr "Sotebat Rapports Commercials"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "Chantier départ"
+msgstr "Chantier départ"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_product_purchase:0
+msgid "ETAT DES ACHATS DE PRODUITS POUR CHAQUE CHANTIER"
+msgstr "État DES ACHATS DE PRODUITS POUR CHAQUE CHANTIER"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "/data/record/product_code"
+msgstr "/data/record/product_code"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "/data/record/name_product"
+msgstr "/data/record/name_product"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "Nom Produit Chez le Fournisseur"
+msgstr "Nom Produit Chez le Fournisseur"
+
+#. module: sotebat_stat
+#: view:price.compare:0
+#: view:wizard.internal.move:0
+#: view:wizard.product.order.statement:0
+#: view:wizard.stock.location:0
+#: view:wizard.stock.order:0
+#: view:wizard.stock.product.purchase:0
+msgid "Create Report"
+msgstr "Générer Rapport"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+msgid "ETAT DE STOCK PAR CHANTIER"
+msgstr "État DE STOCK PAR CHANTIER"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "$F{location}"
+msgstr "$F{location}"
+
+#. module: sotebat_stat
+#: model:ir.actions.act_window,name:sotebat_stat.action_wizard_stock_location
+#: model:ir.actions.report.xml,name:sotebat_stat.report_stock_location
+#: model:ir.ui.menu,name:sotebat_stat.submenu_stock_location
+#: view:wizard.stock.location:0
+msgid "Stock location"
+msgstr "État de Stock par Chantier"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "/data/record/location"
+msgstr "/data/record/location"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+msgid "$F{product_name}"
+msgstr "$F{product_name}"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "\" \" + $V{PAGE_NUMBER}"
+msgstr "\" \" + $V{PAGE_NUMBER}"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "$F{amount_total}.setScale(3)"
+msgstr "$F{amount_total}.setScale(3)"
+
+#. module: sotebat_stat
+#: field:price.compare,state:0
+#: field:wizard.internal.move,state:0
+#: field:wizard.product.order.statement,state:0
+#: field:wizard.stock.location,state:0
+#: field:wizard.stock.order,state:0
+#: field:wizard.stock.product.purchase,state:0
+msgid "unknown"
+msgstr "Inconnu"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "/data/record/ecart"
+msgstr "/data/record/ecart"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_location_print:0
+msgid "/data/record/quantity"
+msgstr "/data/record/quantity"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "Date"
+msgstr "Date"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "Produit"
+msgstr "Produit"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "ETAT DES COMMANDES"
+msgstr "ÉTAT DES COMMANDES"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "/data/record/ref"
+msgstr "/data/record/ref"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "Prix TTC"
+msgstr "Prix TTC"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "Commande"
+msgstr "Commande"
+
+#. module: sotebat_stat
+#: selection:price.compare,report_type:0
+#: selection:wizard.internal.move,report_type:0
+#: selection:wizard.product.order.statement,report_type:0
+#: selection:wizard.stock.location,report_type:0
+#: selection:wizard.stock.order,report_type:0
+#: selection:wizard.stock.product.purchase,report_type:0
+msgid "PDF"
+msgstr "PDF"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "/data/record/quantity_picking"
+msgstr "/data/record/quantity_picking"
+
+#. module: sotebat_stat
+#: view:wizard.stock.product.purchase:0
+msgid "Choose stock"
+msgstr "Sélectionner Stock"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "Qté livrée"
+msgstr "Qté livrée"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_product_purchase:0
+msgid "Prix"
+msgstr "Prix"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "/data/record/depart"
+msgstr "/data/record/depart"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "BC:"
+msgstr "BC:"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "/data/record/Date-date"
+msgstr "/data/record/Date-date"
+
+#. module: sotebat_stat
+#: view:price.compare:0
+#: view:wizard.internal.move:0
+#: view:wizard.product.order.statement:0
+#: view:wizard.stock.location:0
+#: view:wizard.stock.order:0
+#: view:wizard.stock.product.purchase:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: sotebat_stat
+#: model:ir.actions.act_window,name:sotebat_stat.action_compare_prices
+msgid "Compare Prices"
+msgstr "Comparer Prix"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "Référence"
+msgstr "Référence"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_product_purchase:0
+msgid "$F{subtotal}"
+msgstr "$F{subtotal}"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_order_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "SOTÉBAT"
+msgstr "SOTÉBAT"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "/data/record/price"
+msgstr "/data/record/price"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "/data/record/order_name"
+msgstr "/data/record/order_name"
+
+#. module: sotebat_stat
+#: field:wizard.stock.location,stock_ids:0
+#: field:wizard.stock.product.purchase,stock_ids:0
+msgid "Stock"
+msgstr "Stock"
+
+#. module: sotebat_stat
+#: field:price.compare,product_ids:0
+msgid "Product"
+msgstr "Produit"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+#: report:jasper_report_stock_order_print:0
+msgid "%"
+msgstr "%"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_product_purchase:0
+msgid "Total:"
+msgstr "Total:"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "$F{destination}"
+msgstr "$F{destination}"
+
+#. module: sotebat_stat
+#: selection:price.compare,state:0
+#: selection:wizard.internal.move,state:0
+#: selection:wizard.product.order.statement,state:0
+#: selection:wizard.stock.location,state:0
+#: selection:wizard.stock.order,state:0
+#: selection:wizard.stock.product.purchase,state:0
+msgid "get"
+msgstr "get"
+
+#. module: sotebat_stat
+#: model:ir.ui.menu,name:sotebat_stat.submenu_stock_order
+#: view:wizard.stock.order:0
+msgid "Stock orders"
+msgstr "État des Commandes"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "/data/record/partner"
+msgstr "/data/record/partner"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "/data/record/quantity_order"
+msgstr "/data/record/quantity_order"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+msgid "$F{ecart}"
+msgstr "$F{ecart}"
+
+#. module: sotebat_stat
+#: view:price.compare:0
+msgid "Suppliers"
+msgstr "Fournisseurs"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "$F{price}"
+msgstr "$F{price}"
+
+#. module: sotebat_stat
+#: report:jasper_product_order_statement_print:0
+msgid "$F{pourcentage}"
+msgstr "$F{pourcentage}"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_order_print:0
+msgid "$F{received}"
+msgstr "$F{received}"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "$F{name_product}"
+msgstr "$F{name_product}"
+
+#. module: sotebat_stat
+#: model:ir.ui.menu,name:sotebat_stat.submenu_internal_moves
+msgid "Internal stock moves"
+msgstr "Mouvements Inter Chantier"
+
+#. module: sotebat_stat
+#: field:wizard.product.order.statement,order_ids:0
+msgid "Order"
+msgstr "Commande"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "$F{product_qty}"
+msgstr "$F{product_qty}"
+
+#. module: sotebat_stat
+#: report:jasper_report_stock_product_purchase:0
+msgid "$F{subtotal}.setScale(3)"
+msgstr "$F{subtotal}.setScale(3)"
+
+#. module: sotebat_stat
+#: report:jasper_report_price_print:0
+msgid "Code Prduit Chez le Fournisseur"
+msgstr "Code Prduit Chez le Fournisseur"
+
+#. module: sotebat_stat
+#: report:jasper_report_internal_move_print:0
+#: report:jasper_report_stock_location_print:0
+#: report:jasper_report_stock_product_purchase:0
+msgid "Quantité"
+msgstr "Quantité"
+
+#. module: sotebat_stat
+#: view:price.compare:0
+msgid "Products"
+msgstr "Produits"
+
+#. module: sotebat_stat
+#: view:wizard.product.order.statement:0
+msgid "Orders"
+msgstr "État des Commandes"
+

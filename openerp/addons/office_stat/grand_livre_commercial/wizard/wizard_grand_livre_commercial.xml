@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_grand_livre_commercial_view' model="ir.ui.view">
+            <field name="name">Grand Livre Fournisseur Périodique</field>
+            <field name="model">wizard.grand.livre.commercial</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Grand Livre Fournisseur Périodique" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        <field name="fournisseur_id"/>
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Annuler"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_grand_livre_commercial">
+            <field name="name">Grand Livre Fournisseur Périodique</field>
+            <field name="res_model">wizard.grand.livre.commercial</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_grand_livre_commercial_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Grand Livre Fournisseur Périodique"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_grand_livre_commercial_print"
+		rml="office_stat/grand_livre_commercial/report/grand_livre_commercial.jrxml"
+		id="etat_grand_livre_fournisseur"
+		menu="False"
+		/>
+        <menuitem id="submenu_wizard_grand_livre_commercial" name="Grand Livre Fournisseur Périodique" action="action_wizard_grand_livre_commercial" parent="menu_sotebat_reporting" sequence="6"/>
+    </data>
+</openerp>
+

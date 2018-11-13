@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_invoice_picking_tax_tree" model="ir.ui.view">
+            <field name="name">invoice.picking.tax.tree</field>
+            <field name="model">invoice.picking.tax</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Manual Invoice Taxes">
+                    <field name="sequence"/>
+                    <field name="manual"/>
+                    <field name="name"/>
+                    <field name="account_id" groups="base.group_account_user"/>
+                    <field name="base"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_invoice_picking_tax_form" model="ir.ui.view">
+            <field name="name">invoice.picking.tax.form</field>
+            <field name="model">invoice.picking.tax</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Manual Invoice Taxes">
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="account_id"/>
+                    <field name="manual"/>
+                    <field name="amount"/>
+                    <field name="base" readonly="0"/>
+                    <separator colspan="4" string="Tax codes"/>
+                    <field name="base_code_id"/>
+                    <field name="base_amount"/>
+                    <field name="tax_code_id"/>
+                    <field name="tax_amount"/>
+                    <field name="factor_base" invisible="True"/>
+                    <field name="factor_tax" invisible="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_picking_line_tree_view">
+            <field name="name">invoice.picking.line.tree</field>
+            <field name="model">invoice.picking.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+		 <tree string="Ligne Bon de Livraison">
+                     <field name="picking_id" />
+		     <field name="discount_total" string="Remise" invisible="1"/>
+	             <field name="date_picking"/>
+	             <field name="amount_untaxed"/>
+	             <field name="amount_total" string="Sous total"/>
+                 </tree>
+            </field>
+        </record>
+
+	<record model="ir.ui.view" id="invoice_picking_line_form_view">
+            <field name="name">invoice.picking.line.form</field>
+            <field name="model">invoice.picking.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Ligne Bon de Livraison">
+                    <group>
+                        <!--field name="picking_id"  on_change="picking_id_change(picking_id, parent.partner_id)" domain="[('invoice_state', '=', '2binvoiced'), ('partner_id','=', parent.partner_id), ('picking_type_id','=', context['type']),('state','=', 'done')]"/-->
+                        <field name="picking_id" on_change="picking_id_change(picking_id, parent.partner_id)" domain="[('partner_id','=', parent.partner_id),('picking_type_id','=', context['type']),('state','=', 'done'),('invoice_state','!=','invoiced')]"/>
+			<field name="date_picking"/>
+			<field name="amount_untaxed"/>
+			<field name="amount_total"/>
+			<field name="undiscount_total"/>
+			<field name="discount_total"/>
+                        <field name="product_id"  colspan="4" nolabel="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+	
+        <record model="ir.ui.view" id="invoice_picking_tree_out_view">
+            <field name="name">invoice.picking.tree</field>
+            <field name="model">invoice.picking</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Liste Factures">
+                    <field name="number" invisible="1"/>
+                    <field name="internal_number" select="1"/>
+                    <field name="partner_id" string="Client" select="1"/>
+                    <field name="date_invoice_picking" select="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_picking_tree_in_view">
+            <field name="name">invoice.picking.tree</field>
+            <field name="model">invoice.picking</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Liste Factures">
+                    <field name="internal_number" />
+                    <field name="number" invisible="1"/>
+                    <field name="partner_id" string="Fournisseur"/>
+                    <field name="date_invoice_picking"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="invoice_picking_in_form_view">
+            <field name="name">invoice.picking.form</field>
+            <field name="model">invoice.picking</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Nouvelle Facture">
+                    <header>
+                        <button name="inv_open"  string="Approuver" icon="terp-camera_test" type="workflow" states="draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="internal_number" />
+                            <field name="number" invisible="1"/>
+                            <field name="date_invoice_picking"/><field name="date_due" />
+		            <field name="partner_id" string="Fournisseur" domain="[('supplier','=','True')]"/>
+			     <field name="ref_fournisseur" />
+                            <field name="currency_id" invisible="1"/>
+				
+                            <field colspan="4" name="invoice_picking_line" nolabel="1" widget="one2many_list" context="{'type':1}"/> 				 
+                            <group>
+			        <group>
+                                    <field name="tax_line" nolabel="1">
+                                        <tree editable="bottom" string="Taxes">
+                                            <field name="name"/>
+                                            <field name="account_id" groups="account.group_account_invoice"/>
+                                            <field name="base" on_change="base_change(base,parent.currency_id,parent.company_id,parent.date_invoice)" readonly="1"/>
+                                            <field name="amount" on_change="amount_change(amount,parent.currency_id,parent.company_id,parent.date_invoice)"/>
+                                            <field invisible="True" name="base_amount"/>
+                                            <field invisible="True" name="tax_amount"/>
+                                            <field name="factor_base" invisible="True"/>
+                                            <field name="factor_tax" invisible="True"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group class="oe_right">
+		                    <button  name="compute_taxes"  string="Calculer Taxes"  type="object" icon="gtk-execute" />
+                                    <br/>
+				    <field name="undiscount_total"/>   
+				    <field name="discount_total"/>
+		                    <field name="amount_untaxed"/> 
+                                    <field name="amount_tax" string="Total Taxes"/>
+                                    <field name="timbre"/>
+                                    <field name="amount_total"/>
+					<!--<field name="mode_reglement" invisible="0"/>-->
+		                </group>
+				
+				     
+				
+                            </group>
+         
+                        </group>
+                    </sheet>
+		</form>	
+            </field>
+        </record>
+	
+ 	<record model="ir.ui.view" id="invoice_picking_out_form_view">
+            <field name="name">invoice.picking.form</field>
+            <field name="model">invoice.picking</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Nouvelle Facture">
+                    <header>
+                        <!--button name="inv_confirmed" states="draft" string="Cofirmer" icon="terp-camera_test"/-->
+                        <button name="inv_open" states="draft" string="Cofirmer" icon="terp-camera_test" type="workflow"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="internal_number"/>
+                            <field name="date_invoice_picking"/>
+		            <field name="partner_id" string="Client" domain="[('customer','=','True')]"/>
+			
+                            <field colspan="4" name="invoice_picking_line" nolabel="1" widget="one2many_list" context="{'type':2}"/> 
+		            <group>
+                                <group>
+                                    <field name="tax_line" nolabel="1">
+                                        <tree editable="bottom" string="Taxes">
+                                        <field name="name"/>
+                                        <field name="account_id" groups="account.group_account_invoice"/>
+                                        <field name="base" on_change="base_change(base,parent.currency_id,parent.company_id,parent.date_invoice)" readonly="1"/>
+                                        <field name="amount" on_change="amount_change(amount,parent.currency_id,parent.company_id,parent.date_invoice)"/>
+
+                                        <field invisible="True" name="base_amount"/>
+                                        <field invisible="True" name="tax_amount"/>
+                                        <field name="factor_base" invisible="True"/>
+                                        <field name="factor_tax" invisible="True"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group class="oe_link oe_right">
+		                    <button  name="compute_taxes" string="Calculer Taxes"  type="object" icon="gtk-execute"/>
+                                    <br/>
+				    <field name="undiscount_total" />
+				    <field name="discount_total" />			
+		                    <field name="amount_untaxed"/> 
+                                    <field name="amount_tax" string="Total Taxes"/> 
+                                    <field name="timbre"/> 
+                                    <field name="amount_total"/>
+		                </group>
+<field name="mode_reglement" invisible="0"/>
+                            </group>    
+                        </group>
+                    </sheet>
+		</form>
+            </field>
+        </record>
+
+        <!--record model="ir.ui.view" id="view_invoice_picking_out_search">
+        <field name="name">invoice.picking.out.search</field>
+        <field name="model">invoice.picking</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <tree  string="Liste Factures">
+                    <filter icon="terp-check" string="Ouvert" domain="[('state','=','done')]"/>
+                    <separator orientation="vertical"/>
+
+                    <field name="internal_number"  select="1"/>
+                    <field name="number" string="Référence Fournisseur" select="1"/>
+                    <field name="partner_id" string="Fournisseur" select="1"/>
+                    <field name="date_invoice_picking" select="1"/>
+            </tree>
+        </field>
+        </record-->
+
+
+        <record model="ir.actions.act_window" id="action_invoice_picking_out_form">
+            <field name="name">Fatcure Bon de Livraison</field>
+            <field name="res_model">invoice.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <!--field name="search_view_id" ref="view_invoice_picking_out_search"/-->
+            <field name="domain">[('type','=','out_invoice')]</field>
+            <field name="context">{'type':'out_invoice', 'invoicing_picking':1}</field>
+        </record>
+	<record id="action_invoice_picking_tree_out_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="invoice_picking_tree_out_view"/>
+            <field name="act_window_id" ref="action_invoice_picking_out_form"/>
+        </record>
+        <record id="action_invoice_picking_form_out_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invoice_picking_out_form_view"/>
+            <field name="act_window_id" ref="action_invoice_picking_out_form"/>
+        </record>
+        <record model="ir.actions.act_window" id="action_invoice_picking_in_form">
+            <field name="name">Fatcure Bon de Reception</field>
+            <field name="res_model">invoice.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','in_invoice')]</field>
+            <field name="context">{'type':'in_invoice', 'invoicing_picking':1}</field>
+        </record>
+	<record id="action_invoice_picking_tree_in_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="invoice_picking_tree_in_view"/>
+            <field name="act_window_id" ref="action_invoice_picking_in_form"/>
+        </record>
+	<record id="action_invoice_picking_form_in_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invoice_picking_in_form_view"/>
+            <field name="act_window_id" ref="action_invoice_picking_in_form"/>
+        </record>
+
+	<!--record id="action_invoice_picking_view1" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invoice_picking_out_form_view"/>
+            <field name="act_window_id" ref="action_invoice_picking_in_form"/>
+        </record-->
+
+	  <record model="ir.actions.act_window" id="action_invoice_picking_line_form">
+            <field name="name">invoice.picking.line</field>
+            <field name="res_model">invoice.picking.line</field>
+        </record>
+
+     <!-- <menuitem name="Facturer Bon Livraison" icon="terp-project" id="invoice_picking_main_menu"/>  <menuitem name="Lignes Factures Bons Livraison" parent="invoice_picking_main_menu" id="invoice_picking_line_mainform" action="action_invoice_picking_line_form"/>-->
+
+        <menuitem name="Factures Bons Reception" parent="account.menu_finance_payables" id="invoice_picking_mainform_payables" action="action_invoice_picking_in_form" groups="account.group_account_invoice"/>
+        <menuitem name="Factures Bons Livraison" parent="account.menu_finance_receivables" id="invoice_picking_mainform_receivables" action="action_invoice_picking_out_form" groups="account.group_account_invoice"/>
+
+      
+
+    </data>
+</openerp>

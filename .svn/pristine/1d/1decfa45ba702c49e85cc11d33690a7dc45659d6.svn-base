@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--
+            REGLEMENT 
+        -->
+        <menuitem id="menu_reglement" name="Reglement" groups="account.group_account_invoice"/>
+        <!-- 
+            REGLEMENT/PIECE
+        -->
+        <menuitem id="menu_piece_reglement" name="Pièce" parent="menu_reglement" sequence="2"/> 
+
+	<record id="view_piece_client_tree" model="ir.ui.view">
+            <field name="name">reglement.piece.tree</field>
+            <field name="model">reglement.piece</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Reglement" colors="green:state=='free';blue:state in ('cashed');red:state in ('impaid','pimpaid')">
+		    <field name="partner_id" />
+		    <field name="num_cheque_traite"/>
+		    <field name="date_echance" />
+		    <field name="montant_piece"/>
+                    <!--field name="nature_piece"/-->
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+	<record id="view_piece_client_form" model="ir.ui.view">
+            <field name="name">reglement.piece.form</field>
+            <field name="model">reglement.piece</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Reglement">
+                    <header>
+                        <button name="reg_free" string="Valider" states="draft" icon="gtk-jump-to" colspan="4"/>
+                        <button name="reg_impaid" string="Impayer" states="integrated" icon="gtk-jump-to" colspan="2"/>
+                        <button name="reg_cashed" string="Encaisser" states="integrated" icon="gtk-jump-to" colspan="2" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,free,integrated,cashed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="num_cheque_traite"/>	
+                                <field name="mode_reglement"/>		    	    
+                                <field name="partner_id"/>
+                                <field name="montant_piece" />
+		                <field name="date_echance" />
+                                <field name="date_encaissement" string="Date Encaissement"/>
+                            </group>
+                            <group>
+                                <field name="num_compte"/>
+                                <field name="banque_id"/>	    
+                                <field name="agence"/>
+                                <field name="titulaire"/>
+                                <!--field name="nature_piece" /--> 
+                            </group> 
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_piece_fournisseur_tree" model="ir.ui.view">
+            <field name="name">reglement.piece.fournisseur.tree</field>
+            <field name="model">reglement.piece</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Reglement" colors="green:state=='free';blue:state in ('cashed');red:state in ('impaid','pimpaid')">
+		    <field name="partner_id" />
+		    <field name="num_cheque_traite"/>
+		    <field name="date_echance" />
+                    <field name="date_encaissement" string="Date Encaissement"/>
+		    <field name="montant_piece"/>
+                    <field name="nature_piece" invisible="1"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_piece_fournisseur_form" model="ir.ui.view">
+            <field name="name">reglement.piece.fournisseur.form</field>
+            <field name="model">reglement.piece</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Reglement">
+                    <header>
+                        <button name="reg_free" string="Valider" states="draft" icon="gtk-jump-to" colspan="4"/>
+                        <button name="reg_impaid" string="Impayer" states="integrated" icon="gtk-jump-to" colspan="2"/>
+                        <button name="reg_cashed" string="Encaisser" states="integrated" icon="gtk-jump-to" colspan="2" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,free,integrated,cashed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="num_cheque_traite"/>	
+                                <field name="mode_reglement"/>		    	    
+                                <field name="partner_id"/>
+                                <field name="montant_piece" />
+		                <field name="date_echance" />
+                                <field name="date_encaissement" string="Date Encaissement"/>
+                            </group>
+                            <group>
+                                <field name="num_compte"/>
+                                <field name="banque_id"/>	    
+                                <field name="agence"/>
+                                <field name="titulaire"/> 
+                                <field name="nature_piece" invisible="1"/> 
+                            </group> 
+                        </group>
+                    </sheet>  
+	            <!--button name="reg_free" string="Valider" states="draft" icon="gtk-jump-to" colspan="4"/>
+                    <button name="reg_impaid" string="Impayer" states="integrated" icon="gtk-jump-to" colspan="2"/>
+                    <button name="reg_cashed" string="Encaisser" states="integrated" icon="gtk-jump-to" colspan="2" />
+                   <field name="state" /-->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_reglement_piece_serch">
+            <field name="name">account.reglement.piece.serch</field>
+            <field name="model">reglement.piece</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search>
+		   <filter string="Free" icon="terp-accessories-archiver" domain="[('state','=','free')]"/>
+		   <filter string="Cashed" icon="terp-accessories-archiver" domain="[('state','=','cashed')]"/>
+                   <filter string="Impaid" icon="terp-accessories-archiver+" domain="[('state','=','impaid')]"/>
+                   <filter string="Partially Impaid" icon="terp-stock_symbol-selection" domain="[('state','=','pimpaid')]"/>
+                   <separator orientation="vertical"/>
+                   <newline/>
+                    <field name="code_piece"/>
+                    <field name="agence"/>
+                    <field name="partner_id"/>
+                    <field name="banque_id"/>
+                    <field name="date_echance" />
+                </search>
+            </field>
+        </record>
+
+        <!--record id="action_piece_form" model="ir.actions.act_window">
+            <field name="name">Piece Reglement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.piece</field>
+            <field name="view_type">form</field>
+        </record-->
+
+
+
+
+        <record id="action_piece_fournisseur_form" model="ir.actions.act_window">
+            <field name="name">Piece Reglement Fournisseur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.piece</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_piece_fournisseur_tree"/>
+            <field name="domain">[('type','=','in')]</field> 
+            <field name="context">{'type':'in'}</field>
+        </record>
+        <record id="action_piece_fournisseur_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_piece_fournisseur_tree"/>
+            <field name="act_window_id" ref="action_piece_fournisseur_form"/>
+        </record>
+
+	<record id="action_piece_fournisseur_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_piece_fournisseur_form"/>
+            <field name="act_window_id" ref="action_piece_fournisseur_form"/>
+        </record>
+ 
+        <record id="action_piece_client_form" model="ir.actions.act_window">
+            <field name="name">Piece Reglement Client</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.piece</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_piece_client_tree"/>
+            <field name="domain">[('type','=','out')]</field> 
+            <field name="context">{'type':'out'}</field>
+        </record>
+        <record id="action_piece_client_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_piece_client_tree"/>
+            <field name="act_window_id" ref="action_piece_client_form"/>
+        </record>
+
+	<record id="action_piece_client_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_piece_client_form"/>
+            <field name="act_window_id" ref="action_piece_client_form"/>
+        </record>
+
+
+      
+
+
+        <!-- 
+             REGLEMENT/PIECE/PIECE REGLEMENT
+        -->
+        <menuitem action="action_piece_fournisseur_form" id="menu_piece_fournisseur_form"  parent="menu_piece_reglement" /> 
+        <menuitem action="action_piece_client_form" id="menu_piece_client_form"  parent="menu_piece_reglement" /> 
+        <!--menuitem action="action_piece_form" id="menu_piece_form" name="Pièce réglement" parent="menu_piece_reglement" /--> 
+
+        <!-- 
+            REGLEMENT/CONFIGURATION
+        -->
+	<menuitem name="Configuration" id="menu_configuration_reglement"  parent="menu_reglement" sequence="5"/>
+
+        <record model="ir.ui.view" id="view_reglement_mode_tree">
+            <field name="name">mode.reglement.tree</field>
+            <field name="model">reglement.mode</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+		 <tree string="Mode Reglement" >
+	             <field name="code" select="1"/>
+	             <field name="designation" select="1"/>
+                 </tree>
+            </field>
+        </record>
+
+	<record model="ir.ui.view" id="view_mode_reglement_form">
+            <field name="name">mode.reglement.form</field>
+            <field name="model">reglement.mode</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form  string="Mode">
+                    <group>
+		        <field name="code" />
+			<field name="designation"/>    	
+                    </group>		
+                </form>
+            </field>
+        </record>
+
+	<record id="action_mode_reg_form" model="ir.actions.act_window">
+            <field name="name">Mode Reglement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.mode</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <!-- 
+            REGLEMENT/CONFIGURATION/Mode REGLEMENT
+        -->
+	<menuitem action="action_mode_reg_form" id="menu_mode_reg_form"  parent="menu_configuration_reglement" />
+
+	<record model="ir.ui.view" id="view_reglement_banque_tree">
+            <field name="name">banque.reglement.tree</field>
+            <field name="model">reglement.banque</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+		 <tree string="Banque" >
+	             <field name="code" select="1"/>
+	             <field name="designation" select="1"/>
+                 </tree>
+            </field>
+        </record>
+
+	<record model="ir.ui.view" id="view_banque_reglement_form">
+            <field name="name">banque.reglement.form</field>
+            <field name="model">reglement.banque</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form  string="Banque">
+                    <group>
+		        <field name="code" />
+			<field name="designation"/>   
+                    </group> 			
+                </form>
+            </field>
+        </record>
+        
+	<record id="action_banque_form" model="ir.actions.act_window">
+            <field name="name">Banque</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.banque</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <!-- 
+            REGLEMENT/CONFIGURATION/BANQUE
+        -->
+        <menuitem name="Banque" action="action_banque_form" id="menu_banque_form"  parent="menu_configuration_reglement" />
+
+	<record model="ir.ui.view" id="view_regelment_retenu_form">
+            <field name="name">reglement.retenu.form</field>
+            <field name="model">reglement.retenu</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form  string="Retenu">
+                    <group>
+		        <field name="code" />
+	                <field name="designation"/>
+                        <field name="type"/>  	
+                    </group>
+                </form>
+            </field>
+        </record>
+
+	<record id="view_retenu_tree" model="ir.ui.view">
+            <field name="name">reglement.retenu.tree</field>
+            <field name="model">reglement.retenu</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Retenu">
+		    <field name="code" select="1"/>
+		    <field name="designation" select="1"/>
+                    <field name="type" select="1"/>  	
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_retenu_form" model="ir.actions.act_window">
+            <field name="name">Taux Source Retenu</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reglement.retenu</field>
+            <field name="view_type">form</field>
+        </record>
+        <!-- REGLEMENT/CONFIGURATION/RETENUE -->
+	<menuitem action="action_retenu_form" id="menu_retenu_form"  parent="menu_configuration_reglement" />
+
+    </data>
+</openerp>

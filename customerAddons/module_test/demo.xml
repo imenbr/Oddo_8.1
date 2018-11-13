@@ -1,0 +1,19 @@
+<openerp>
+    <data>
+
+           <record id="object0" model="module_test.module_test">
+             <field name="name">Cours 1</field>
+             <field name="description">Description 1</field>
+           </record>
+
+           <record id="object1" model="module_test.module_test">
+             <field name="name">Cours 2</field>
+             <field name="description">Description 2</field>
+           </record>
+
+           <record id="object2" model="module_test.module_test">
+             <field name="name">Cours 3</field>
+           </record>
+
+    </data>
+</openerp>

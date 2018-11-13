@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_liste_cheque_view' model="ir.ui.view">
+            <field name="name">Liste Des Chéques</field>
+            <field name="model">wizard.liste.cheque</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Liste Des Chéques" >
+                    <group col="2" fill="0" states="choose" colspan="4">
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <field name="mode_reglement_id"/>
+                        <field name="fournisseur_id"/>
+                        <field name="banque_id"/>
+                        <field name="etat_cheque"/>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_liste_cheque">
+            <field name="name">Liste Des Chéques</field>
+            <field name="res_model">wizard.liste.cheque</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_liste_cheque_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Liste Des Chéques"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_liste_cheque_print"
+		rml="sotebat_stat/liste_cheque/report/liste_cheque.jrxml"
+		id="etat_liste_cheque"
+		menu="False"
+		/>
+        <menuitem id="submenu_wizard_liste_cheque" name="Liste Des Chéques" action="action_wizard_liste_cheque" parent="menu_sotebat_reporting" sequence="6"/>
+    </data>
+</openerp>
+

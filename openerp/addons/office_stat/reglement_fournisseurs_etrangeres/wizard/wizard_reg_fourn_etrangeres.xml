@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_reg_fourns_etrangeres_view' model="ir.ui.view">
+            <field name="name">Reglement fournisseurs etrangeres</field>
+            <field name="model">wizard.reg.fourns.etrangeres</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Reglement fournisseurs etrangeres " >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <field name="date_from" />
+			<field name="date_to" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_Reg_fournis_etrangeres">
+            <field name="name">Reglement fournisseurs etrangeres</field>
+            <field name="res_model">wizard.reg.fourns.etrangeres</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_reg_fourns_etrangeres_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Reglement fournisseurs etrangeres"
+		model="account.invoice"
+		auto="True"
+		name="jasper_reg_fourns_etrangeres_print"
+		rml="office_stat/reglement_fournisseurs_etrangeres/report/reg_fourns_etrangeres.jrxml"
+		id="Reg_fournis_etrangeres"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_Reg_fournis_etrangeres_report" name="Reglement fournisseurs etrangeres" action="action_wizard_Reg_fournis_etrangeres" parent="menu_comptabilite_report"  sequence="12"/>
+    </data>
+</openerp>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_cheque_circulation_view' model="ir.ui.view">
+            <field name="name">Cheques En circulations</field>
+            <field name="model">wizard.cheque.circulation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Cheques en circulations " >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <field name="date_from" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_cheque_circulation">
+            <field name="name">Cheques en circulation</field>
+            <field name="res_model">wizard.cheque.circulation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_cheque_circulation_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Cheques en circulation"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_cheques_circulation_print"
+		rml="office_stat/cheque_circulations/report/cheques_circulation.jrxml"
+		id="cheque_circulation"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_cheque_circulation_report" name="Cheques en circulations" action="action_wizard_cheque_circulation" parent="menu_rapport_reglement"  sequence="11"/>
+    </data>
+</openerp>
+

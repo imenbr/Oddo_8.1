@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--====================wizard View==================-->
+
+        <record id='wizard_report_turnover_client' model="ir.ui.view">
+            <field name="name">Chiffre d'affaire</field>
+            <field name="model">wizard.turnover.stat.client</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Journal" >
+                    <group col="2" fill="0" states="choose">
+                        <separator string="Chiffre Affaire Client" colspan="4"/>
+                        <field name="from_date" required='1'/>
+                        <field name="to_date" required='1' />
+                        <field name="user_ids" required='1' />
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                                <div class="oe_button_box oe_right">
+					<button special="cancel" icon="gtk-cancel" string="Annuler"/>
+	                                <button type="object" name="create_report" icon="gtk-go-forward" string="Créer"/>
+				</div>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_turnover_stat_client">
+            <field name="name">Chiffre d'affaire</field>
+            <field name="res_model">wizard.turnover.stat.client</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+           <field name="view_id" ref="wizard_report_turnover_client"/>
+           <field name="target">new</field>
+        </record>
+<!--==================== Report ========================-->
+        <report string="Chiffre d'affaire"
+		model="account.invoice"
+		auto="True"
+		name="jasper_report_turnover_client_print"
+		rml="office_stat/stat_turnover/report/report_turnover_stats_client.jrxml"
+		id="stat_turnover_report_client"
+		menu="False"
+		/>
+    <menuitem id="menu_comptabilite_report" name="Rapports" parent="account.menu_finance" sequence="6"/>
+    <menuitem id="submenu_reporting_turnover_client" name="Chiffre d'affaire" action="action_turnover_stat_client" parent="menu_comptabilite_report" />
+
+    </data>
+</openerp>
+

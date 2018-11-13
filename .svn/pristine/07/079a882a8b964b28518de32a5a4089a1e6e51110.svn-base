@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grand_livre_commercial" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2396694214876043"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="header1" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/header1]]></fieldDescription>
+	</field>
+	<field name="header2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/header2]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/user]]></fieldDescription>
+	</field>
+	<field name="date_piece" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/date_piece]]></fieldDescription>
+	</field>
+	<field name="libelle" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/libelle]]></fieldDescription>
+	</field>
+	<field name="num_piece" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/num_piece]]></fieldDescription>
+	</field>
+	<field name="debit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/debit]]></fieldDescription>
+	</field>
+	<field name="credit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/credit]]></fieldDescription>
+	</field>
+	<field name="matricule_fiscale" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/matricule_fiscale]]></fieldDescription>
+	</field>
+	<field name="raison_social" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/raison_social]]></fieldDescription>
+	</field>
+	<field name="date_debut" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/date_debut]]></fieldDescription>
+	</field>
+	<field name="date_fin" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/date_fin]]></fieldDescription>
+	</field>
+	<field name="date_report_precedent" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/date_report_precedent]]></fieldDescription>
+	</field>
+	<field name="libelle_report_precedent" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/libelle_report_precedent]]></fieldDescription>
+	</field>
+	<field name="num_piece_report_precedent" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/num_piece_report_precedent]]></fieldDescription>
+	</field>
+	<field name="debit_report_precedent" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/debit_report_precedent]]></fieldDescription>
+	</field>
+	<field name="credit_report_precedent" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/credit_report_precedent]]></fieldDescription>
+	</field>
+	<field name="solde" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/solde]]></fieldDescription>
+	</field>
+	<field name="solde_precedant" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/solde_precedant]]></fieldDescription>
+	</field>
+	<group name="nom_emp">
+		<groupHeader>
+			<band height="141">
+				<staticText>
+					<reportElement x="0" y="96" width="89" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Date Piéce]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="89" y="96" width="139" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Libelle]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="387" y="96" width="86" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Crédit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="302" y="96" width="85" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Débit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="228" y="96" width="74" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Numéro Piéce]]></text>
+				</staticText>
+				<rectangle radius="10">
+					<reportElement x="1" y="10" width="228" height="54"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="1" y="10" width="228" height="17"/>
+					<box topPadding="3">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Fournisseur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="47" width="113" height="17"/>
+					<box leftPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Matricule Fiscale :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="114" y="27" width="115" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{raison_social}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="114" y="47" width="115" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{matricule_fiscale}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="27" width="113" height="20"/>
+					<box leftPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Raison Sociale :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="126" y="76" width="82" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date Début :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="345" y="76" width="69" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date Fin :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="208" y="76" width="94" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date_debut}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="414" y="76" width="87" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date_fin}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="117" width="89" height="24"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date_report_precedent}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="228" y="117" width="74" height="24"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{num_piece_report_precedent}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="89" y="117" width="139" height="24"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{libelle_report_precedent}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="302" y="117" width="85" height="24"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{debit_report_precedent}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="387" y="117" width="86" height="24"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{credit_report_precedent}.setScale(3)]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="473" y="96" width="82" height="21"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Solde]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="473" y="117" width="82" height="24"/>
+					<box rightPadding="3">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{solde_precedant}.setScale(3)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="4"/>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="100" height="61"/>
+				<imageExpression><![CDATA["/home/openerp/openerp-server-6.0.3/bin/addons/sotebat_logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="0" width="302" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOTÉBAT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="20" width="455" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{header1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="40" width="455" height="21"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{header2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[GRAND LIVRE FOURNISSEUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="34" width="69" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Elaboré le :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="54" width="30" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Par :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="414" y="54" width="141" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="34" width="141" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="89" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_piece}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="0" width="139" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{libelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="0" width="74" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num_piece}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="302" y="0" width="85" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{debit}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="387" y="0" width="86" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{credit}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="473" y="0" width="82" height="20"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solde}.setScale(3)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,188 @@
+﻿from openerp.osv import fields, osv
+import openerp.addons.decimal_precision as dp
+from datetime import datetime,timedelta
+import calendar
+
+class hr_avance(osv.osv):
+    _name = 'hr.avance'
+    _inherit = 'mail.thread'
+    
+    
+    def _employee_get(self, cr, uid, context=None):        
+        emp_id = context.get('default_employee_id', False)
+        if emp_id:
+            return emp_id
+        ids = self.pool.get('hr.employee').search(cr, uid, [('user_id', '=', uid)], context=context)
+        if ids:
+            return ids[0]
+        return False
+
+    _columns = {
+        'employee_id': fields.many2one('hr.employee', 'Employee', required=True, readonly=True, states={'draft': [('readonly', False)]}),
+	'date':fields.date('Date',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+        'state': fields.selection([
+            ('draft', 'Brouillon'),
+            ('sent', 'Envoyée'),
+            ('done', 'Acceptée'),
+            ('cancel', 'Refusée'),
+        ]),
+	'montant':fields.float('Montant demandé',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+	'description':fields.text('Description',readonly=True, states={'draft': [('readonly', False)]}),
+    }
+    _defaults = {
+	
+		'state':'draft',
+        'employee_id': _employee_get,
+    }
+
+		
+		
+		
+    def create(self,cr, uid, values, context=None):
+	res=0
+	employee_id = values.get('employee_id', False)
+        #demande_avance=self.browse(cr, uid, ids)
+	montant = values.get('montant', False)
+		
+        contract_ids=self.pool.get('hr.contract').search(cr, uid, [('employee_id', '=',employee_id)])
+		
+        contract = self.pool.get('hr.contract').browse(cr, uid,contract_ids)
+
+
+    	if montant > contract.wage:
+
+			#raise osv.except_osv(_('Montant erroné'), _('Montant demandé supperieur à votre salaire '))
+			raise osv.except_osv(('Montant erroné'), ('Montant demandé supperieur à votre salaire '))
+        else :
+		res=super(hr_avance, self).create(cr, uid, values, context)
+        return res
+## il faut redefenir le write aussi !! 
+
+    def envoyer(self, cr, uid, ids, context):
+        '''
+           Methode du workflow: changer l'état du demande à l'état envoyé
+        ''' 
+        demande_avance=self.browse(cr, uid, ids)
+        #print "***************************ids==",demande_avance.employee_id.user_id.id
+        print "***************************ids==",demande_avance.date[5:-3]
+	montant=0.0
+	mois=int(demande_avance.date[5:-3])
+	year= datetime.now().year
+	from_date=datetime(year,mois,1)
+	to_date=datetime(year,mois,calendar.monthrange(year,mois)[1])	
+	print "from_date1====",from_date
+	print "to_date====",to_date
+        contract_ids=self.pool.get('hr.contract').search(cr, uid, [('employee_id', '=', demande_avance.employee_id.id)])
+		
+        contract = self.pool.get('hr.contract').browse(cr, uid,contract_ids)
+
+    	user_id=1
+	avance_ids = self.pool.get('hr.avance').search(cr, uid, [('employee_id','=',demande_avance.employee_id.id),('state','not in',['draft']),('date','>=',from_date),('date','<=',to_date)])
+	avance_obj = self.pool.get('hr.avance').browse(cr, uid, avance_ids)
+	if int(contract.type_avance)==1:
+		print "dans if ===1 "
+		
+		if avance_obj:
+			raise osv.except_osv(('Deux demandes d\'avance pour un seul mois'), ('Vous avez déjà envoyé une demande d\'avance pour ce mois '))
+		
+	elif int(contract.type_avance)==2:
+		if avance_obj:
+			for avance in avance_obj:
+				montant+=avance.montant
+    			print "montant===", montant
+    			print "montant+demande_avance.montant===", montant+demande_avance.montant
+    			if montant+demande_avance.montant > contract.wage:
+
+				raise osv.except_osv(('Montant erroné'), ('Montant demandé pour ce mois est supperieur à votre salaire '))
+	print "apres eliif **"	
+	mail_vals = {
+		'body':'<html>Vous avez une demande d\'avance </html>',
+		'record_name':'demande',
+		'res_id':ids[0],
+		'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+		'model':'hr.avance',
+		'type':'comment',
+		'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		'starred':True,
+	}
+	message = self.pool.get('mail.message').create(cr, uid, mail_vals) 
+	print "messages reeeeeeeeeeeeeeeeeeeeeee" 
+			
+	mail_notif_vals = {
+		'partner_id':self.pool.get('res.users').browse(cr, uid,user_id, context=context).partner_id.id,
+		'message_id':message,
+		'is_read':False,
+		'starred':True,
+				
+	}
+	self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+	print "notiiiiiiiiifffffff reeeeeeeeeeeeeeeeeeeeeee"
+
+        self.write(cr, uid, ids, {'state': 'sent'})
+        return True
+
+    def confirmer(self, cr, uid, ids, context):
+        '''
+           Methode du workflow: changer l'état du demande à l'état accepté
+        ''' 
+        demande_avance=self.browse(cr, uid, ids)
+        print "***************************ids==",demande_avance.employee_id.user_id.id
+	mail_vals = {
+		'body':'<html>Votre demande d\'avance a été acceptée</html>',
+		'record_name':'Demande acceptée',
+		'res_id':ids[0],
+		'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+		'model':'hr.avance',
+		'type':'comment',
+		'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		'starred':True,
+	}
+	message = self.pool.get('mail.message').create(cr, uid, mail_vals) 
+	print "messages reeeeeeeeeeeeeeeeeeeeeee" 
+			
+	mail_notif_vals = {
+		'partner_id':self.pool.get('res.users').browse(cr, uid,demande_avance.employee_id.user_id.id, context=context).partner_id.id,
+		'message_id':message,
+		'is_read':False,
+		'starred':True,
+				
+	}
+	self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+	print "notiiiiiiiiifffffff reeeeeeeeeeeeeeeeeeeeeee"
+        self.write(cr, uid, ids, {'state': 'done'})
+        return True
+
+    def refuser(self, cr, uid, ids, context):
+        '''
+           Methode du workflow: changer l'état du demande à l'état refusé
+        ''' 
+        demande_avance=self.browse(cr, uid, ids)
+        print "***************************ids==",demande_avance.employee_id.user_id.id
+	mail_vals = {
+		'body':'<html>Votre demande d\'avance a été refusée</html>',
+		'record_name':'Demande refusée',
+		'res_id':ids[0],
+		'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+		'model':'hr.avance',
+		'type':'comment',
+		'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+		'starred':True,
+	}
+	message = self.pool.get('mail.message').create(cr, uid, mail_vals) 
+	print "messages reeeeeeeeeeeeeeeeeeeeeee" 
+			
+	mail_notif_vals = {
+		'partner_id':self.pool.get('res.users').browse(cr, uid,demande_avance.employee_id.user_id.id, context=context).partner_id.id,
+		'message_id':message,
+		'is_read':False,
+		'starred':True,
+				
+	}
+	self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+	print "notiiiiiiiiifffffff reeeeeeeeeeeeeeeeeeeeeee"
+        self.write(cr, uid, ids, {'state': 'cancel'})
+        return True
+hr_avance()

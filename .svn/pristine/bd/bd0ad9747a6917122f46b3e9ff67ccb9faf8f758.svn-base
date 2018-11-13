@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="action_sale_devis_order" model="ir.actions.act_window">
+            <field name="name">Bon Commande</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="sale.view_order_form"/>
+        </record>
+
+        <record id="view_sale_devis_form" model="ir.ui.view">
+            <field name="name">sale.devis.form</field>
+            <field name="model">sale.devis</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+		<form string="Sales Devis">
+                    <header>
+
+			<button name="envoyer" string="Envoyer" states="draft" type="workflow"/>
+			<button name="confirmer_devis" string="Confirmer" states="sent" type="workflow"/>
+			<button name="action_view_order" string="Voir Bon Commande" states="confirmed" type="object"/>
+			<field name="state" widget="statusbar" statusbar_visible="draft,sent,confirmed" />
+		    </header>
+		    <sheet>
+                    <h1>
+                        <label string="Devis " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
+                    </h1>
+			<group>
+				<group>
+		                	<field name="partner_id"  attrs="{'readonly':[('state','in',('sent','confirmed'))]}"/>
+				</group>
+		                <group>
+		                	<field name="reference"/>
+		                	<field name="date" attrs="{'readonly':[('state','in',('sent','confirmed'))]}"/>
+		                	<field name="company_id"  attrs="{'readonly':[('state','in',('sent','confirmed'))]}"/>
+				</group>
+			</group>
+                	<field name="devis_lines"  attrs="{'readonly':[('state','in',('sent','confirmed'))]}">
+			     <tree string="Ligne de devis">
+				  <field name="product_id"/>
+                		  <field name="price_unit"/>
+                		  <field name="product_qty"/>
+                		  <field name="discount"/>
+                		  <field name="product_uom"/>
+                                  <field name="tax_ids"/>
+                                  <field name="price_subtotal"/>
+			     </tree>
+                             <form string="Ligne de devis">
+                                  <group>
+				      <field name="product_id" on_change="product_id_change(product_id,tax_ids)"/>
+                		      <field name="price_unit"/>
+                		      <field name="product_qty"/>
+                		      <field name="discount"/>
+                		      <field name="product_uom"/>
+                                      <field name="tax_ids"/>
+                                      <field name="price_subtotal"/>
+                                  </group>
+			     </form>
+			</field>
+                        <group>
+                            <group> 
+                                <field name="tax_lines" nolabel="1"  attrs="{'readonly':[('state','in',('sent','confirmed'))]}">
+                                    <tree editable="bottom" string="Taxes">
+                                        <field name="name"/>
+                                        <field name="account_id" groups="account.group_account_invoice"/>
+                                        <field name="base"  readonly="1"/>
+                                        <field name="amount" />
+                                        <field invisible="True" name="base_amount"/>
+                                        <field invisible="True" name="tax_amount"/>
+                                        <field name="factor_base" invisible="True"/>
+                                        <field name="factor_tax" invisible="True"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group class="oe_right">
+                                <button colspan="2" name="button_reset_taxes" string="Compute Taxes" type="object" icon="terp-stock_format-scientific"/>                               
+			        <field name="undiscount_total"/>
+                                <label string="" colspan="2"/>
+		                <field name="discount_total" />
+                                <label string="" colspan="2"/>
+		                <field name="amount_untaxed"  string ="Total NHT"/>
+                                <label string="" colspan="2"/>
+                                <field name="amount_tax"  string="Total Taxes"/>
+                                <field name="amount_total"/>
+                            
+                            </group>  
+                        </group>
+		    </sheet>
+		</form>
+            </field>
+        </record>
+
+	<record id="view_sale_devis_tree" model="ir.ui.view">
+            <field name="name">sale.devis.tree</field>
+            <field name="model">sale.devis</field>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <tree string="Sale devis">
+                    <field name="reference"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sale_devis" model="ir.actions.act_window">
+            <field name="name">Devis</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.devis</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_sale_devis_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+	<menuitem id="menu_sale_devis_item" name="Devis Vente" parent="base.menu_sales" action="action_sale_devis"/>
+
+
+	<!--
+            sale.order remove the word Devis
+        -->
+        <record id="sale_order_form_inherited" model="ir.ui.view">
+            <field name="name">sale.order.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@string='Sales Order']/sheet/h1/label[position()=1]" position="attributes">
+			<attribute name="invisible">['state','=','draft']</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+

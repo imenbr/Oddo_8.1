@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id='wizard_category_products_view' model="ir.ui.view">
+            <field name="name">Categorie Produit</field>
+            <field name="model">category.products.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Categorie Produit" >
+                    <group col="2" fill="0" states="choose">
+                        <separator string="Categorie" />
+                        <field name="category_ids" colspan="4" nolabel="1" required="1"/>
+                        <separator colspan="2"/>
+                        <!--group  string="Excel" colspan="4">
+			    <field name="name" colspan="4" string ="Nom fichier" />
+			    <field name="db_datas" colspan="4" nolabel="1" />
+			    <button type="object" colspan="4" name="generate_file" icon="gtk-go-forward" string="Créer rapport xls"/>
+			</group-->
+                        <group  string="PDF">
+                            <button special="cancel" icon="gtk-cancel" string="Annuler"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Créer rapport pdf"/>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_category_product">
+            <field name="name">Categorie Produit</field>
+            <field name="res_model">category.products.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_category_products_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Category"
+		model="product.category"
+		auto="True"
+		name="jasper_report_category_product_print"
+		rml="office_stat/product_per_category/report/category_products.jrxml"
+		id="category_products"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_category_products" name="Liste des Produits par Categorie" action="action_category_product" sequence ="1" parent="menu_reporting_office"/>
+
+    </data>
+</openerp>
+

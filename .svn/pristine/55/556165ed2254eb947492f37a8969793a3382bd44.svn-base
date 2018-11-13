@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport_facture_bl" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="OPENERP_RELATIONS" value="[&apos;tax_line&apos;]"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Amount-amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Amount-amount]]></fieldDescription>
+	</field>
+	<field name="Base-base" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Base-base]]></fieldDescription>
+	</field>
+	<field name="Tax_Description-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Tax_Description-name]]></fieldDescription>
+	</field>
+	<field name="Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Tax_Account-account_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Base_Code_Amount-base_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Base_Code_Amount-base_amount]]></fieldDescription>
+	</field>
+	<field name="Tax_Case_Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Base_Code-base_code_id/Tax_Case_Name-name]]></fieldDescription>
+	</field>
+	<field name="Tax_Code_Amount-tax_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Tax_Code_Amount-tax_amount]]></fieldDescription>
+	</field>
+	<field name="Tax_Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Base_Code-base_code_id/Lines-line_ids/Tax-account_tax_id/Tax_Name-name]]></fieldDescription>
+	</field>
+	<field name="Name-name2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Tax_Account-account_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Name-name3" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Tax_Account-account_id/Name-name]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="167" y="0" width="88" height="20"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Amount-amount}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="64" y="0" width="103" height="20"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Base-base}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="63" height="20"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tax_Description-name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

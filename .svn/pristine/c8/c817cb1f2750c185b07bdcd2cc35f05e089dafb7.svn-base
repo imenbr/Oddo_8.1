@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-today OpenERP SA (<http://www.openerp.com>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from datetime import datetime, date
+from lxml import etree
+import time
+
+from openerp import SUPERUSER_ID
+from openerp import tools
+from openerp.addons.resource.faces import task as Task
+from openerp.osv import fields, osv
+from openerp.tools import float_is_zero
+from openerp.tools.translate import _
+
+
+class task(osv.osv):
+    _name = "project.task"
+
+    _inherit = 'project.task'
+
+    _columns = {
+
+
+
+
+
+
+    }
+
+
+    def create(self, cr, uid, vals, context=None):
+
+
+		task_id = super(task, self).create(cr, uid, vals, context=context)
+		##notifier
+		name = vals.get('name', False)
+		user_id=vals.get('user_id', False)
+
+		if task_id and user_id :
+			mail_vals = {
+				'body':'<html>Vous avez une nouvelle tache à réaliser </html>',
+				'record_name':name,
+				'res_id':task_id,
+				'reply_to':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+				'author_id':self.pool.get('res.users').browse(cr, uid, uid, context=context).partner_id.id,
+				'model':'project.task',
+				'type':'comment',
+				'email_from':self.pool.get('res.users').browse(cr, uid, uid, context=context).name,
+				'starred':True,
+			}
+			message = self.pool.get('mail.message').create(cr, uid, mail_vals) 
+			print "messages reeeeeeeeeeeeeeeeeeeeeee" 
+			mail_notif_vals = {
+				'partner_id':self.pool.get('res.users').browse(cr, uid,user_id, context=context).partner_id.id,
+				'message_id':message,
+				'is_read':False,
+				'starred':True,
+						
+			}
+			self.pool.get('mail.notification').create(cr, uid, mail_notif_vals)
+			print "notiiiiiiiiifffffff reeeeeeeeeeeeeeeeeeeeeee"
+		return task_id
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_rapport_grand_livre_view' model="ir.ui.view">
+            <field name="name">Grand Livre</field>
+            <field name="model">wizard.grand.livre</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Grand Livre Fournisseur Périodique" >
+                    <group col="2" >
+                        <field name="fournisseur_id"/>
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Créer Rapport"/>
+                        </group>
+                        
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rapport_grand_livre">
+            <field name="name">Grand Livre</field>
+            <field name="res_model">wizard.grand.livre</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_rapport_grand_livre_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Grand Livre"
+		model="reglement.piece"
+		auto="True"
+		name="jasper_rapport_grand_livre_print"
+		rml="sotebat_stat/rapport_grand_livre/report/grand_livre.jrxml"
+		id="etat_rapport_grand_livre"
+		menu="False"
+		/>
+        <menuitem id="submenu_rapport_grand_livre" name="Grand Livre" action="action_rapport_grand_livre" parent="menu_sotebat_reporting" sequence="6"/>
+    </data>
+</openerp>
+
+

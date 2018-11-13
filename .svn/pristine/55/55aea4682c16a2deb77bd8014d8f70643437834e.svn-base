@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReport_facture" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;tax_line&apos;]"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Tax_Description-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Tax_Lines-tax_line/Tax_Description-name]]></fieldDescription>
+	</field>
+	<field name="Montant-amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_taxe-tax_line/Montant-amount]]></fieldDescription>
+	</field>
+	<field name="Base_de_calcul-base" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_taxe-tax_line/Base_de_calcul-base]]></fieldDescription>
+	</field>
+	<field name="Nom_de_la_taxe-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Lignes_de_taxe-tax_line/Ligne_de_facture-invoice_id/Lignes_de_taxe-tax_line/Nom_de_la_taxe-name]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="0" width="103" height="20"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Base_de_calcul-base}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="166" y="0" width="88" height="20"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Montant-amount}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="63" height="20"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tax_Description-name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

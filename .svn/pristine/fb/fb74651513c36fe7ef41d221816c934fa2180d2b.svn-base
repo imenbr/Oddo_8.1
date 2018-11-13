@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--==================== wizard View ==================-->
+        <record id='wizard_avance_view' model="ir.ui.view">
+            <field name="name">Les avances des employees </field>
+            <field name="model">wizard.avance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rapport Les avances des employees " >
+                    <group col="2" fill="0" colspan="4">
+			
+                       
+                        <field name="date_from" />
+			<field name="date_to" />
+                        <group colspan="2">
+                            <div class="oe_button_box oe_right">
+				<button special="cancel" icon="gtk-cancel" string="Cancel"/>
+	                        <button type="object" name="create_report" icon="gtk-go-forward" string="Creer Rapport"/>
+			    </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_avance">
+            <field name="name">Les avances des employees</field>
+            <field name="res_model">wizard.avance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_avance_view"/>
+            <field name="target">new</field>
+        </record>
+
+<!--==================== report spec ========================-->
+        <report string="Les avances des employees"
+		model="hr.avance"
+		auto="True"
+		name="jasper_avance_print"
+		rml="office_avance/report/avance_emp.jrxml"
+		id="fact_client_nonpaye"
+		menu="False"
+		/>
+        
+        <menuitem id="submenu_wizard_avance_report" name="Les avances des employees" action="action_wizard_avance" parent="menu_hr_root_avance"  sequence="12" groups="base.group_hr_manager" />
+    </data>
+</openerp>
+

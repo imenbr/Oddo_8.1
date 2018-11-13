@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id='wizard_product_order_statement_view' model="ir.ui.view">
+            <field name="name">Product Order Statement</field>
+            <field name="model">wizard.product.order.statement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Product Order Statement" >
+                    <group col="2" fill="0" states="choose">
+                        <separator string="Orders" />
+ 			<field name="order_ids" colspan="4" nolabel="1" required="1" /><!--domain="[('state','!=',[('draft','cancel'])]"-->
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Create Report"/>
+                        </group>
+                        <field invisible="1" name="state"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_product_order_statement">
+            <field name="name">Product Order Statement</field>
+            <field name="res_model">wizard.product.order.statement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_product_order_statement_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Order statement"
+		model="stock.move"
+		auto="True"
+		name="jasper_product_order_statement_print"
+		rml="office_stat/product_order_statement/report_product_order_statement/report_product_order_statement.jrxml"
+		id="order_statement"
+		menu="False"
+		/>
+
+        <!--
+            ENTREPOT/OFFICE RAPPORT/ETAT BON DE COMMANDE
+        -->
+        <menuitem id="submenu_product_order_statement" name="Etat Bon de commande" sequence="2" parent="menu_reporting_office" action="action_product_order_statement" />
+
+    </data>
+</openerp>
+

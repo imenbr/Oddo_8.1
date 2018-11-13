@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="picking_inventory_location_change_form" model="ir.ui.view">
+            <field name="name">picking.inventory.location.change</field>
+            <field name="model">stock.inventory</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Inventory Details']/field[@name='line_ids']/tree/field[@name='product_qty']" position="after">
+                    <field name='quantity_difference' string="Écart" />  
+                </xpath>
+                <xpath expr="//page[@string='Inventory Details']/field[@name='line_ids']/tree/field[@name='package_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+<!--
+	the field reference is created automatically
+-->
+		<xpath expr="//form[@string='Inventory Adjustment']/sheet/div/h1/field[@name='name']" position="attributes">
+                    <attribute name="required">False</attribute>
+                    <attribute name="readonly">True</attribute>
+		</xpath>
+	    </field>
+	</record>
+
+<!--
+	Remove the fields Force Valuation Period
+-->
+
+	<record id="view_inventory_form_inherited" model="ir.ui.view">
+            <field name="name">stock.inventory.form.inherited</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock_account.view_inventory_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='period_id']" position="replace"/>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

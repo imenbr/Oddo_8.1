@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id='wizard_etat_inventaire_view' model="ir.ui.view">
+            <field name="name">Etat d'Inventaire</field>
+            <field name="model">wizard.etat.inventaire</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Etat d'inventaire" >
+                    <group col="2" fill="0"  colspan="4">
+                        <field name="inventory_id" required='1' domain="[('state','=','done')]"/>
+                        <separator colspan="2"/>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Annuler"/>
+                            <button type="object" name="create_report" icon="gtk-go-forward" string="Générer Rapport"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_etat_inventaire">
+            <field name="name">Etat d'Inventaire</field>
+            <field name="res_model">wizard.etat.inventaire</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_etat_inventaire_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <report string="Etat d'inventaire"
+		model="stock.inventory"
+		auto="True"
+		name="jasper_report_etat_inventaire_print"
+		rml="office_stat/etat_inventaire/report/etat_inventaire.jrxml"
+		id="report_stock_inventory_2"
+		menu="False"
+		/>
+        <!--
+            ENTREPOT/OFFICE RAPPORT/ETAT D INVENTAIRE
+        -->
+        <menuitem id="submenu_etat_inventaire" name="Etat d'Inventaire" action="action_wizard_etat_inventaire" parent="menu_reporting_office" sequence="10"/>
+
+    </data>
+</openerp>
+

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sotebat_retenue_source" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="106"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;retenue_src_lines&apos;]"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/odoo/odoo-8/openerp/addons/office_etat/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SubReport1" class="java.lang.Object"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Date-date_retenu" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Date-date_retenu]]></fieldDescription>
+	</field>
+	<field name="Taux-designation" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Taux-designation]]></fieldDescription>
+	</field>
+	<field name="Type-type" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ref_Retenu-retenu_id/Type-type]]></fieldDescription>
+	</field>
+	<field name="Designation-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Ref_Retenu-retenu_id/Designation-code]]></fieldDescription>
+	</field>
+	<field name="Date_Facture-date_invoice" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Invoice_Ref-retenue_src_lines/Retenue_source_Ref-retenu_src_id/Invoice_Ref-retenue_src_lines/Date_Facture-date_invoice]]></fieldDescription>
+	</field>
+	<field name="Total_TTC-total_ttc" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Total_TTC-total_ttc]]></fieldDescription>
+	</field>
+	<field name="Total_Retenu-total_retenu" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Total_Retenu-total_retenu]]></fieldDescription>
+	</field>
+	<field name="Total_Retse-total_reste_a_payer" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Total_Retse-total_reste_a_payer]]></fieldDescription>
+	</field>
+	<field name="Montant_Total_TTC-ttc" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Invoice_Ref-retenue_src_lines/Montant_Total_TTC-ttc]]></fieldDescription>
+	</field>
+	<field name="Montant_Retenu-montant_retenu" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Invoice_Ref-retenue_src_lines/Montant_Retenu-montant_retenu]]></fieldDescription>
+	</field>
+	<field name="Reste_a_payer-montant_rest" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[/data/record/Invoice_Ref-retenue_src_lines/Reste_a_payer-montant_rest]]></fieldDescription>
+	</field>
+	<field name="Invoice_Number-internal_number" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Invoice_Ref-retenue_src_lines/Ref_Facture-invoice_id/Invoice_Number-internal_number]]></fieldDescription>
+	</field>
+	<field name="Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Customer-partner_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="date_to_day" class="java.util.Date"/>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Invoice_Ref-retenue_src_lines/id]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="91" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="86" width="555" height="1"/>
+			</line>
+			<subreport>
+				<reportElement x="10" y="5" width="536" height="77"/>
+				<subreportParameter name="company_id"/>
+				<dataSourceExpression><![CDATA[$P{SubReport1}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="184" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="13" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Etat De Retenue A La Source]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="164" width="110" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Réference Facture]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="164" width="108" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Date Facture]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="164" width="123" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Montant Total TTC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="164" width="107" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Montant Retenue]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="164" width="107" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Reste A Payer]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="364" y="57" width="191" height="42"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="364" y="57" width="191" height="21"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date ]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="364" y="117" width="191" height="41"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="364" y="117" width="191" height="21"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fournisseur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="138" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Fournisseur :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="138" width="125" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Name-name}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="0" y="57" width="191" height="101"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="57" width="191" height="21"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retenue]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="66" y="78" width="125" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Designation-code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="99" width="125" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Type-type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="78" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Réference  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="98" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Type :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="118" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Taux :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="66" y="119" width="125" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Taux-designation}.setScale(2)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="138" width="125" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Date-date_retenu}.substring( 8, 10 )+"/"+$F{Date-date_retenu}.substring( 5, 7 )+"/"+$F{Date-date_retenu}.substring( 0, 4 )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="138" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="364" y="78" width="191" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="0" width="108" height="21"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Date_Facture-date_invoice}.substring( 8, 10 )+"/"+$F{Date_Facture-date_invoice}.substring( 5, 7 )+"/"+$F{Date_Facture-date_invoice}.substring( 0, 4 )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="0" width="107" height="21"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Montant_Retenu-montant_retenu}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="107" height="21"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Total_Retse-total_reste_a_payer}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="110" height="21"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Invoice_Number-internal_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="123" height="21"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Montant_Total_TTC-ttc}.setScale(3)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="470" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="350" y="10" width="205" height="91"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="350" y="10" width="205" height="31"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="449" y="41" width="106" height="20"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_TTC-total_ttc}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="61" width="106" height="20"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_Retenu-total_retenu}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="81" width="106" height="20"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_Retse-total_reste_a_payer}.setScale(3)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="41" width="99" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TTC :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="61" width="99" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retenue :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="81" width="99" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reste  :]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

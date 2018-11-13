@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <record id="invoice_supplier_inherit_form" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.inherit.form</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='supplier_invoice_number']" position="attributes">
+                <attribute name="string">Référence Fournisseur</attribute> 
+            </xpath>
+            <xpath expr="//field[@name='reference_type']" position="attributes">
+                <attribute name="invisible">True</attribute> 
+            </xpath>
+            <label for="reference_type" position="replace"/>
+            <xpath expr="//field[@name='reference']" position="attributes">
+                <attribute name="invisible">True</attribute> 
+            </xpath>
+            <xpath expr="//field[@name='fiscal_position']" position="replace"/> 
+            <xpath expr="//field[@name='account_id']" position="attributes">
+                <attribute name="invisible">True</attribute> 
+            </xpath>
+            <xpath expr="//field[@name='journal_id']" position="attributes">
+                <attribute name="invisible">True</attribute> 
+            </xpath>
+            
+            <xpath expr="sheet[@string='Supplier Invoice']/notebook/page[@string='Invoice']/field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='account_id']" position="attributes">
+                <attribute name="invisible">True</attribute> 
+            </xpath>
+            <xpath expr="//page[@string='Payments']" position="replace"/>
+            
+            <field name="amount_untaxed" position="attributes">
+                <attribute name="string">Total Net HT</attribute>     
+            </field> 
+            <field name="amount_untaxed" position="before"> 
+                <field name="undiscount_total" string="Total sans remise" widget="monetary" options="{'currency_field': 'currency_id'}"/>	
+                <field name="discount_total" widget="monetary" options="{'currency_field': 'currency_id'}" />
+            </field>
+            <field name="amount_tax" position="after">
+                <field name="timbre" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </field>
+            <field name="amount_tax" position="attributes">
+                <attribute name="string">Total tax</attribute>     
+            </field> 
+            <field name="comment" position="replace" >
+                <group>
+                    <field name="amount_word" string="Total en toute lettre"/>
+                </group>
+            </field>
+            <field name="residual" position="replace">
+                <field name="reste_a_payer" string="Reste à payer"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="invoice_tree_change" model="ir.ui.view">
+        <field name="name">account.invoice.tree.change</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="number" position="after">
+                <field name="internal_number"/>
+	    </field>
+            <field name="residual" position="replace">
+                <field name="reste_a_payer" string="Reste à payer"/>
+            </field>
+	</field>
+    </record> 
+
+
+	<!--
+            account.invoice remove the page autres informations
+        -->
+        <record id="invoice_supplier_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@string='Supplier Invoice']/sheet[@string='Supplier Invoice']/notebook/page[@string='Other Info']" position="attributes">
+			<attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+</data>
+</openerp>
+
