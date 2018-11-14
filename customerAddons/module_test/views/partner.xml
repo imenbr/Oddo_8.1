@@ -26,7 +26,7 @@
 
         <menuitem id="configuration_menu" name="Configuration"
                   parent="main_openacademy_menu"/>
-        <menuitem id="contact_menu" name="Contacts"
+        <menuitem id="config_menu" name="Contacts"
                   parent="configuration_menu"
                   action="contact_list_action"/>
     </data>

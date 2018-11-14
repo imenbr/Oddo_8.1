@@ -23,4 +23,8 @@ class Session(models.Model):
     seats = fields.Integer(string="Number of seats")
     instructor_id = fields.Many2one('res.partner', string="Instructor")
     course_id = fields.Many2one('module_test.module_test', ondelete='cascade', string="Course", required=True)
-    attendee_ids = fields.Many2many('res.partner', string="Attendees")
+    # attendee_ids = fields.Many2many('res.partner', relation='attendiesSession',
+    #                                 column1='name', column2='description', string="Attendees")
+    attendee_ids = fields.Many2many(comodel_name="res.partner", relation="group_partner_rel", column1="group_id",
+                                   column2="partner_id", string="Opérateurs économiques")
+    # attendee_ids = fields.Many2many('res.partner', string="Attendees")

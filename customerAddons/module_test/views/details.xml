@@ -1,0 +1,28 @@
+ <openerp>
+    <data>
+
+        <!-- Add instructor field to existing view -->
+        <record model="ir.ui.view" id="details_form_view">
+            <field name="name">course.details</field>
+            <field name="model">module_test.module_test</field>
+            <field name="inherit_id" ref="course_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                     <field name="duration" string="Durée Cours"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="details_list_action">
+            <field name="name">Details</field>
+            <field name="res_model">module_test.module_test</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="details_menu" name="Details"
+                  parent="main_openacademy_menu"/>
+        <menuitem id="contact_menu" name="courses details"
+                  parent="details_menu"
+                  action="details_list_action"/>
+    </data>
+</openerp>
