@@ -27,6 +27,7 @@
         # 'security/ir.model.access.csv',
         'templates.xml',
         'views/moduleTest.xml',
+        'views/partner.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

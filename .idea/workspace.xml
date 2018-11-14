@@ -18,69 +18,57 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="25" />
-          <entry key="xml" value="4" />
+          <entry key="py" value="30" />
+          <entry key="xml" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="25" />
-          <entry key="XML" value="4" />
+          <entry key="Python" value="30" />
+          <entry key="XML" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="152" />
-          <entry key="xml" value="213" />
+          <entry key="py" value="387" />
+          <entry key="xml" value="216" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="152" />
-          <entry key="XML" value="213" />
+          <entry key="Python" value="387" />
+          <entry key="XML" value="216" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44742">
+    <splitter split-orientation="horizontal" split-proportion="0.42886883">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/openerp/models.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="308">
-                  <caret line="1726" selection-start-line="1726" selection-end-line="1726" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/openerp/api.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="173">
+                <state relative-caret-position="55">
                   <caret line="507" selection-start-line="507" selection-end-line="507" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/customerAddons/module_test/views/moduleTest.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="285">
-                  <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+                <state relative-caret-position="166">
+                  <caret line="64" column="43" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="43" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/customerAddons/module_test/models.py">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/customerAddons/module_test/views/partner.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-                  <folding>
-                    <marker date="1542114450217" expanded="true" signature="468:469" ph="..." />
-                  </folding>
+                <state relative-caret-position="195">
+                  <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
                 </state>
               </provider>
             </entry>
@@ -89,13 +77,13 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/customerAddons/module_test/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="375">
-                  <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
+                <state relative-caret-position="336">
+                  <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
                   <folding>
-                    <marker date="1542114450217" expanded="true" signature="468:469" ph="..." />
+                    <marker date="1542127127675" expanded="true" signature="468:469" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -104,8 +92,20 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/openerp/fields.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="600">
-                  <caret line="1755" column="8" selection-start-line="1755" selection-start-column="8" selection-end-line="1755" selection-end-column="8" />
+                <state relative-caret-position="-504">
+                  <caret line="1822" column="8" selection-start-line="1822" selection-start-column="8" selection-end-line="1822" selection-end-column="8" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/customerAddons/module_test/partner.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+                  <folding>
+                    <marker date="1542128306396" expanded="true" signature="65:70" ph="..." />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -114,24 +114,37 @@
       </split-second>
     </splitter>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>openacademy</find>
       <find>openacademy_menu</find>
       <find>session_form_view</find>
       <find>module_test.module_test</find>
       <find>'module_test.module_test</find>
       <find>course_list_action</find>
+      <find>openacademy</find>
+      <find>contact_list_action</find>
+      <find>session_list_action</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/addons/account/account.py" />
-        <option value="$PROJECT_DIR$/customerAddons/module_test/__openerp__.py" />
         <option value="$PROJECT_DIR$/customerAddons/module_test/demo.xml" />
-        <option value="$PROJECT_DIR$/customerAddons/module_test/models.py" />
         <option value="$PROJECT_DIR$/customerAddons/module_test/views/moduleTest.xml" />
+        <option value="$PROJECT_DIR$/customerAddons/partner.py" />
+        <option value="$PROJECT_DIR$/customerAddons/module_test/__init__.py" />
+        <option value="$PROJECT_DIR$/customerAddons/module_test/__openerp__.py" />
+        <option value="$PROJECT_DIR$/customerAddons/module_test/views/partner.xml" />
+        <option value="$PROJECT_DIR$/customerAddons/module_test/models.py" />
+        <option value="$PROJECT_DIR$/customerAddons/module_test/partner.py" />
       </list>
     </option>
   </component>
@@ -171,6 +184,11 @@
               <item name="module_test" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="odoo_8.1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="odoo_8.1" type="462c0819:PsiDirectoryNode" />
+              <item name="openerp" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -180,6 +198,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/customerAddons/module_test" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -235,13 +258,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16338798" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11147541" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="1" weight="0.32901832" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.49190938" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.25566342" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" />
@@ -313,13 +337,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customerAddons/module_test/__openerp__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/customerAddons/module_test/controllers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -362,13 +379,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/openerp/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="507" selection-start-line="507" selection-end-line="507" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/customerAddons/module_test/templates.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -385,42 +395,76 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/customerAddons/module_test/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="true" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
           <folding>
-            <element signature="e#24#42#0" expanded="true" />
+            <element signature="e#24#49#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customerAddons/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customerAddons/module_test/__openerp__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/openerp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="1726" selection-start-line="1726" selection-end-line="1726" />
+        <state relative-caret-position="350">
+          <caret line="617" selection-start-line="617" selection-end-line="617" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openerp/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="507" selection-start-line="507" selection-end-line="507" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/openerp/fields.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="1755" column="8" selection-start-line="1755" selection-start-column="8" selection-end-line="1755" selection-end-column="8" />
+        <state relative-caret-position="-504">
+          <caret line="1822" column="8" selection-start-line="1822" selection-start-column="8" selection-end-line="1822" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/customerAddons/module_test/views/moduleTest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+        <state relative-caret-position="166">
+          <caret line="64" column="43" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/customerAddons/module_test/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
+        <state relative-caret-position="336">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
           <folding>
-            <marker date="1542114450217" expanded="true" signature="468:469" ph="..." />
+            <marker date="1542127127675" expanded="true" signature="468:469" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customerAddons/module_test/partner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <marker date="1542128306396" expanded="true" signature="65:70" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customerAddons/module_test/views/partner.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
         </state>
       </provider>
     </entry>
